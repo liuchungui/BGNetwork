@@ -1,8 +1,6 @@
 ##BGNetwork是什么？
 BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要由**BGNetworkManager**、**BGNetworkRequest**、**BGNetworkConnector**、**BGNetworkCache**、**BGNetworkConfiguration**五个部分组成。它的工作流程是将每个网络请求封装一个Request对象，然后交给BGNetworkManager发送请求，最后使用统一的代理方法调回。
-<p align="center" >
-  <img src="https://raw.githubusercontent.com/chunguiLiu/BGNetwork/master/assets/architecture.png" alt="AFNetworking" title="AFNetworking" height=251 width = 556>
-</p>
+
 
 ##如何使用？
 
@@ -24,3 +22,15 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 * 提供公共业务参数的配置
 * 提供HTTP请求头的配置
 * 提供对请求数据的加密入口
+
+##Podfile
+```ruby
+ platform :ios, '7.0'
+ pod "BGNetwork", "~> 0.1.1"
+ ```
+
+
+##相关类的任务角色
+<p align="center" >
+  <img src="https://raw.githubusercontent.com/chunguiLiu/BGNetwork/master/assets/architecture.png" alt="AFNetworking" title="AFNetworking" height=251 width = 556>
+</p>
