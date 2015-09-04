@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "DemoNetworkConfiguration.h"
+#import "BGNetworkManager.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +18,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //对网络进行配置
+    [[BGNetworkManager sharedManager] setNetworkConfiguration:[DemoNetworkConfiguration configuration]];
     // Override point for customization after application launch.
     return YES;
 }
