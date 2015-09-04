@@ -4,12 +4,12 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 
 ##如何使用？
 
-1.1 子类化一个BGNetworkConfiguration类，实现BGNetworkConfiguration协议从对网络进行配置，在Appdelegate.m文件中将它设置给BGNetworkManager。   
+1. 子类化一个BGNetworkConfiguration类，实现BGNetworkConfiguration协议从对网络进行配置，在Appdelegate.m文件中将它设置给BGNetworkManager。   
 ```objective-c
 [[BGNetworkManager sharedManager] setNetworkConfiguration:[DemoNetworkConfiguration configuration]];
 ```
 
-2.2 根据业务子类化BGNetowrkRequest封装请求，实现BGNetowrkRequest协议，然后发送请求。   
+2. 根据业务子类化BGNetowrkRequest封装请求，实现BGNetowrkRequest协议，然后发送请求。   
 ```objective-c
     DemoRequest *request = [[DemoRequest alloc] initPage:_page pageSize:_pageSize];
     [request sendRequestWithDelegate:self];
