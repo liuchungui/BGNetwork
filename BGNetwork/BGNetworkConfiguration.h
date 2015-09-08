@@ -9,38 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "BGNetworkRequest.h"
 
-/**
- *  读取缓存策略
- */
-typedef NS_ENUM(NSInteger, BGNetworkReadCachePolicy){
-    /**
-     *  缓存存在，则仅仅读取缓存，不再请求网络
-     */
-    BGNetworkReadCacheOnly,
-    /**
-     *  读取缓存的同时也请求网络
-     */
-    BGNetworkReadCacheAndLoadData,
-};
-
-/**
- *  写缓存策略
- */
-typedef NS_ENUM(NSInteger, BGNetworkWriteCachePolicy){
-    /**
-     *  用新的数据覆盖老的数据
-     */
-    BGNetworkOverOldCacheData,
-    /**
-     *  忽略缓存，不做任何事情
-     */
-    BGNetworkIgnoreCache,
-    /**
-     *  清空老的数据，不写入新的数据
-     */
-    BGNetworkClenOldCacheData,
-};
-
 @protocol BGNetworkConfiguration;
 
 @protocol BGNetworkConfiguration <NSObject>
@@ -53,12 +21,6 @@ typedef NS_ENUM(NSInteger, BGNetworkWriteCachePolicy){
 
 
 @optional
-/**
- *  读取缓存的策略
- */
-@property (nonatomic, assign, readonly) BGNetworkReadCachePolicy readCachePolicy;
-
-
 /**
  *  返回公共的参数
  *
@@ -105,14 +67,14 @@ typedef NS_ENUM(NSInteger, BGNetworkWriteCachePolicy){
 - (NSData *)decryptResponseData:(NSData *)responseData response:(NSURLResponse *)response request:(BGNetworkRequest *)request;
 
 /**
- *  当请求需要缓存数据时，以何种策略缓存数据，是直接使用新数据覆盖老数据，还是忽略，什么都不做。此方法主要用来配合服务器做数据缓存。
+ *  由服务器返回的某种规则来确定此数据是否缓存，默认位YES
  *
  *  @param responseObject 请求到的数据
  *
- *  @return 默认返回BGNetworkOverOldCacheData
+ *  @return 默认返回YES
  *
  */
-- (BGNetworkWriteCachePolicy)cachePolicyFromResponseData:(id)responseObject response:(NSURLResponse *)response;
+- (BOOL)isCacheResponseData:(id)responseObject response:(NSURLResponse *)response;
 
 @end
 

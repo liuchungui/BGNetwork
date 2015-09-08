@@ -48,8 +48,8 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
     return YES;
 }
 
-- (BOOL)isNeedCache{
-    return NO;
+- (BGNetworkRequestCachePolicy)cachePolicy{
+    return BGNetworkRquestCacheNone;
 }
 
 - (BOOL)isEncrypt{

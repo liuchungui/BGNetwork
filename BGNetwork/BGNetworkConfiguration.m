@@ -25,10 +25,6 @@
     return nil;
 }
 
-- (BGNetworkReadCachePolicy)readCachePolicy{
-    return BGNetworkReadCacheOnly;
-}
-
 - (NSDictionary *)requestCommonParamters{
     return [NSDictionary dictionary];
 }
@@ -65,7 +61,7 @@
     return responseData;
 }
 
-- (BGNetworkWriteCachePolicy)cachePolicyFromResponseData:(id)responseObject response:(NSURLResponse *)response{
-    return BGNetworkOverOldCacheData;
+- (BOOL)isCacheResponseData:(id)responseObject response:(NSURLResponse *)response{
+    return YES;
 }
 @end

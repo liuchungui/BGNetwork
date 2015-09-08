@@ -39,6 +39,10 @@
         _httpClient.requestSerializer = requestSerializer;
         _httpClient.responseSerializer = responseSerializer;
         
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        policy.allowInvalidCertificates = YES;
+        _httpClient.securityPolicy = policy;
+        
         //设置代理
         _delegate = delegate;
     }

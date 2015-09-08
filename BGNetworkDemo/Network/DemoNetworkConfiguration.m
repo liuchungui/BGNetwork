@@ -11,5 +11,8 @@
 @implementation DemoNetworkConfiguration
 - (NSString *)baseURL{
     return @"http://182.92.5.161/web/test/";
+//    return @"https://172.16.4.115/test/";
+//    return @"https://www.baidu.com/";
+//    return @"https://api.app.net/";
 }
 @end

@@ -55,12 +55,15 @@ static BGNetworkManager *_manager = nil;
 - (void)managerSendRequest:(BGNetworkRequest *)request{
     NSParameterAssert(self.connector);
     dispatch_async(self.workQueue, ^{
-        if(request.isNeedCache){
-            [self readCacheWithRequest:request];
-        }
-        else{
-            //请求网络数据
-            [self loadNetworkDataWithRequest:request];
+        switch (request.cachePolicy) {
+            case BGNetworkRquestCacheNone:
+                //请求网络
+                [self loadNetworkDataWithRequest:request];
+                break;
+            case BGNetworkRequestCacheDataAndReadCacheOnly:
+            case BGNetworkRequestCacheDataAndReadCacheLoadData:
+                //读取缓存并且请求数据
+                [self readCacheAndRequestData:request];
         }
     });
 }
@@ -93,7 +96,7 @@ static BGNetworkManager *_manager = nil;
 }
 
 #pragma mark - cache method
-- (void)readCacheWithRequest:(BGNetworkRequest *)request{
+- (void)readCacheAndRequestData:(BGNetworkRequest *)request{
     __weak BGNetworkManager *weakManager = self;
     NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
     [self.cache queryCacheForKey:cacheKey completed:^(NSData *data) {
@@ -103,7 +106,8 @@ static BGNetworkManager *_manager = nil;
             dispatch_async(weakManager.workQueue, ^{
                 if(responseObject){
                     [weakManager successWithRequest:request responseData:data responseObject:responseObject];
-                    if(weakManager.configuration.readCachePolicy == BGNetworkReadCacheAndLoadData){
+                    //读取缓存之后，再请求数据
+                    if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData){
                         [weakManager loadNetworkDataWithRequest:request];
                     }
                 }
@@ -116,21 +120,10 @@ static BGNetworkManager *_manager = nil;
     }];
 }
 
-- (void)cacheResponseData:(NSData *)responseData responseObject:(id)responseObject response:(NSURLResponse *)response request:(BGNetworkRequest *)request{
-    //当某种条件下，是否应该缓存网络的请求数据
-    BGNetworkWriteCachePolicy policy = [self.configuration cachePolicyFromResponseData:responseObject response:response];
+- (void)cacheResponseData:(NSData *)responseData request:(BGNetworkRequest *)request{
     NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
-    switch (policy) {
-        case BGNetworkOverOldCacheData:
-            //缓存数据
-            [self.cache storeData:responseData forKey:cacheKey];
-            break;
-        case BGNetworkClenOldCacheData:
-            [self.cache removeCacheForKey:cacheKey];
-            break;
-        case BGNetworkIgnoreCache:
-            break;
-    }
+    //缓存数据
+    [self.cache storeData:responseData forKey:cacheKey];
 }
 
 #pragma mark - set method
@@ -149,9 +142,9 @@ static BGNetworkManager *_manager = nil;
         //解析数据
         id responseObject = [self parseResponseData:responseData];
         dispatch_async(self.workQueue, ^{
-            //缓存数据
-            if(request.isNeedCache){
-                [self cacheResponseData:decryptData responseObject:responseObject response:task.response request:request];
+            if((request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheOnly || request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData) && [self.configuration isCacheResponseData:responseData response:task.response]){
+                //缓存数据
+                [self cacheResponseData:responseData request:request];
             }
             //成功回调
             [self successWithRequest:request responseData:decryptData responseObject:responseObject];
@@ -172,8 +165,6 @@ static BGNetworkManager *_manager = nil;
             [self.cache removeCacheForKey:cacheKey];
         }
         @finally {
-            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
-            [self.cache removeCacheForKey:cacheKey];
         }
         //成功回调
         dispatch_async(dispatch_get_main_queue(), ^{

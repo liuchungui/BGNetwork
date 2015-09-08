@@ -11,12 +11,12 @@
 
 @implementation DemoRequest
 #pragma mark - BGNetworkRequest method
-- (BOOL)isNeedCache{
-    return YES;
+- (BGNetworkRequestCachePolicy)cachePolicy{
+    return BGNetworkRquestCacheNone;
 }
-
 - (NSString *)methodName{
     return @"demo.php";
+//    return @"stream/0/posts/stream/global";
 }
 
 - (BGNetworkRequestHTTPMethod)httpMethod{
@@ -35,8 +35,8 @@
         [self setValue:@"1196689" forParamKey:@"orderNo"];
         [self setIntegerValue:page forParamKey:@"page"];
         [self setIntegerValue:pageSize forParamKey:@"pageSize"];
+//        [self setValue:@"test" forParamKey:@"test.demo"];
     }
     return self;
 }
-
 @end

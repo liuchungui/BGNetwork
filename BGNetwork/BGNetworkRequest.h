@@ -18,6 +18,25 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestHTTPMethod){
      */
     BGNetworkRequestHTTPPost,
 };
+
+/**
+ *  网络请求缓存策略
+ */
+typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
+    /**
+     *  不进行缓存
+     */
+    BGNetworkRquestCacheNone,
+    /**
+     *  请求到数据后缓存数据，读取缓存时如果有缓存则仅仅读取缓存，不再请求网络
+     */
+    BGNetworkRequestCacheDataAndReadCacheOnly,
+    /**
+     *  请求到数据后缓存数据，读取到缓存后请求网络
+     */
+    BGNetworkRequestCacheDataAndReadCacheLoadData,
+};
+
 @protocol BGNetworkRequestDelegate;
 @protocol BGNetworkRequest <NSObject>
 /**
@@ -31,14 +50,9 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestHTTPMethod){
 @property (nonatomic, assign, readonly) BGNetworkRequestHTTPMethod httpMethod;
 
 /**
- *  是否需要缓存，默认为NO
+ *  缓存策略，默认为BGNetworkRquestCacheNone
  */
-@property (nonatomic, assign, readonly) BOOL isNeedCache;
-
-/**
- *  是否加密
- */
-@property (nonatomic, assign, readonly) BOOL isEncrypt;
+@property (nonatomic, assign, readonly) BGNetworkRequestCachePolicy cachePolicy;
 
 /**
  *  处理请求到的数据，父类默认不处理直接返回，子类覆写此方法进行处理
