@@ -20,7 +20,7 @@
 }
 
 - (BGNetworkRequestHTTPMethod)httpMethod{
-    return BGNetworkRequestHTTPPost;
+    return BGNetworkRequestHTTPGet;
 }
 
 - (id)processResponseObject:(id)responseObject{

@@ -26,6 +26,11 @@
     if(self = [super init]){
         //AFHTTPClient
         _httpClient = [[BGAFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey];
+        //是否允许CA不信任的证书通过
+        policy.allowInvalidCertificates = YES;
+        policy.validatesDomainName = YES;
+        _httpClient.securityPolicy = policy;
         
         //请求的序列化器
         BGAFRequestSerializer *requestSerializer = [BGAFRequestSerializer serializer];
@@ -38,10 +43,6 @@
         //设置
         _httpClient.requestSerializer = requestSerializer;
         _httpClient.responseSerializer = responseSerializer;
-        
-        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-        policy.allowInvalidCertificates = YES;
-        _httpClient.securityPolicy = policy;
         
         //设置代理
         _delegate = delegate;
