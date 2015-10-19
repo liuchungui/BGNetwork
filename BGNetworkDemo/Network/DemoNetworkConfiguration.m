@@ -11,8 +11,8 @@
 @implementation DemoNetworkConfiguration
 - (NSString *)baseURL{
 //    return @"https://localhost/test/";
-    return @"https://casetree.cn/web/test/";
-//    return @"https://182.92.5.161/web/test/";
+//    return @"https://casetree.cn/web/test/";
+    return @"http://182.92.5.161/web/test/";
 //    return @"https://baidu.com/";
 //    return @"https://172.16.4.115/test/";
 //    return @"http://192.168.31.186/test/";

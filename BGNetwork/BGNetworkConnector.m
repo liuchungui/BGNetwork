@@ -26,9 +26,10 @@
     if(self = [super init]){
         //AFHTTPClient
         _httpClient = [[BGAFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
-        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModePublicKey];
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         //是否允许CA不信任的证书通过
         policy.allowInvalidCertificates = YES;
+        //是否验证主机名
         policy.validatesDomainName = YES;
         _httpClient.securityPolicy = policy;
         

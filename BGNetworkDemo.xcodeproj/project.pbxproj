@@ -16,7 +16,8 @@
 		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
-		CE0EDA341BB92C4A00B19525 /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0EDA331BB92C4A00B19525 /* client.cer */; settings = {ASSET_TAGS = (); }; };
+		CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7C1BC2D9650071BAFB /* public.cer */; settings = {ASSET_TAGS = (); }; };
+		CE0FCC7F1BC2D9870071BAFB /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7E1BC2D9870071BAFB /* client.cer */; settings = {ASSET_TAGS = (); }; };
 		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; settings = {ASSET_TAGS = (); }; };
 		CEF8E4191B99464C0087CDB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E4181B99464C0087CDB3 /* main.m */; };
 		CEF8E41C1B99464C0087CDB3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E41B1B99464C0087CDB3 /* AppDelegate.m */; };
@@ -59,7 +60,6 @@
 		CEF8E6DC1B9959E40087CDB3 /* BGNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */; };
 		CEF8E6DD1B9959E40087CDB3 /* BGNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */; };
 		CEF8E6DE1B9959E40087CDB3 /* BGNetworkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */; };
-		CEFDA9B21BB6AAE40033877D /* public.cer in Resources */ = {isa = PBXBuildFile; fileRef = CEFDA9B11BB6AAE40033877D /* public.cer */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +92,8 @@
 		CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		CE070BBF1BB517A0002FF644 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		CE0EDA331BB92C4A00B19525 /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
+		CE0FCC7C1BC2D9650071BAFB /* public.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.cer; sourceTree = "<group>"; };
+		CE0FCC7E1BC2D9870071BAFB /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
 		CED2BD921BBA3775005928B9 /* casetree.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = casetree.cer; sourceTree = "<group>"; };
 		CEF8E4131B99464C0087CDB3 /* BGNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BGNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF8E4171B99464C0087CDB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,7 +174,6 @@
 		CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkRequest.m; sourceTree = "<group>"; };
 		CEF8E6C31B9959E40087CDB3 /* BGNetworkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkUtil.h; sourceTree = "<group>"; };
 		CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkUtil.m; sourceTree = "<group>"; };
-		CEFDA9B11BB6AAE40033877D /* public.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,9 +298,9 @@
 				CEF8E51E1B9947E10087CDB3 /* Views */,
 				CEF8E41A1B99464C0087CDB3 /* AppDelegate.h */,
 				CEF8E41B1B99464C0087CDB3 /* AppDelegate.m */,
-				CE0EDA331BB92C4A00B19525 /* client.cer */,
-				CEFDA9B11BB6AAE40033877D /* public.cer */,
+				CE0FCC7E1BC2D9870071BAFB /* client.cer */,
 				CED2BD921BBA3775005928B9 /* casetree.cer */,
+				CE0FCC7C1BC2D9650071BAFB /* public.cer */,
 				CEF8E5531B9948290087CDB3 /* Main.storyboard */,
 				CEF8E4231B99464C0087CDB3 /* Images.xcassets */,
 				CEF8E4251B99464C0087CDB3 /* LaunchScreen.xib */,
@@ -605,6 +605,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0FCC7F1BC2D9870071BAFB /* client.cer in Resources */,
 				CEF8E54F1B9947E10087CDB3 /* _refresh_rotate@2x.png in Resources */,
 				CEF8E54E1B9947E10087CDB3 /* _refresh_arrow@2x.png in Resources */,
 				CEF8E54B1B9947E10087CDB3 /* DemoCell.xib in Resources */,
@@ -613,9 +614,8 @@
 				CEF8E5511B9947E10087CDB3 /* RefreshTableFooterView.xib in Resources */,
 				CEF8E4271B99464C0087CDB3 /* LaunchScreen.xib in Resources */,
 				CEF8E4241B99464C0087CDB3 /* Images.xcassets in Resources */,
-				CEFDA9B21BB6AAE40033877D /* public.cer in Resources */,
 				CED2BD931BBA3775005928B9 /* casetree.cer in Resources */,
-				CE0EDA341BB92C4A00B19525 /* client.cer in Resources */,
+				CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +791,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: TuanChe Internet Technology (Beijing) Co., Ltd.";
 				INFOPLIST_FILE = BGNetworkDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

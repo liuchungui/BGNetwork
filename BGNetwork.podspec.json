@@ -1,6 +1,6 @@
 {
     "name": "BGNetwork",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "license": "MIT",
     "summary": "BGNetwork is a request util based on AFNetworking",
     "homepage": "https://github.com/chunguiLiu/BGNetwork",
