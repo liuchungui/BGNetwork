@@ -26,7 +26,7 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 ##Podfile
 ```ruby
  platform :ios, '7.0'
- pod "BGNetwork", "~> 0.1.1"
+ pod "BGNetwork"
  ```
 
 
