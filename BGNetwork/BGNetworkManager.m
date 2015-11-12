@@ -140,11 +140,11 @@ static BGNetworkManager *_manager = nil;
         //对数据进行解密
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
         //解析数据
-        id responseObject = [self parseResponseData:responseData];
+        id responseObject = [self parseResponseData:decryptData];
         dispatch_async(self.workQueue, ^{
             if((request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheOnly || request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData) && [self.configuration isCacheResponseData:responseData response:task.response]){
                 //缓存数据
-                [self cacheResponseData:responseData request:request];
+                [self cacheResponseData:decryptData request:request];
             }
             //成功回调
             [self successWithRequest:request responseData:decryptData responseObject:responseObject];

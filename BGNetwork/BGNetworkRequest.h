@@ -75,11 +75,6 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 @interface BGNetworkRequest : NSObject <NSCopying, BGNetworkRequest>
 
 /**
- *  代理
- */
-@property (nonatomic, weak, readonly) id<BGNetworkRequestDelegate> delegate;
-
-/**
  *  参数字典
  */
 @property (nonatomic, copy, readonly) NSDictionary *parametersDic;
@@ -110,6 +105,10 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 
 #pragma mark - BGNetworkRequest(BGNetworkManager)
 @interface BGNetworkRequest (BGNetworkManager)
+/**
+ *  代理
+ */
+@property (nonatomic, weak, readonly) id<BGNetworkRequestDelegate> delegate;
 /**
  *  发送请求
  */
