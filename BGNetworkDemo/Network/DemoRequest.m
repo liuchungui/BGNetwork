@@ -11,18 +11,6 @@
 
 @implementation DemoRequest
 #pragma mark - BGNetworkRequest method
-- (BGNetworkRequestCachePolicy)cachePolicy{
-    return BGNetworkRquestCacheNone;
-}
-- (NSString *)methodName{
-    return @"demo.php";
-//    return @"stream/0/posts/stream/global";
-}
-
-- (BGNetworkRequestHTTPMethod)httpMethod{
-    return BGNetworkRequestHTTPGet;
-}
-
 - (id)processResponseObject:(id)responseObject{
     PageModel *model = [[PageModel alloc] initWithDictionary:responseObject[@"result"]];
     return model;
@@ -31,6 +19,9 @@
 #pragma mark - 
 - (instancetype)initPage:(NSInteger)page pageSize:(NSInteger)pageSize{
     if(self = [super init]){
+        self.methodName = @"demo.php";
+        self.httpMethod = BGNetworkRequestHTTPGet;
+        self.cachePolicy = BGNetworkRquestCacheNone;
         //设置参数
         [self setValue:@"1196689" forParamKey:@"orderNo"];
         [self setIntegerValue:page forParamKey:@"page"];

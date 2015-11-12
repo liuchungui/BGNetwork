@@ -114,7 +114,7 @@
     [_tableView reloadData];
 }
 
-- (void)request:(BGNetworkRequest *)request failWithError:(NSError *)error{
+- (void)request:(BGNetworkRequest *)request failWithResponse:(id)response error:(NSError *)error {
     
 }
 

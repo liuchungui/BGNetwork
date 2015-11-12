@@ -11,26 +11,31 @@
 #import <objc/runtime.h>
 
 static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKey";
-@interface BGNetworkRequest ()
+@interface BGNetworkRequest (){
+    NSString *_methodName;
+}
 @property (nonatomic, strong) NSMutableDictionary *mutableParametersDic;
 @property (nonatomic, copy) NSMutableDictionary *requestHTTPHeaderFields;
 /**
  *  代理
  */
 @property (nonatomic, weak) id<BGNetworkRequestDelegate> delegate;
+
 @end
 @implementation BGNetworkRequest
 - (instancetype)init{
     if(self = [super init]){
         _requestHTTPHeaderFields = [[NSMutableDictionary alloc] init];
         _mutableParametersDic = [[NSMutableDictionary alloc] init];
-        self.methodName = [self methodName];
+        self.httpMethod = BGNetworkRequestHTTPGet;
+        self.cachePolicy = BGNetworkRquestCacheNone;
     }
     return self;
 }
 
 #pragma mark - set or get method
 - (void)setMethodName:(NSString *)methodName{
+    _methodName = methodName;
     [[self class] setRequestMethodName:methodName];
 }
 
@@ -38,30 +43,13 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
     return [_mutableParametersDic copy];
 }
 
+- (NSDictionary *)requestHTTPHeaderFields {
+    return [_requestHTTPHeaderFields copy];
+}
+
 #pragma mark - BGNetworkRequest method
-- (NSString *)methodName{
-    NSAssert(NO, @"子类必须覆写methodName方法");
-    return nil;
-}
-
-- (BOOL)isShouldCacheResponseData:(id)responseDic{
-    return YES;
-}
-
-- (BGNetworkRequestCachePolicy)cachePolicy{
-    return BGNetworkRquestCacheNone;
-}
-
-- (BOOL)isEncrypt{
-    return NO;
-}
-
 - (id)processResponseObject:(id)data{
     return data;
-}
-
-- (BGNetworkRequestHTTPMethod)httpMethod{
-    return BGNetworkRequestHTTPGet;
 }
 
 #pragma mark - 设置或获取请求头
@@ -114,11 +102,6 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
     return request;
 }
 
-#pragma mark - class method
-+ (void)cancelRequest{
-    [[BGNetworkManager sharedManager] cancelRequestWithUrl:[self getRequestMethodName]];
-}
-
 /**
  *  用户初始化后，此url才有效。
  */
@@ -139,12 +122,17 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
 #pragma mark - description
 - (NSString *)description{
     NSString *className = NSStringFromClass([self class]);
-    NSString *desStr = [NSString stringWithFormat:@"%@\nparam:\n%@", className, self.parametersDic];
+    NSString *desStr = [NSString stringWithFormat:@"%@\nmthodName:%@\nparam:\n%@", className, self.methodName, self.parametersDic];
     return desStr;
 }
 @end
 
 @implementation BGNetworkRequest (BGNetworkManager)
+#pragma mark - class method
++ (void)cancelRequest{
+    [[BGNetworkManager sharedManager] cancelRequestWithUrl:[self getRequestMethodName]];
+}
+
 - (void)sendRequestWithDelegate:(id<BGNetworkRequestDelegate>)delegate{
     self.delegate = delegate;
     [[BGNetworkManager sharedManager] managerSendRequest:self];

@@ -64,4 +64,8 @@
 - (BOOL)isCacheResponseData:(id)responseObject response:(NSURLResponse *)response{
     return YES;
 }
+
+- (BOOL)isSuccessWithResponseData:(id)responseObject response:(NSURLResponse *)response {
+    return YES;
+}
 @end

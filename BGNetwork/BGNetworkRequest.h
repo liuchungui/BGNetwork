@@ -40,21 +40,6 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 @protocol BGNetworkRequestDelegate;
 @protocol BGNetworkRequest <NSObject>
 /**
- *  方法名
- */
-@property (nonatomic, copy, readonly) NSString *methodName;
-
-/**
- *  HTTP请求的方法，默认GET，现支持GET和POST
- */
-@property (nonatomic, assign, readonly) BGNetworkRequestHTTPMethod httpMethod;
-
-/**
- *  缓存策略，默认为BGNetworkRquestCacheNone
- */
-@property (nonatomic, assign, readonly) BGNetworkRequestCachePolicy cachePolicy;
-
-/**
  *  处理请求到的数据，父类默认不处理直接返回，子类覆写此方法进行处理
  *
  *  @param responseObject 请求到的数据
@@ -73,6 +58,20 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
  *  [request sendRequestWithDelegate:self];
  */
 @interface BGNetworkRequest : NSObject <NSCopying, BGNetworkRequest>
+/**
+ *  方法名
+ */
+@property (nonatomic, strong) NSString *methodName;
+
+/**
+ *  HTTP请求的方法，默认GET，现支持GET和POST
+ */
+@property (nonatomic, assign) BGNetworkRequestHTTPMethod httpMethod;
+
+/**
+ *  缓存策略，默认为BGNetworkRquestCacheNone
+ */
+@property (nonatomic, assign) BGNetworkRequestCachePolicy cachePolicy;
 
 /**
  *  参数字典
@@ -82,14 +81,8 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 /**
  *  请求头
  */
-@property (readonly, copy) NSDictionary *requestHTTPHeaderFields;
+@property (nonatomic, readonly, copy) NSDictionary *requestHTTPHeaderFields;
 
-
-#pragma mark - public request method
-/**
- *  取消请求
- */
-+ (void)cancelRequest;
 
 #pragma mark - 设置或获取请求头的内容
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
@@ -105,6 +98,10 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 
 #pragma mark - BGNetworkRequest(BGNetworkManager)
 @interface BGNetworkRequest (BGNetworkManager)
+/**
+ *  取消请求
+ */
++ (void)cancelRequest;
 /**
  *  代理
  */
@@ -128,8 +125,9 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 /**
  *  网络失败调回代理
  *
- *  @param request 请求
- *  @param error   失败的错误
+ *  @param request   请求
+ *  @param response  json解析化之后的数据
+ *  @param error     网络失败的错误
  */
-- (void)request:(BGNetworkRequest *)request failWithError:(NSError *)error;
+- (void)request:(BGNetworkRequest *)request failWithResponse:(id)response error:(NSError *)error;
 @end
