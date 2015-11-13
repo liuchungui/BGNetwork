@@ -29,6 +29,7 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
         _mutableParametersDic = [[NSMutableDictionary alloc] init];
         self.httpMethod = BGNetworkRequestHTTPGet;
         self.cachePolicy = BGNetworkRquestCacheNone;
+        self.methodName = self.methodName;
     }
     return self;
 }

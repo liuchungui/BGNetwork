@@ -217,13 +217,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BGNetwork/BGNetworkManager.m"
-            timestampString = "468986747.779348"
+            filePath = "AFNetworking/AFHTTPSessionManager.m"
+            timestampString = "469102430.466714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "-readCacheAndRequestData:"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-POST:parameters:constructingBodyWithBlock:success:failure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -42,4 +42,5 @@
  *  @return 返回queryString格式的字符串
  */
 + (NSString *)queryStringFromParamDic:(NSDictionary *)paramDic;
+
 @end

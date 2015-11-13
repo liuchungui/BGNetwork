@@ -23,6 +23,7 @@ static BGNetworkManager *_manager = nil;
  *  网络配置
  */
 @property (nonatomic, strong) BGNetworkConfiguration *configuration;
+@property (nonatomic, strong) NSURL *baseURL;
 @end
 
 @implementation BGNetworkManager
@@ -70,7 +71,9 @@ static BGNetworkManager *_manager = nil;
 
 - (void)loadNetworkDataWithRequest:(BGNetworkRequest *)request{
     //保存请求
-    self.requestDic[[self requestCompleteUrlWithMethodName:request.methodName]] = request;
+    NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
+    self.requestDic[requestKey] = request;
+    
     //发送请求
     __weak BGNetworkManager *weakManager = self;
     switch (request.httpMethod) {
@@ -131,6 +134,7 @@ static BGNetworkManager *_manager = nil;
     NSParameterAssert(configuration);
     NSParameterAssert(configuration.baseURL);
     self.connector = [[BGNetworkConnector alloc] initWithBaseURL:configuration.baseURL delegate:self];
+    self.baseURL = [NSURL URLWithString:configuration.baseURL];
     _configuration = configuration;
 }
 
@@ -198,10 +202,6 @@ static BGNetworkManager *_manager = nil;
         return nil;
     }
     return [BGNetworkUtil parseJsonData:responseData];
-}
-
-- (NSString *)requestCompleteUrlWithMethodName:(NSString *)methodName{
-    return [NSString stringWithFormat:@"%@%@", self.configuration.baseURL, methodName];
 }
 
 #pragma mark - BGNetworkConnectorDelegate

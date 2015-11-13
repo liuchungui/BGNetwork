@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE070BC11BB517A0002FF644 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BAF1BB517A0002FF644 /* AFHTTPRequestOperation.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC21BB517A0002FF644 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB11BB517A0002FF644 /* AFHTTPRequestOperationManager.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC31BB517A0002FF644 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB31BB517A0002FF644 /* AFHTTPSessionManager.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC41BB517A0002FF644 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB61BB517A0002FF644 /* AFNetworkReachabilityManager.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC51BB517A0002FF644 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB81BB517A0002FF644 /* AFSecurityPolicy.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC61BB517A0002FF644 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBA1BB517A0002FF644 /* AFURLConnectionOperation.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; settings = {ASSET_TAGS = (); }; };
-		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
-		CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7C1BC2D9650071BAFB /* public.cer */; settings = {ASSET_TAGS = (); }; };
-		CE0FCC7F1BC2D9870071BAFB /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7E1BC2D9870071BAFB /* client.cer */; settings = {ASSET_TAGS = (); }; };
-		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; settings = {ASSET_TAGS = (); }; };
+		CE070BC11BB517A0002FF644 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BAF1BB517A0002FF644 /* AFHTTPRequestOperation.m */; };
+		CE070BC21BB517A0002FF644 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB11BB517A0002FF644 /* AFHTTPRequestOperationManager.m */; };
+		CE070BC31BB517A0002FF644 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB31BB517A0002FF644 /* AFHTTPSessionManager.m */; };
+		CE070BC41BB517A0002FF644 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB61BB517A0002FF644 /* AFNetworkReachabilityManager.m */; };
+		CE070BC51BB517A0002FF644 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BB81BB517A0002FF644 /* AFSecurityPolicy.m */; };
+		CE070BC61BB517A0002FF644 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBA1BB517A0002FF644 /* AFURLConnectionOperation.m */; };
+		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; };
+		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; };
+		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; };
+		CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7C1BC2D9650071BAFB /* public.cer */; };
+		CE0FCC7F1BC2D9870071BAFB /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7E1BC2D9870071BAFB /* client.cer */; };
+		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; };
 		CEF8E4191B99464C0087CDB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E4181B99464C0087CDB3 /* main.m */; };
 		CEF8E41C1B99464C0087CDB3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E41B1B99464C0087CDB3 /* AppDelegate.m */; };
 		CEF8E4241B99464C0087CDB3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF8E4231B99464C0087CDB3 /* Images.xcassets */; };
@@ -202,17 +202,9 @@
 				CE070BCD1BB5180E002FF644 /* Serialization */,
 				CE070BCC1BB517FB002FF644 /* NSURLSession */,
 				CE070BCB1BB517D5002FF644 /* NSURLConnection */,
-				CE070BCA1BB517BB002FF644 /* Security */,
 				CE070BB41BB517A0002FF644 /* AFNetworking.h */,
 			);
 			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		CE070BCA1BB517BB002FF644 /* Security */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Security;
 			sourceTree = "<group>";
 		};
 		CE070BCB1BB517D5002FF644 /* NSURLConnection */ = {
