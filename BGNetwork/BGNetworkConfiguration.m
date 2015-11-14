@@ -68,7 +68,7 @@
     return NO;
 }
 
-- (BOOL)isSuccessWithResponseData:(id)responseObject response:(NSURLResponse *)response {
+- (BOOL)shouldBusinessSuccessWithResponseData:(id)responseData task:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request {
     return YES;
 }
 @end

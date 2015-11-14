@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 @protocol BGNetworkRequestDelegate <NSObject>
 @required
 /**
- *  成功回调的代理方法
+ *  业务成功回调的代理方法
  *
  *  @param request  请求
  *  @param response 请求返回的数据
@@ -124,11 +124,19 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 - (void)request:(BGNetworkRequest *)request successWithResponse:(id)response;
 
 /**
- *  失败回调的代理方法
+ *  网络失败回调的代理方法
  *
  *  @param request   请求
- *  @param response  json解析化之后的数据
  *  @param error     网络失败的错误
  */
-- (void)request:(BGNetworkRequest *)request failWithResponse:(id)response error:(NSError *)error;
+- (void)request:(BGNetworkRequest *)request failureWithNetworkError:(NSError *)error;
+
+@optional
+/**
+ *  业务失败回调的代理方法
+ *
+ *  @param request  请求
+ *  @param response 返回的数据
+ */
+- (void)request:(BGNetworkRequest *)request businessFailureWithResponse:(id)response;
 @end

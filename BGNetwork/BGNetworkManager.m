@@ -81,7 +81,7 @@ static BGNetworkManager *_manager = nil;
             [self.connector sendGETRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
                 [weakManager loadNetworkSuccess:task request:request responseData:responseData];
             } failed:^(NSURLSessionDataTask *task, NSError *error) {
-                [weakManager failWithRequest:request response:nil error:error];
+                [weakManager failureWithRequest:request error:error];
             }];
         }
             break;
@@ -89,7 +89,7 @@ static BGNetworkManager *_manager = nil;
             [self.connector sendPOSTRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
                 [weakManager loadNetworkSuccess:task request:request responseData:responseData];
             } failed:^(NSURLSessionDataTask *task, NSError *error) {
-                [weakManager failWithRequest:request response:nil error:error];
+                [weakManager failureWithRequest:request error:error];
             }];
         }
             break;
@@ -146,7 +146,7 @@ static BGNetworkManager *_manager = nil;
         //解析数据
         id responseObject = [self parseResponseData:decryptData];
         dispatch_async(self.workQueue, ^{
-            if([self.configuration isSuccessWithResponseData:responseObject response:task.response]){
+            if([self.configuration shouldBusinessSuccessWithResponseData:responseObject task:task request:request]) {
                 if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
                     //缓存解密之后的数据
                     [self cacheResponseData:decryptData request:request];
@@ -155,7 +155,7 @@ static BGNetworkManager *_manager = nil;
                 [self successWithRequest:request responseObject:responseObject];
             }
             else {
-                [self failWithRequest:request response:responseObject error:nil];
+                [self businessFailureWithRequest:request response:responseObject];
             }
         });
     });
@@ -182,9 +182,21 @@ static BGNetworkManager *_manager = nil;
     });
 }
 
-- (void)failWithRequest:(BGNetworkRequest *)request response:(id)response error:(NSError *)error{
+/**
+ *  网络成功
+ */
+- (void)businessFailureWithRequest:(BGNetworkRequest *)request response:(id)response {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [request.delegate request:request failWithResponse:response error:error];
+        [request.delegate request:request businessFailureWithResponse:response];
+    });
+}
+
+/**
+ *  网络失败
+ */
+- (void)failureWithRequest:(BGNetworkRequest *)request error:(NSError *)error {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [request.delegate request:request failureWithNetworkError:error];
     });
 }
 

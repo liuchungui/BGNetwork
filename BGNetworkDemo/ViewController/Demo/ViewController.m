@@ -114,8 +114,12 @@
     [_tableView reloadData];
 }
 
-- (void)request:(BGNetworkRequest *)request failWithResponse:(id)response error:(NSError *)error {
-    
+- (void)request:(BGNetworkRequest *)request failureWithNetworkError:(NSError *)error {
+    NSLog(@"%@", error);
+}
+
+- (void)request:(BGNetworkRequest *)request businessFailureWithResponse:(id)response {
+    NSLog(@"%@", response);
 }
 
 - (void)didReceiveMemoryWarning {
