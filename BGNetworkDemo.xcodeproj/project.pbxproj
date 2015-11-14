@@ -16,7 +16,6 @@
 		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; };
 		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; };
 		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; };
-		CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7C1BC2D9650071BAFB /* public.cer */; };
 		CE0FCC7F1BC2D9870071BAFB /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = CE0FCC7E1BC2D9870071BAFB /* client.cer */; };
 		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; };
 		CEF8E4191B99464C0087CDB3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E4181B99464C0087CDB3 /* main.m */; };
@@ -92,7 +91,6 @@
 		CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		CE070BBF1BB517A0002FF644 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		CE0FCC7C1BC2D9650071BAFB /* public.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.cer; sourceTree = "<group>"; };
 		CE0FCC7E1BC2D9870071BAFB /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
 		CED2BD921BBA3775005928B9 /* casetree.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = casetree.cer; sourceTree = "<group>"; };
 		CEF8E4131B99464C0087CDB3 /* BGNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BGNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -292,7 +290,6 @@
 				CEF8E41B1B99464C0087CDB3 /* AppDelegate.m */,
 				CE0FCC7E1BC2D9870071BAFB /* client.cer */,
 				CED2BD921BBA3775005928B9 /* casetree.cer */,
-				CE0FCC7C1BC2D9650071BAFB /* public.cer */,
 				CEF8E5531B9948290087CDB3 /* Main.storyboard */,
 				CEF8E4231B99464C0087CDB3 /* Images.xcassets */,
 				CEF8E4251B99464C0087CDB3 /* LaunchScreen.xib */,
@@ -607,7 +604,6 @@
 				CEF8E4271B99464C0087CDB3 /* LaunchScreen.xib in Resources */,
 				CEF8E4241B99464C0087CDB3 /* Images.xcassets in Resources */,
 				CED2BD931BBA3775005928B9 /* casetree.cer in Resources */,
-				CE0FCC7D1BC2D9650071BAFB /* public.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

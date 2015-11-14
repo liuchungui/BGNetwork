@@ -19,7 +19,7 @@
 #pragma mark - 
 - (instancetype)initPage:(NSInteger)page pageSize:(NSInteger)pageSize{
     if(self = [super init]){
-        self.methodName = @"http://182.92.5.161/web/test/demo.php";
+        self.methodName = @"demo.php";
         self.httpMethod = BGNetworkRequestHTTPPost;
         self.cachePolicy = BGNetworkRequestCacheDataAndReadCacheOnly;
         //设置参数
