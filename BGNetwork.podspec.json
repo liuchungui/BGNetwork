@@ -1,15 +1,16 @@
 {
     "name": "BGNetwork",
-    "version": "0.1.2",
+    "version": "custom-0.0.1",
     "license": "MIT",
     "summary": "BGNetwork is a request util based on AFNetworking",
     "homepage": "https://github.com/chunguiLiu/BGNetwork",
     "authors": {
-        "chunguiLiu": "chunguiLiu@126.com"
+        "liuchungui": "404468494@qq.com",
+        "blog": "http://www.liuchungui.com"
     },
     "source": {
         "git": "https://github.com/chunguiLiu/BGNetwork.git",
-        "tag": "0.1.2"
+        "tag": "custom-0.0.1"
     },
     "source_files": "BGNetwork/*",
     "platforms": {
