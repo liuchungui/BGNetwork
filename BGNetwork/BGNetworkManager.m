@@ -146,17 +146,12 @@ static BGNetworkManager *_manager = nil;
         //解析数据
         id responseObject = [self parseResponseData:decryptData];
         dispatch_async(self.workQueue, ^{
-            if([self.configuration isSuccessWithResponseData:responseObject response:task.response]){
-                if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
-                    //缓存解密之后的数据
-                    [self cacheResponseData:decryptData request:request];
-                }
-                //成功回调
-                [self successWithRequest:request responseObject:responseObject];
+            if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
+                //缓存解密之后的数据
+                [self cacheResponseData:decryptData request:request];
             }
-            else {
-                [self failWithRequest:request response:responseObject error:nil];
-            }
+            //成功回调
+            [self successWithRequest:request responseObject:responseObject];
         });
     });
 }

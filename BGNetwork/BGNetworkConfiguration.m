@@ -68,7 +68,4 @@
     return NO;
 }
 
-- (BOOL)isSuccessWithResponseData:(id)responseObject response:(NSURLResponse *)response {
-    return YES;
-}
 @end

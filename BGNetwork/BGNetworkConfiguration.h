@@ -77,16 +77,6 @@
  */
 - (BOOL)shouldCacheResponseData:(id)responseData task:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request;
 
-/**
- *  当网络成功请求到数据并且json解析化之后，可以定义一种规则来判断什么是成功。默认返回YES，即网络能通走成功。
- *
- *  @param responseObject json解析化之后的对象
- *  @param response       原始的response
- *
- *  @return 默认返回YES，
- */
-- (BOOL)isSuccessWithResponseData:(id)responseObject response:(NSURLResponse *)response;
-
 @end
 
 /**
