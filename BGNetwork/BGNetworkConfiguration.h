@@ -22,18 +22,13 @@
 
 @optional
 /**
- *  返回公共的参数
+ *  对request当中的HTTP Header进行处理，可以在此方法内部加入公共的请求头内容
  *
- *  @return 字典
- */
-- (NSDictionary *)requestCommonParamters;
-
-/**
- *  返回公共的请求头
+ *  @param request 请求
  *
- *  @return 字典
+ *  @return 返回一个处理好的请求头给AF，默认加公共的Content-Type和User-Agent
  */
-- (NSDictionary *)requestCommonHTTPHeaderFields;
+- (NSDictionary *)requestHTTPHeaderFields:(BGNetworkRequest *)request;
 
 /**
  *  组装url的query部分，其中默认GET请求会将参数全部用&连接，但POST请求返回nil

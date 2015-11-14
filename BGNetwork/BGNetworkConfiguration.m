@@ -25,15 +25,15 @@
     return nil;
 }
 
-- (NSDictionary *)requestCommonParamters{
-    return [NSDictionary dictionary];
-}
-
-- (NSDictionary *)requestCommonHTTPHeaderFields{
-    return @{
-             @"Content-Type":@"application/x-www-form-urlencoded;charset=utf-8",
-             @"User-Agent":@"iPhone"
-             };
+- (NSDictionary *)requestHTTPHeaderFields:(BGNetworkRequest *)request {
+    NSMutableDictionary *allHTTPHeaderFileds = [@{
+                                                  @"Content-Type":@"application/x-www-form-urlencoded;charset=utf-8",
+                                                  @"User-Agent":@"iPhone"
+                                                  } mutableCopy];
+    [request.requestHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+        allHTTPHeaderFileds[key] = obj;
+    }];
+    return allHTTPHeaderFileds;
 }
 
 - (NSString *)queryStringForURLWithRequest:(BGNetworkRequest *)request{

@@ -208,11 +208,7 @@ static BGNetworkManager *_manager = nil;
 - (NSDictionary *)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector *)connector request:(NSURLRequest *)request{
     //取出请求
     BGNetworkRequest *networkRequest = self.requestDic[request.URL.absoluteString];
-    NSMutableDictionary *allHTTPHeaderFileds = [self.configuration.requestCommonHTTPHeaderFields mutableCopy];
-    [networkRequest.requestHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
-        allHTTPHeaderFileds[key] = obj;
-    }];
-    return allHTTPHeaderFileds;
+    return [self.configuration requestHTTPHeaderFields:networkRequest];
 }
 
 - (NSString *)queryStringForURLWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request{
