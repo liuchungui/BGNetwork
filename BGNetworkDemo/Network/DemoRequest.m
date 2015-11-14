@@ -21,7 +21,7 @@
     if(self = [super init]){
         self.methodName = @"http://182.92.5.161/web/test/demo.php";
         self.httpMethod = BGNetworkRequestHTTPPost;
-        self.cachePolicy = BGNetworkRquestCacheNone;
+        self.cachePolicy = BGNetworkRequestCacheDataAndReadCacheOnly;
         //设置参数
         [self setValue:@"1196689" forParamKey:@"orderNo"];
         [self setIntegerValue:page forParamKey:@"page"];

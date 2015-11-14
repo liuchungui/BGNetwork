@@ -108,7 +108,7 @@ static BGNetworkManager *_manager = nil;
             id responseObject = [weakManager parseResponseData:data];
             dispatch_async(weakManager.workQueue, ^{
                 if(responseObject){
-                    [weakManager successWithRequest:request responseData:data responseObject:responseObject];
+                    [weakManager successWithRequest:request  responseObject:responseObject];
                     //读取缓存之后，再请求数据
                     if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData){
                         [weakManager loadNetworkDataWithRequest:request];
@@ -147,12 +147,12 @@ static BGNetworkManager *_manager = nil;
         id responseObject = [self parseResponseData:decryptData];
         dispatch_async(self.workQueue, ^{
             if([self.configuration isSuccessWithResponseData:responseObject response:task.response]){
-                if((request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheOnly || request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData) && [self.configuration isCacheResponseData:responseData response:task.response]){
-                    //缓存数据
+                if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
+                    //缓存解密之后的数据
                     [self cacheResponseData:decryptData request:request];
                 }
                 //成功回调
-                [self successWithRequest:request responseData:decryptData responseObject:responseObject];
+                [self successWithRequest:request responseObject:responseObject];
             }
             else {
                 [self failWithRequest:request response:responseObject error:nil];
@@ -161,7 +161,7 @@ static BGNetworkManager *_manager = nil;
     });
 }
 
-- (void)successWithRequest:(BGNetworkRequest *)request responseData:(NSData *)responseData responseObject:(id)responseObject{
+- (void)successWithRequest:(BGNetworkRequest *)request responseObject:(id)responseObject{
     dispatch_async(self.dataHandleQueue, ^{
         id resultObject = nil;
         @try {

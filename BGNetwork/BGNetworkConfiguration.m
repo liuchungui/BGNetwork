@@ -61,8 +61,11 @@
     return responseData;
 }
 
-- (BOOL)isCacheResponseData:(id)responseObject response:(NSURLResponse *)response{
-    return YES;
+- (BOOL)shouldCacheResponseData:(id)responseData task:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request{
+    if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheOnly || request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL)isSuccessWithResponseData:(id)responseObject response:(NSURLResponse *)response {

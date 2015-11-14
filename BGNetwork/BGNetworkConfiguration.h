@@ -62,14 +62,20 @@
 - (NSData *)decryptResponseData:(NSData *)responseData response:(NSURLResponse *)response request:(BGNetworkRequest *)request;
 
 /**
- *  由服务器返回的某种规则来确定此数据是否缓存，默认位YES
+ *  是否应该缓存当前的数据，里面根据request.cachePolicy来进行判断。若是根据服务器返回的一个字段来判断是否应该返回数据，子类覆写此方法
  *
- *  @param responseObject 请求到的数据
+ *  @param responseData 请求到的数据，此数据已经经过json解析之后的数据
+ *  @param task         task
+ *  @param request      请求
  *
- *  @return 默认返回YES
- *
+ *  @return 根据request.cachePolicy来判断
+ *  @code
+    if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheOnly || request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData) {
+    return YES;
+    }
+    return NO;
  */
-- (BOOL)isCacheResponseData:(id)responseObject response:(NSURLResponse *)response;
+- (BOOL)shouldCacheResponseData:(id)responseData task:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request;
 
 /**
  *  当网络成功请求到数据并且json解析化之后，可以定义一种规则来判断什么是成功。默认返回YES，即网络能通走成功。
