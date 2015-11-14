@@ -20,7 +20,7 @@
 }
 
 #pragma mark - BGNetworkConfiguration
-- (NSString *)baseURL{
+- (NSString *)baseURLString{
     [NSException exceptionWithName:@"子类必须覆写baseURL方法" reason:nil userInfo:nil];
     return nil;
 }
