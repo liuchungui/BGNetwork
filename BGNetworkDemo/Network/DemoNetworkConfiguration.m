@@ -9,7 +9,7 @@
 #import "DemoNetworkConfiguration.h"
 
 @implementation DemoNetworkConfiguration
-- (NSString *)baseURL{
+- (NSString *)baseURLString{
 //    return @"https://localhost/test/";
 //    return @"https://casetree.cn/web/test/";
     return @"http://182.92.5.161/web/test/";

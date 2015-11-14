@@ -15,9 +15,9 @@
 
 @required
 /**
- *  基础地址
+ *  基础地址字符串
  */
-@property (nonatomic, strong, readonly) NSString *baseURL;
+@property (nonatomic, strong, readonly) NSString *baseURLString;
 
 
 @optional

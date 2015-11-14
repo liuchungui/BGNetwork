@@ -101,7 +101,7 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - cache method
 - (void)readCacheAndRequestData:(BGNetworkRequest *)request{
     __weak BGNetworkManager *weakManager = self;
-    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
+    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
     [self.cache queryCacheForKey:cacheKey completed:^(NSData *data) {
         dispatch_async(weakManager.dataHandleQueue, ^{
             //解析数据
@@ -124,7 +124,7 @@ static BGNetworkManager *_manager = nil;
 }
 
 - (void)cacheResponseData:(NSData *)responseData request:(BGNetworkRequest *)request{
-    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
+    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
     //缓存数据
     [self.cache storeData:responseData forKey:cacheKey];
 }
@@ -132,9 +132,9 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - set method
 - (void)setNetworkConfiguration:(BGNetworkConfiguration *)configuration{
     NSParameterAssert(configuration);
-    NSParameterAssert(configuration.baseURL);
-    self.connector = [[BGNetworkConnector alloc] initWithBaseURL:configuration.baseURL delegate:self];
-    self.baseURL = [NSURL URLWithString:configuration.baseURL];
+    NSParameterAssert(configuration.baseURLString);
+    self.connector = [[BGNetworkConnector alloc] initWithBaseURL:configuration.baseURLString delegate:self];
+    self.baseURL = [NSURL URLWithString:configuration.baseURLString];
     _configuration = configuration;
 }
 
@@ -170,7 +170,7 @@ static BGNetworkManager *_manager = nil;
         }
         @catch (NSException *exception) {
             //崩溃则删除对应的缓存数据
-            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURL];
+            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
             [self.cache removeCacheForKey:cacheKey];
         }
         @finally {
