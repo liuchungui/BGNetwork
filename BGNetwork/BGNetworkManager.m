@@ -183,11 +183,13 @@ static BGNetworkManager *_manager = nil;
 }
 
 /**
- *  网络成功
+ *  网络成功，业务失败
  */
 - (void)businessFailureWithRequest:(BGNetworkRequest *)request response:(id)response {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [request.delegate request:request businessFailureWithResponse:response];
+        if([request.delegate respondsToSelector:@selector(request:businessFailureWithResponse:)]) {
+            [request.delegate request:request businessFailureWithResponse:response];
+        }
     });
 }
 
