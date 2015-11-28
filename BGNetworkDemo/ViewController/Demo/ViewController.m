@@ -115,11 +115,11 @@
 }
 
 - (void)request:(BGNetworkRequest *)request failureWithNetworkError:(NSError *)error {
-    NSLog(@"%@", error);
+    NSLog(@"网络失败：%@", error);
 }
 
 - (void)request:(BGNetworkRequest *)request businessFailureWithResponse:(id)response {
-    NSLog(@"%@", response);
+    NSLog(@"业务失败：%@", response);
 }
 
 - (void)didReceiveMemoryWarning {
