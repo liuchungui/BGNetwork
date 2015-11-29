@@ -71,4 +71,5 @@
 - (BOOL)shouldBusinessSuccessWithResponseData:(id)responseData task:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request {
     return YES;
 }
+
 @end

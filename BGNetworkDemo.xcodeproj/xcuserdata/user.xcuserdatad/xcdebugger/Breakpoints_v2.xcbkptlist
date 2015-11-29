@@ -170,44 +170,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AFNetworking/AFURLSessionManager.m"
-            timestampString = "464863936.870891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "885"
-            endingLineNumber = "885"
-            landmarkName = "-URLSession:didReceiveChallenge:completionHandler:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AFNetworking/AFURLSessionManager.m"
             timestampString = "465205414.102043"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "944"
             endingLineNumber = "944"
             landmarkName = "-URLSession:task:didReceiveChallenge:completionHandler:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AFNetworking/AFSecurityPolicy.m"
-            timestampString = "466156788.471236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "-evaluateServerTrust:forDomain:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
