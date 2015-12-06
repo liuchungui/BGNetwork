@@ -31,5 +31,5 @@
  *  @param success  全部请求成功回调
  *  @param failure  失败回调，这里只要有一个请求失败，则立马回调，失败的信息在errorResponse中的error当中
  */
-//- (void)sendRequestProgress:(void (^)(BGBatchRequest *batchRequest, NSInteger progress, NSInteger totalNum))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *batchRequest, NSArray *responseArray))successBlock failure:(void (^)(BGBatchRequest *batchRequest, BGNetworkResponse *errorResponse))failureBlock;
+- (void)sendRequestProgress:(void (^)(BGBatchRequest *batchRequest, NSInteger progress, NSInteger totalNum))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *batchRequest, NSArray *responseArray))successBlock failure:(void (^)(BGBatchRequest *batchRequest, BGNetworkResponse *errorResponse))failureBlock;
 @end

@@ -32,54 +32,39 @@
     [self sendRequestProgress:NULL completionWithSuccess:successBlock failure:failureBlock];
 }
 
-- (void)sendRequestProgress:(void (^)(BGBatchRequest *, NSInteger, NSInteger))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *, NSArray *))successBlock failure:(void (^)(BGBatchRequest *, BGNetworkResponse *))failureBlock {
+- (void)sendRequestProgress:(void (^)(BGBatchRequest *, NSInteger progress, NSInteger totalCount))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *, NSArray *))successBlock failure:(void (^)(BGBatchRequest *, BGNetworkResponse *))failureBlock {
     self.progressBlock = progressBlock;
     self.successBlock = successBlock;
     self.failureBlock = failureBlock;
     
-    //start
-    [self startSendRequest];
-}
-
-- (void)startSendRequest {
+    NSInteger requestCount = self.requestArray.count;
+    __block NSInteger successRequestCount = 0;
     for (BGNetworkRequest *request in self.requestArray) {
-//        [request sendRequestCompletionWithSuccess]
+        [request sendRequestWithSuccess:^(BGNetworkRequest *request, id response) {
+            successRequestCount ++;
+            if(successRequestCount == requestCount) {
+                if(successBlock) {
+#warning 此处未写完
+                    successBlock(self, nil);
+                }
+                else {
+                    if(progressBlock) {
+                        progressBlock(self, successRequestCount, requestCount);
+                    }
+                }
+            }
+        } businessFailure:^(BGNetworkRequest *request, id response) {
+            if(failureBlock) {
+#warning 此处未写完
+                failureBlock(self, nil);
+            }
+        } networkFailure:^(BGNetworkRequest *request, NSError *error) {
+            if(failureBlock) {
+#warning 此处未写完
+                failureBlock(self, nil);
+            }
+        }];
     }
 }
 
-- (void)clearAllBlock {
-    self.progressBlock = nil;
-    self.successBlock = nil;
-    self.failureBlock = nil;
-}
-
-#pragma mark - BGNetworkRequestDelegate method
-- (void)request:(BGNetworkRequest *)request successWithResponse:(id)response {
-    BGNetworkResponse *networkResponse = [[BGNetworkResponse alloc] initWithResponse:response request:request];
-    [self.responseArray addObject:networkResponse];
-    if(self.responseArray.count == self.requestArray.count) {
-        //call back
-        if(self.successBlock) {
-            self.successBlock(self, self.responseArray);
-        }
-        [self clearAllBlock];
-    }
-    else {
-        if(self.progressBlock) {
-            self.progressBlock(self, self.responseArray.count, self.requestArray.count);
-        }
-    }
-}
-
-- (void)request:(BGNetworkRequest *)request businessFailureWithResponse:(id)response {
-    BGNetworkResponse *networkResponse = [[BGNetworkResponse alloc] initWithResponse:response request:request];
-    self.failureBlock(self, networkResponse);
-    [self clearAllBlock];
-}
-
-- (void)request:(BGNetworkRequest *)request failureWithNetworkError:(NSError *)error {
-    BGNetworkResponse *networkResponse = [[BGNetworkResponse alloc] initWithError:error request:request];
-    self.failureBlock(self, networkResponse);
-    [self clearAllBlock];
-}
 @end
