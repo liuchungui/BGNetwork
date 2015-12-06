@@ -10,6 +10,10 @@
 #import "PageModel.h"
 
 @implementation DemoRequest
+- (void)dealloc {
+    NSLog(@"%@ dealloc", NSStringFromClass(self.class));
+}
+
 #pragma mark - BGNetworkRequest method
 - (id)processResponseObject:(id)responseObject{
     PageModel *model = [[PageModel alloc] initWithDictionary:responseObject[@"result"]];
