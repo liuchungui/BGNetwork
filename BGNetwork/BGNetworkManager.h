@@ -39,12 +39,19 @@
  */
 - (void)setNetworkConfiguration:(BGNetworkConfiguration *)configuration;
 
+
 /**
  *  发送请求
  *
- *  @param request 请求
+ *  @param request                请求
+ *  @param successCompletionBlock 成功调回
+ *  @param businessFailureBlock   业务失败调回
+ *  @param networkFailureBlock    网络失败调回
  */
-- (void)managerSendRequest:(BGNetworkRequest *)request;
+- (void)sendRequest:(BGNetworkRequest *)request
+            success:(BGSuccessCompletionBlock)successCompletionBlock
+    businessFailure:(BGBusinessFailureBlock)businessFailureBlock
+     networkFailure:(BGNetworkFailureBlock)networkFailureBlock;
 
 /**
  *  取消请求

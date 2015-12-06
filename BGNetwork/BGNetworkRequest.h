@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class BGNetworkRequest;
+
 typedef NS_ENUM(NSInteger, BGNetworkRequestHTTPMethod){
     /**
      *  GET请求
@@ -36,6 +38,12 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
      */
     BGNetworkRequestCacheDataAndReadCacheLoadData,
 };
+
+
+#pragma mark - completion block
+typedef void(^BGSuccessCompletionBlock)(BGNetworkRequest *request, id response);
+typedef void(^BGBusinessFailureBlock)(BGNetworkRequest *request, id response);
+typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
 
 @protocol BGNetworkRequestDelegate;
 @protocol BGNetworkRequest <NSObject>
@@ -102,41 +110,15 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
  *  取消请求
  */
 + (void)cancelRequest;
-/**
- *  代理
- */
-@property (nonatomic, weak, readonly) id<BGNetworkRequestDelegate> delegate;
-/**
- *  发送请求
- */
-- (void)sendRequestWithDelegate:(id<BGNetworkRequestDelegate>)delegate;
-@end
-
-#pragma mark - BGNetworkRequestDelegate method
-@protocol BGNetworkRequestDelegate <NSObject>
-@required
-/**
- *  业务成功回调的代理方法
- *
- *  @param request  请求
- *  @param response 请求返回的数据
- */
-- (void)request:(BGNetworkRequest *)request successWithResponse:(id)response;
 
 /**
- *  网络失败回调的代理方法
+ *  发送网络请求
  *
- *  @param request   请求
- *  @param error     网络失败的错误
+ *  @param successCompletionBlock 成功回调
+ *  @param businessFailureBlock   业务失败回调
+ *  @param networkFailureBlock    网络失败回调
  */
-- (void)request:(BGNetworkRequest *)request failureWithNetworkError:(NSError *)error;
-
-@optional
-/**
- *  业务失败回调的代理方法
- *
- *  @param request  请求
- *  @param response 返回的数据
- */
-- (void)request:(BGNetworkRequest *)request businessFailureWithResponse:(id)response;
+- (void)sendRequestWithSuccess:(BGSuccessCompletionBlock)successCompletionBlock
+               businessFailure:(BGBusinessFailureBlock)businessFailureBlock
+                networkFailure:(BGNetworkFailureBlock)networkFailureBlock;
 @end

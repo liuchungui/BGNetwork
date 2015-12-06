@@ -43,7 +43,7 @@
 
 - (void)startSendRequest {
     for (BGNetworkRequest *request in self.requestArray) {
-        [request sendRequestWithDelegate:self];
+//        [request sendRequestCompletionWithSuccess]
     }
 }
 

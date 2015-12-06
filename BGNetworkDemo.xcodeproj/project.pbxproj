@@ -95,7 +95,6 @@
 		CE0F5CA91C09435300A8A65F /* BGBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGBatchRequest.m; sourceTree = "<group>"; };
 		CE0F5CAC1C094E7800A8A65F /* BGNetworkResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkResponse.h; sourceTree = "<group>"; };
 		CE0F5CAD1C094E7800A8A65F /* BGNetworkResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkResponse.m; sourceTree = "<group>"; };
-		CE0FCC7C1BC2D9650071BAFB /* public.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.cer; sourceTree = "<group>"; };
 		CE0FCC7E1BC2D9870071BAFB /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
 		CED2BD921BBA3775005928B9 /* casetree.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = casetree.cer; sourceTree = "<group>"; };
 		CEF8E4131B99464C0087CDB3 /* BGNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BGNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -639,9 +638,7 @@
 				CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */,
 				CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */,
 				CEF8E6DD1B9959E40087CDB3 /* BGNetworkRequest.m in Sources */,
-				CE0F5CAA1C09435300A8A65F /* BGBatchRequest.m in Sources */,
 				CEF8E5431B9947E10087CDB3 /* BaseCollectionViewCell.m in Sources */,
-				CE0F5CAE1C094E7800A8A65F /* BGNetworkResponse.m in Sources */,
 				CEF8E5481B9947E10087CDB3 /* BaseLineView.m in Sources */,
 				CE070BC51BB517A0002FF644 /* AFSecurityPolicy.m in Sources */,
 				CEF8E5451B9947E10087CDB3 /* BaseDoubleLineView.m in Sources */,
@@ -790,11 +787,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: TuanChe Internet Technology (Beijing) Co., Ltd.";
+				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = BGNetworkDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4d91b544-478c-4f4c-909e-ceb80e934af3";
 			};
 			name = Debug;
 		};
@@ -806,6 +804,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4d91b544-478c-4f4c-909e-ceb80e934af3";
 			};
 			name = Release;
 		};

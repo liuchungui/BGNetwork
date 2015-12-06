@@ -12,8 +12,9 @@
 #import "DemoCell.h"
 #import "PageModel.h"
 #import "DemoRequest.h"
+#import "BGBatchRequest.h"
 
-@interface ViewController ()<RefreshTableViewDelegate, BGNetworkRequestDelegate>{
+@interface ViewController ()<RefreshTableViewDelegate>{
     RefreshTableView *_tableView;
     NSMutableArray *_dataArr;
     NSInteger _pageSize;
@@ -41,7 +42,13 @@
 
 - (void)requestData{
     DemoRequest *request = [[DemoRequest alloc] initPage:_page pageSize:_pageSize];
-    [request sendRequestWithDelegate:self];
+    [request sendRequestWithSuccess:^(BGNetworkRequest *request, id response) {
+        [self request:request successWithResponse:response];
+    } businessFailure:^(BGNetworkRequest *request, id response) {
+        [self request:request businessFailureWithResponse:response];
+    } networkFailure:^(BGNetworkRequest *request, NSError *error) {
+        [self request:request failureWithNetworkError:error];
+    }];
 }
 
 - (void)setupViews{

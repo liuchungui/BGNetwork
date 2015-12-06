@@ -134,8 +134,8 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
     [[BGNetworkManager sharedManager] cancelRequestWithUrl:[self getRequestMethodName]];
 }
 
-- (void)sendRequestWithDelegate:(id<BGNetworkRequestDelegate>)delegate{
-    self.delegate = delegate;
-    [[BGNetworkManager sharedManager] managerSendRequest:self];
+- (void)sendRequestWithSuccess:(BGSuccessCompletionBlock)successCompletionBlock businessFailure:(BGBusinessFailureBlock)businessFailureBlock networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
+    [[BGNetworkManager sharedManager] sendRequest:self success:successCompletionBlock businessFailure:businessFailureBlock networkFailure:networkFailureBlock];
 }
+
 @end

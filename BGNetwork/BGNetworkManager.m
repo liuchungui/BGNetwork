@@ -53,24 +53,47 @@ static BGNetworkManager *_manager = nil;
     return self;
 }
 
-- (void)managerSendRequest:(BGNetworkRequest *)request{
+- (void)sendRequest:(BGNetworkRequest *)request
+            success:(BGSuccessCompletionBlock)successCompletionBlock
+    businessFailure:(BGBusinessFailureBlock)businessFailureBlock
+     networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
     NSParameterAssert(self.connector);
     dispatch_async(self.workQueue, ^{
         switch (request.cachePolicy) {
             case BGNetworkRquestCacheNone:
-                //请求网络
-                [self loadNetworkDataWithRequest:request];
+                //请求网络数据
+                [self loadNetworkDataWithRequest:request success:successCompletionBlock businessFailure:businessFailureBlock networkFailure:networkFailureBlock];
                 break;
             case BGNetworkRequestCacheDataAndReadCacheOnly:
             case BGNetworkRequestCacheDataAndReadCacheLoadData:
                 //读取缓存并且请求数据
-                [self readCacheAndRequestData:request];
+                [self readCacheAndRequestData:request completion:^(BGNetworkRequest *request, id responseObject) {
+                    if(responseObject){
+                        /*
+                         缓存策略
+                         BGNetworkRequestCacheDataAndReadCacheOnly：获取缓存数据直接调回，不再请求
+                         BGNetworkRequestCacheDataAndReadCacheLoadData：缓存数据成功调回并且重新请求网络
+                         */
+                        [self success:request responseObject:responseObject completion:successCompletionBlock];
+                        
+                        if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData){
+                            [self loadNetworkDataWithRequest:request success:successCompletionBlock businessFailure:businessFailureBlock networkFailure:networkFailureBlock];
+                        }
+                    }
+                    else{
+                        //无缓存数据，则还需要再请求网络
+                        [self loadNetworkDataWithRequest:request success:successCompletionBlock businessFailure:businessFailureBlock networkFailure:networkFailureBlock];
+                    }
+                }];
         }
     });
 }
 
-- (void)loadNetworkDataWithRequest:(BGNetworkRequest *)request{
-    //保存请求
+- (void)loadNetworkDataWithRequest:(BGNetworkRequest *)request
+                           success:(BGSuccessCompletionBlock)successCompletionBlock
+                   businessFailure:(BGBusinessFailureBlock)businessFailureBlock
+                    networkFailure:(BGNetworkFailureBlock)networkFailureBlock{
+    //临时保存请求
     NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
     self.requestDic[requestKey] = request;
     
@@ -79,17 +102,17 @@ static BGNetworkManager *_manager = nil;
     switch (request.httpMethod) {
         case BGNetworkRequestHTTPGet:{
             [self.connector sendGETRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
-                [weakManager loadNetworkSuccess:task request:request responseData:responseData];
+                [weakManager networkSuccess:request task:task responseData:responseData success:successCompletionBlock businessFailure:businessFailureBlock];
             } failed:^(NSURLSessionDataTask *task, NSError *error) {
-                [weakManager failureWithRequest:request error:error];
+                [weakManager networkFailure:request error:error completion:networkFailureBlock];
             }];
         }
             break;
         case BGNetworkRequestHTTPPost:{
             [self.connector sendPOSTRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
-                [weakManager loadNetworkSuccess:task request:request responseData:responseData];
+                [weakManager networkSuccess:request task:task responseData:responseData success:successCompletionBlock businessFailure:businessFailureBlock];
             } failed:^(NSURLSessionDataTask *task, NSError *error) {
-                [weakManager failureWithRequest:request error:error];
+                [weakManager networkFailure:request error:error completion:networkFailureBlock];
             }];
         }
             break;
@@ -99,7 +122,7 @@ static BGNetworkManager *_manager = nil;
 }
 
 #pragma mark - cache method
-- (void)readCacheAndRequestData:(BGNetworkRequest *)request{
+- (void)readCacheAndRequestData:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
     __weak BGNetworkManager *weakManager = self;
     NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
     [self.cache queryCacheForKey:cacheKey completed:^(NSData *data) {
@@ -107,16 +130,8 @@ static BGNetworkManager *_manager = nil;
             //解析数据
             id responseObject = [weakManager parseResponseData:data];
             dispatch_async(weakManager.workQueue, ^{
-                if(responseObject){
-                    [weakManager successWithRequest:request  responseObject:responseObject];
-                    //读取缓存之后，再请求数据
-                    if(request.cachePolicy == BGNetworkRequestCacheDataAndReadCacheLoadData){
-                        [weakManager loadNetworkDataWithRequest:request];
-                    }
-                }
-                else{
-                    //请求网络
-                    [weakManager loadNetworkDataWithRequest:request];
+                if(completionBlock) {
+                    completionBlock(request, responseObject);
                 }
             });
         });
@@ -139,29 +154,37 @@ static BGNetworkManager *_manager = nil;
 }
 
 #pragma mark - 网络请求回来调用的方法
-- (void)loadNetworkSuccess:(NSURLSessionDataTask *)task request:(BGNetworkRequest *)request responseData:(NSData *)responseData{
+- (void)networkSuccess:(BGNetworkRequest *)request
+                  task:(NSURLSessionDataTask *)task
+          responseData:(NSData *)responseData
+               success:(BGSuccessCompletionBlock)successCompletionBlock
+       businessFailure:(BGBusinessFailureBlock)businessFailureBlock{
+    
     dispatch_async(self.dataHandleQueue, ^{
         //对数据进行解密
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
         //解析数据
         id responseObject = [self parseResponseData:decryptData];
         dispatch_async(self.workQueue, ^{
-            if([self.configuration shouldBusinessSuccessWithResponseData:responseObject task:task request:request]) {
+            if(responseObject && [self.configuration shouldBusinessSuccessWithResponseData:responseObject task:task request:request]) {
                 if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
                     //缓存解密之后的数据
                     [self cacheResponseData:decryptData request:request];
                 }
                 //成功回调
-                [self successWithRequest:request responseObject:responseObject];
+                [self success:request responseObject:responseObject completion:successCompletionBlock];
             }
             else {
-                [self businessFailureWithRequest:request response:responseObject];
+                [self businessFailure:request response:responseObject completion:businessFailureBlock];
             }
         });
     });
+    
 }
 
-- (void)successWithRequest:(BGNetworkRequest *)request responseObject:(id)responseObject{
+- (void)success:(BGNetworkRequest *)request
+ responseObject:(id)responseObject
+     completion:(BGSuccessCompletionBlock)successCompletionBlock{
     dispatch_async(self.dataHandleQueue, ^{
         id resultObject = nil;
         @try {
@@ -177,7 +200,9 @@ static BGNetworkManager *_manager = nil;
         }
         //成功回调
         dispatch_async(dispatch_get_main_queue(), ^{
-            [request.delegate request:request successWithResponse:resultObject];
+            if(successCompletionBlock) {
+                successCompletionBlock(request, resultObject);
+            }
         });
     });
 }
@@ -185,10 +210,10 @@ static BGNetworkManager *_manager = nil;
 /**
  *  网络成功，业务失败
  */
-- (void)businessFailureWithRequest:(BGNetworkRequest *)request response:(id)response {
+- (void)businessFailure:(BGNetworkRequest *)request response:(id)response completion:(BGNetworkFailureBlock)businessFailureBlock{
     dispatch_async(dispatch_get_main_queue(), ^{
-        if([request.delegate respondsToSelector:@selector(request:businessFailureWithResponse:)]) {
-            [request.delegate request:request businessFailureWithResponse:response];
+        if(businessFailureBlock) {
+            businessFailureBlock(request, response);
         }
     });
 }
@@ -196,9 +221,11 @@ static BGNetworkManager *_manager = nil;
 /**
  *  网络失败
  */
-- (void)failureWithRequest:(BGNetworkRequest *)request error:(NSError *)error {
+- (void)networkFailure:(BGNetworkRequest *)request error:(NSError *)error completion:(BGNetworkFailureBlock)networkFailureBlock{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [request.delegate request:request failureWithNetworkError:error];
+        if(networkFailureBlock) {
+            networkFailureBlock(request, error);
+        }
     });
 }
 
