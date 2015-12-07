@@ -10,12 +10,15 @@
 
 @interface BGBatchRequest ()
 @property (nonatomic, strong) NSArray *requestArray;
+@property (nonatomic, copy) void (^businessFailureBlock)(BGNetworkRequest *, id);
+@property (nonatomic, copy) void (^networkFailureBlock)(BGNetworkRequest *, NSError *);
 @end
 
 @implementation BGBatchRequest
 - (instancetype)init {
     return [self initWithRequests:nil];
 }
+
 - (instancetype)initWithRequests:(NSArray *)requestArray {
     if(self = [super init]) {
         self.requestArray = requestArray;
@@ -23,46 +26,56 @@
     return self;
 }
 
+- (void)clearRequestBlock {
+    self.businessFailureBlock = nil;
+    self.networkFailureBlock = nil;
+}
+
+- (void)setBusinessFailure:(void (^)(BGNetworkRequest *, id))businessFailureBlock networkFailure:(void (^)(BGNetworkRequest *, NSError *))networkFailureBlock {
+    self.businessFailureBlock = businessFailureBlock;
+    self.networkFailureBlock = networkFailureBlock;
+}
+
 - (void)sendRequestSuccess:(void (^)(BGNetworkRequest *, id))successBlock
-                   failure:(void (^)(BGNetworkRequest *, id))failureBlock
-                completion:(void (^)(BGBatchRequest *))completionBlock {
+                completion:(void (^)(BGBatchRequest *, BOOL))completionBlock {
     
     NSInteger requestCount = self.requestArray.count;
     __block NSInteger successCount = 0;
     
-    //成功回调
-    void (^ batchSuccessCallBack)(BGNetworkRequest *request, id response) = ^(BGNetworkRequest *request, id response) {
-        successCount ++;
-        if(successBlock) {
-            successBlock(request, response);
-        }
-        if(successCount == requestCount) {
-            if(completionBlock) {
-                completionBlock(self);
-            }
-        }
-    };
-    
-    //失败回调
-    void (^ batchFailureCallBack)(BGNetworkRequest *request, id response) = ^(BGNetworkRequest *request, id response){
-        if(failureBlock) {
-            failureBlock(request, response);
-        }
-        if(!self.continueLoadWhenRequestFailure) {
-            [self cancelAllRequest];
-            if(completionBlock) {
-                completionBlock(self);
-            }
-        }
-    };
-    
     for (BGNetworkRequest *request in self.requestArray) {
         [request sendRequestWithSuccess:^(BGNetworkRequest *request, id response) {
-            batchSuccessCallBack(request, response);
+            successCount ++;
+            if(successBlock) {
+                successBlock(request, response);
+            }
+            if(successCount == requestCount) {
+                [self clearRequestBlock];
+                if(completionBlock) {
+                    completionBlock(self, YES);
+                }
+            }
         } businessFailure:^(BGNetworkRequest *request, id response) {
-            batchFailureCallBack(request, response);
+            if(self.businessFailureBlock) {
+                self.businessFailureBlock(request, response);
+            }
+            if(!self.continueLoadWhenRequestFailure) {
+                [self clearRequestBlock];
+                [self cancelAllRequest];
+                if(completionBlock) {
+                    completionBlock(self, NO);
+                }
+            }
         } networkFailure:^(BGNetworkRequest *request, NSError *error) {
-            batchFailureCallBack(request, error);
+            if(self.networkFailureBlock) {
+                self.networkFailureBlock(request, error);
+            }
+            if(!self.continueLoadWhenRequestFailure) {
+                [self clearRequestBlock];
+                [self cancelAllRequest];
+                if(completionBlock) {
+                    completionBlock(self, NO);
+                }
+            }
         }];
     }
 }
@@ -73,4 +86,5 @@
         [[request class] cancelRequest];
     }
 }
+
 @end

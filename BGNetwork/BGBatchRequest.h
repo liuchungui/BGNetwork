@@ -28,13 +28,20 @@
 @property (nonatomic, assign) BOOL continueLoadWhenRequestFailure;
 
 /**
+ *  设置每个请求失败回调
+ *
+ *  @param businessFailureBlock BGNetworkRequest请求业务失败
+ *  @param networkFailureBlock  BGNetworkRequest请求网络失败
+ */
+- (void)setBusinessFailure:(void (^)(BGNetworkRequest *request, id response))businessFailureBlock
+            networkFailure:(void (^)(BGNetworkRequest *request, NSError *error))networkFailureBlock;
+
+/**
  *  批量发送请求
  *
- *  @param successBlock    请求成功回调
- *  @param failureBlock    请求失败回调
- *  @param completionBlock 所有请求完成后回调
+ *  @param successBlock    每个BGNetworkRequest请求成功回调
+ *  @param completionBlock 所有BGNetworkRequest请求完成后回调
  */
 - (void)sendRequestSuccess:(void (^)(BGNetworkRequest *request, id response))successBlock
-                   failure:(void (^)(BGNetworkRequest *request, id response))failureBlock
-                completion:(void (^)(BGBatchRequest *batchRequest))completionBlock;
+                completion:(void (^)(BGBatchRequest *batchRequest, BOOL isSuccess))completionBlock;
 @end
