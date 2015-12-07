@@ -27,7 +27,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"BGNetworkDemo";
     [self setupViews];
     [self setupData];
     // Do any additional setup after loading the view, typically from a nib.

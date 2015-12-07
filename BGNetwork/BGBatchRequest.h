@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BGNetworkRequest.h"
-#import "BGNetworkResponse.h"
 
 /**
  *  批量发送请求
