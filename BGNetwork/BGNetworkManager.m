@@ -16,9 +16,9 @@ static BGNetworkManager *_manager = nil;
 @property (nonatomic, strong) dispatch_queue_t workQueue;
 @property (nonatomic, strong) dispatch_queue_t dataHandleQueue;
 /**
- *  储存请求的字典
+ *  临时储存请求的字典
  */
-@property (nonatomic, strong) NSMutableDictionary *requestDic;
+@property (nonatomic, strong) NSMutableDictionary *tmpRequestDic;
 /**
  *  网络配置
  */
@@ -47,7 +47,7 @@ static BGNetworkManager *_manager = nil;
         _dataHandleQueue = dispatch_queue_create("com.BGNEtworkManager.dataHandle", DISPATCH_QUEUE_CONCURRENT);
         
         dispatch_async(_workQueue, ^{
-            _requestDic = [[NSMutableDictionary alloc] init];
+            _tmpRequestDic = [[NSMutableDictionary alloc] init];
         });
     }
     return self;
@@ -95,7 +95,7 @@ static BGNetworkManager *_manager = nil;
                     networkFailure:(BGNetworkFailureBlock)networkFailureBlock{
     //临时保存请求
     NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
-    self.requestDic[requestKey] = request;
+    self.tmpRequestDic[requestKey] = request;
     
     //发送请求
     __weak BGNetworkManager *weakManager = self;
@@ -248,18 +248,18 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - BGNetworkConnectorDelegate
 - (NSDictionary *)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector *)connector request:(NSURLRequest *)request{
     //取出请求
-    BGNetworkRequest *networkRequest = self.requestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
     return [self.configuration requestHTTPHeaderFields:networkRequest];
 }
 
 - (NSString *)queryStringForURLWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request{
     //取出请求
-    BGNetworkRequest *networkRequest = self.requestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
     return [self.configuration queryStringForURLWithRequest:networkRequest];
 }
 
 - (NSData *)dataOfHTTPBodyWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request error:(NSError *__autoreleasing *)error{
-    BGNetworkRequest *networkRequest = self.requestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
     return [self.configuration httpBodyDataWithRequest:networkRequest];
 }
 @end
