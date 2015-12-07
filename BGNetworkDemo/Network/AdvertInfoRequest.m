@@ -11,7 +11,7 @@
 @implementation AdvertInfoRequest
 - (instancetype)init {
     if(self = [super init]) {
-        self.methodName = @"http://localhost/app/BGNetwork/info.php";
+        self.methodName = @"advert.php";
         self.httpMethod = BGNetworkRequestHTTPGet;
     }
     return self;

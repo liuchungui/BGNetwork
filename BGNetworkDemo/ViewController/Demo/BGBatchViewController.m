@@ -17,6 +17,9 @@
 @end
 
 @implementation BGBatchViewController
+- (void)dealloc {
+    NSLog(@"%@ delloc", NSStringFromClass(self.class));
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,23 +32,35 @@
 }
 
 - (IBAction)sendRequestAction:(id)sender {
+    //clear
+    self.textLabel.text = @"";
+    
+    //create request
     InfoRequest *infoRequest = [[InfoRequest alloc] initWithId:13];
     AdvertInfoRequest *advertRequest = [[AdvertInfoRequest alloc] init];
     
     BGBatchRequest *batchRequest = [[BGBatchRequest alloc] initWithRequests:@[infoRequest, advertRequest]];
+    batchRequest.continueLoadWhenRequestFailure = YES;
     
-    //失败的
+    //set failure block
     [batchRequest setBusinessFailure:^(BGNetworkRequest *request, id response) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, response];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), response];
     } networkFailure:^(BGNetworkRequest *request, NSError *error) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, error];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), error];
     }];
     
+    //send request
     [batchRequest sendRequestSuccess:^(BGNetworkRequest *request, id response) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, response];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), response];
     } completion:^(BGBatchRequest *batchRequest, BOOL isSuccess) {
-//        self.textLabel.text = [NSString stringWithFormat:@"%@\n\nFinish!", self.textLabel.text];
-        self.textLabel.text = @"jfkjdfkkfj";
+        NSString *finishTip = @"";
+        if(isSuccess) {
+            finishTip = @"Success!";
+        }
+        else {
+            finishTip = @"Failure!";
+        }
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@", self.textLabel.text, finishTip];
     }];
 }
 

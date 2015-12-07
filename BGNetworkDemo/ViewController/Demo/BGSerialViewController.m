@@ -18,6 +18,10 @@
 
 @implementation BGSerialViewController
 
+- (void)dealloc {
+    NSLog(@"%@ delloc", NSStringFromClass(self.class));
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -29,22 +33,33 @@
 }
 
 - (IBAction)sendRequestAction:(id)sender {
+    //clear
+    self.textLabel.text = @"";
+    
     InfoRequest *infoRequest = [[InfoRequest alloc] initWithId:13];
     AdvertInfoRequest *advertRequest = [[AdvertInfoRequest alloc] init];
     
     BGSerialRequest *serialRequest = [[BGSerialRequest alloc] initWithRequests:@[infoRequest, advertRequest]];
     
-    //失败的
+    //set failure block
     [serialRequest setBusinessFailure:^(BGNetworkRequest *request, id response) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, response];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), response];
     } networkFailure:^(BGNetworkRequest *request, NSError *error) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, error];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), error];
     }];
     
+    //send request
     [serialRequest sendRequestSuccess:^(BGNetworkRequest *request, id response) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n%@", self.textLabel.text, response];
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@:%@", self.textLabel.text, NSStringFromClass(request.class), response];
     } completion:^(BGSerialRequest *serialRequest, BOOL isSuccess) {
-        self.textLabel.text = [NSString stringWithFormat:@"%@\n\nFinish!", self.textLabel.text];
+        NSString *finishTip = @"";
+        if(isSuccess) {
+            finishTip = @"Success!";
+        }
+        else {
+            finishTip = @"Failure!";
+        }
+        self.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@", self.textLabel.text, finishTip];
     }];
 }
 

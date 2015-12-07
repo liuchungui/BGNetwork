@@ -9,9 +9,10 @@
 #import "InfoRequest.h"
 
 @implementation InfoRequest
+
 - (instancetype)initWithId:(NSInteger)infoId {
     if(self = [super init]) {
-        self.methodName = @"http://localhost/app/BGNetwork/info.php";
+        self.methodName = @"info.php";
         self.httpMethod = BGNetworkRequestHTTPPost;
         [self setIntegerValue:infoId forParamKey:@"infoId"];
     }

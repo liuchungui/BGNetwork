@@ -10,6 +10,7 @@
 #import "PageModel.h"
 
 @implementation DemoRequest
+
 #pragma mark - BGNetworkRequest method
 - (id)processResponseObject:(id)responseObject{
     PageModel *model = [[PageModel alloc] initWithDictionary:responseObject[@"result"]];

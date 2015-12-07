@@ -18,7 +18,7 @@ static BGNetworkManager *_manager = nil;
 /**
  *  临时储存请求的字典
  */
-@property (nonatomic, strong) NSMutableDictionary *tmpRequestDic;
+@property (nonatomic, strong) NSMutableDictionary *tempRequestDic;
 /**
  *  网络配置
  */
@@ -47,7 +47,7 @@ static BGNetworkManager *_manager = nil;
         _dataHandleQueue = dispatch_queue_create("com.BGNEtworkManager.dataHandle", DISPATCH_QUEUE_CONCURRENT);
         
         dispatch_async(_workQueue, ^{
-            _tmpRequestDic = [[NSMutableDictionary alloc] init];
+            self.tempRequestDic = [[NSMutableDictionary alloc] init];
         });
     }
     return self;
@@ -67,7 +67,7 @@ static BGNetworkManager *_manager = nil;
             case BGNetworkRequestCacheDataAndReadCacheOnly:
             case BGNetworkRequestCacheDataAndReadCacheLoadData:
                 //读取缓存并且请求数据
-                [self readCacheAndRequestData:request completion:^(BGNetworkRequest *request, id responseObject) {
+                [self readCacheWithRequest:request completion:^(BGNetworkRequest *request, id responseObject) {
                     if(responseObject){
                         /*
                          缓存策略
@@ -95,7 +95,7 @@ static BGNetworkManager *_manager = nil;
                     networkFailure:(BGNetworkFailureBlock)networkFailureBlock{
     //临时保存请求
     NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
-    self.tmpRequestDic[requestKey] = request;
+    self.tempRequestDic[requestKey] = request;
     
     //发送请求
     __weak BGNetworkManager *weakManager = self;
@@ -122,7 +122,7 @@ static BGNetworkManager *_manager = nil;
 }
 
 #pragma mark - cache method
-- (void)readCacheAndRequestData:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
+- (void)readCacheWithRequest:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
     __weak BGNetworkManager *weakManager = self;
     NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
     [self.cache queryCacheForKey:cacheKey completed:^(NSData *data) {
@@ -159,6 +159,8 @@ static BGNetworkManager *_manager = nil;
           responseData:(NSData *)responseData
                success:(BGSuccessCompletionBlock)successCompletionBlock
        businessFailure:(BGBusinessFailureBlock)businessFailureBlock{
+    //remove temp request
+    [self removeTempRequest:request];
     
     dispatch_async(self.dataHandleQueue, ^{
         //对数据进行解密
@@ -222,10 +224,24 @@ static BGNetworkManager *_manager = nil;
  *  网络失败
  */
 - (void)networkFailure:(BGNetworkRequest *)request error:(NSError *)error completion:(BGNetworkFailureBlock)networkFailureBlock{
+    //remove temp request
+    [self removeTempRequest:request];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if(networkFailureBlock) {
             networkFailureBlock(request, error);
         }
+    });
+}
+
+#pragma mark - private method
+/**
+ *  删除临时存储的请求
+ */
+- (void)removeTempRequest:(BGNetworkRequest *)request {
+    dispatch_async(self.workQueue, ^{
+        NSString *requestKey = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
+        [self.tempRequestDic removeObjectForKey:requestKey];
     });
 }
 
@@ -248,18 +264,18 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - BGNetworkConnectorDelegate
 - (NSDictionary *)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector *)connector request:(NSURLRequest *)request{
     //取出请求
-    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
     return [self.configuration requestHTTPHeaderFields:networkRequest];
 }
 
 - (NSString *)queryStringForURLWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request{
     //取出请求
-    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
     return [self.configuration queryStringForURLWithRequest:networkRequest];
 }
 
 - (NSData *)dataOfHTTPBodyWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request error:(NSError *__autoreleasing *)error{
-    BGNetworkRequest *networkRequest = self.tmpRequestDic[request.URL.absoluteString];
+    BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
     return [self.configuration httpBodyDataWithRequest:networkRequest];
 }
 @end
