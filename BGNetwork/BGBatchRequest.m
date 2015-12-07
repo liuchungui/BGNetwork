@@ -10,12 +10,8 @@
 
 @interface BGBatchRequest ()
 @property (nonatomic, strong) NSArray *requestArray;
-@property (nonatomic, strong) NSMutableArray *responseArray;
-@property (nonatomic, copy) void (^successBlock)(BGBatchRequest *batchRequest, NSArray *responseArray);
-@property (nonatomic, copy) void (^failureBlock)(BGBatchRequest *batchRequest, BGNetworkResponse *errorResponse);
-@property (nonatomic, copy) void (^progressBlock)(BGBatchRequest *batchRequest, NSInteger progress, NSInteger totalNum);
-
 @end
+
 @implementation BGBatchRequest
 - (instancetype)init {
     return [self initWithRequests:nil];
@@ -23,48 +19,58 @@
 - (instancetype)initWithRequests:(NSArray *)requestArray {
     if(self = [super init]) {
         self.requestArray = requestArray;
-        self.responseArray = [NSMutableArray array];
     }
     return self;
 }
 
-- (void)sendRequestCompletionWithSuccess:(void (^)(BGBatchRequest *, NSArray *))successBlock failure:(void (^)(BGBatchRequest *, BGNetworkResponse *))failureBlock {
-    [self sendRequestProgress:NULL completionWithSuccess:successBlock failure:failureBlock];
-}
-
-- (void)sendRequestProgress:(void (^)(BGBatchRequest *, NSInteger progress, NSInteger totalCount))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *, NSArray *))successBlock failure:(void (^)(BGBatchRequest *, BGNetworkResponse *))failureBlock {
-    self.progressBlock = progressBlock;
-    self.successBlock = successBlock;
-    self.failureBlock = failureBlock;
+- (void)sendRequestSuccess:(void (^)(BGNetworkRequest *, id))successBlock
+                   failure:(void (^)(BGNetworkRequest *, id))failureBlock
+                completion:(void (^)(BGBatchRequest *))completionBlock {
     
     NSInteger requestCount = self.requestArray.count;
-    __block NSInteger successRequestCount = 0;
+    __block NSInteger successCount = 0;
+    
+    //成功回调
+    void (^ batchSuccessCallBack)(BGNetworkRequest *request, id response) = ^(BGNetworkRequest *request, id response) {
+        successCount ++;
+        if(successBlock) {
+            successBlock(request, response);
+        }
+        if(successCount == requestCount) {
+            if(completionBlock) {
+                completionBlock(self);
+            }
+        }
+    };
+    
+    //失败回调
+    void (^ batchFailureCallBack)(BGNetworkRequest *request, id response) = ^(BGNetworkRequest *request, id response){
+        if(failureBlock) {
+            failureBlock(request, response);
+        }
+        if(!self.continueLoadWhenRequestFailure) {
+            [self cancelAllRequest];
+            if(completionBlock) {
+                completionBlock(self);
+            }
+        }
+    };
+    
     for (BGNetworkRequest *request in self.requestArray) {
         [request sendRequestWithSuccess:^(BGNetworkRequest *request, id response) {
-            successRequestCount ++;
-            if(successRequestCount == requestCount) {
-                if(successBlock) {
-#warning 此处未写完
-                    successBlock(self, nil);
-                }
-                else {
-                    if(progressBlock) {
-                        progressBlock(self, successRequestCount, requestCount);
-                    }
-                }
-            }
+            batchSuccessCallBack(request, response);
         } businessFailure:^(BGNetworkRequest *request, id response) {
-            if(failureBlock) {
-#warning 此处未写完
-                failureBlock(self, nil);
-            }
+            batchFailureCallBack(request, response);
         } networkFailure:^(BGNetworkRequest *request, NSError *error) {
-            if(failureBlock) {
-#warning 此处未写完
-                failureBlock(self, nil);
-            }
+            batchFailureCallBack(request, error);
         }];
     }
 }
 
+- (void)cancelAllRequest {
+    for (BGNetworkRequest *request in self.requestArray) {
+#warning 取消请求是否用类方法取消？
+        [[request class] cancelRequest];
+    }
+}
 @end

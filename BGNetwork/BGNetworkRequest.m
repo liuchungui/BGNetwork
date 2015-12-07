@@ -24,6 +24,10 @@ static NSUInteger _requestIdentifier = 0;
 
 @end
 @implementation BGNetworkRequest
+- (void)dealloc {
+    
+}
+
 - (instancetype)init{
     if(self = [super init]){
         _requestIdentifier += 1;

@@ -14,22 +14,27 @@
  *  批量发送请求
  */
 @interface BGBatchRequest : NSObject
-- (instancetype)initWithRequests:(NSArray *)requestArray;
-@property (nonatomic, readonly) NSArray *requestArray;
 /**
- *  发送批量请求
- *
- *  @param success 全部请求成功回调
- *  @param failure 失败回调，这里只要有一个请求失败，则立马回调，失败的信息在errorResponse中的error当中
+ *  init method
+ *  @param requestArray 一组BGNetworkRequest
  */
-- (void)sendRequestCompletionWithSuccess:(void (^)(BGBatchRequest *batchRequest, NSArray *responseArray))successBlock failure:(void (^)(BGBatchRequest *batchRequest, BGNetworkResponse *errorResponse))failureBlock;
+- (instancetype)initWithRequests:(NSArray *)requestArray;
+
+@property (nonatomic, readonly) NSArray *requestArray;
 
 /**
- *  发送批量请求
- *
- *  @param progress 进度条
- *  @param success  全部请求成功回调
- *  @param failure  失败回调，这里只要有一个请求失败，则立马回调，失败的信息在errorResponse中的error当中
+ *  当某个请求失败后，是否还继续加载其它请求，默认YES
  */
-- (void)sendRequestProgress:(void (^)(BGBatchRequest *batchRequest, NSInteger progress, NSInteger totalNum))progressBlock completionWithSuccess:(void (^)(BGBatchRequest *batchRequest, NSArray *responseArray))successBlock failure:(void (^)(BGBatchRequest *batchRequest, BGNetworkResponse *errorResponse))failureBlock;
+@property (nonatomic, assign) BOOL continueLoadWhenRequestFailure;
+
+/**
+ *  批量发送请求
+ *
+ *  @param successBlock    请求成功回调
+ *  @param failureBlock    请求失败回调
+ *  @param completionBlock 所有请求完成后回调
+ */
+- (void)sendRequestSuccess:(void (^)(BGNetworkRequest *request, id response))successBlock
+                   failure:(void (^)(BGNetworkRequest *request, id response))failureBlock
+                completion:(void (^)(BGBatchRequest *batchRequest))completionBlock;
 @end
