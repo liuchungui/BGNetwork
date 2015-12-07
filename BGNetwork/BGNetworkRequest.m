@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKey";
+static NSUInteger _requestIdentifier = 0;
 @interface BGNetworkRequest (){
     NSString *_methodName;
 }
@@ -25,6 +26,7 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
 @implementation BGNetworkRequest
 - (instancetype)init{
     if(self = [super init]){
+        _requestIdentifier += 1;
         _requestHTTPHeaderFields = [[NSMutableDictionary alloc] init];
         _mutableParametersDic = [[NSMutableDictionary alloc] init];
         self.httpMethod = BGNetworkRequestHTTPGet;
@@ -35,6 +37,10 @@ static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKe
 }
 
 #pragma mark - set or get method
+- (NSUInteger)requestIdentifier {
+    return _requestIdentifier;
+}
+
 - (void)setMethodName:(NSString *)methodName{
     _methodName = methodName;
     [[self class] setRequestMethodName:methodName];

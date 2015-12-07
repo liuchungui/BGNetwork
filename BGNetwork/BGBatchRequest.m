@@ -8,7 +8,7 @@
 
 #import "BGBatchRequest.h"
 
-@interface BGBatchRequest ()<BGNetworkRequestDelegate>
+@interface BGBatchRequest ()
 @property (nonatomic, strong) NSArray *requestArray;
 @property (nonatomic, strong) NSMutableArray *responseArray;
 @property (nonatomic, copy) void (^successBlock)(BGBatchRequest *batchRequest, NSArray *responseArray);

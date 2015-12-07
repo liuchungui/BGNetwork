@@ -66,6 +66,11 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
  *  [request sendRequestWithDelegate:self];
  */
 @interface BGNetworkRequest : NSObject <NSCopying, BGNetworkRequest>
+
+/**
+ *  请求标识码，每个请求都拥有唯一的标示
+ */
+@property (nonatomic, assign, readonly) NSUInteger requestIdentifier;
 /**
  *  方法名
  */

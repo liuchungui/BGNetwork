@@ -10,7 +10,7 @@
 
 @implementation DemoNetworkConfiguration
 - (NSString *)baseURLString{
-//    return @"http://casetree.cn/web/test/";
-    return @"https://casetree.cn/web/test/";
+    return @"http://casetree.cn/web/test/";
+//    return @"https://casetree.cn/web/test/";
 }
 @end
