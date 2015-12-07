@@ -21,12 +21,12 @@
     if(self = [super init]){
         self.methodName = @"demo.php";
         self.httpMethod = BGNetworkRequestHTTPPost;
-        self.cachePolicy = BGNetworkRequestCacheDataAndReadCacheOnly;
+        self.cachePolicy = BGNetworkRquestCacheNone;
         //设置参数
         [self setValue:@"1196689" forParamKey:@"orderNo"];
         [self setIntegerValue:page forParamKey:@"page"];
         [self setIntegerValue:pageSize forParamKey:@"pageSize"];
-//        [self setValue:@"test" forParamKey:@"test.demo"];
+        [self setValue:@"test" forParamKey:@"test.demo"];
     }
     return self;
 }

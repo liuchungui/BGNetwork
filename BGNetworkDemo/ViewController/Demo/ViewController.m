@@ -112,7 +112,7 @@
         [_dataArr addObjectsFromArray:resultModel.list];
     }
     //加载完成，改变tableView状态
-    if(_page*_pageSize >= resultModel.count){
+    if((_page+1)*_pageSize >= resultModel.count){
         _tableView.isCompleted = YES;
     }
     else{
