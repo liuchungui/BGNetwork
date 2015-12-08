@@ -12,7 +12,7 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 
 其次，根据业务子类化BGNetowrkRequest封装请求，然后发送请求。   
 
-```
+```objective-c
     DemoRequest *request = [[DemoRequest alloc] initPage:_page pageSize:_pageSize];
     [request sendRequestWithSuccess:^(BGNetworkRequest *request, id response) {
         [self request:request successWithResponse:response];
