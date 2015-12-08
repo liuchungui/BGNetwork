@@ -16,12 +16,9 @@
 		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; };
 		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; };
 		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; };
-		CE1004C61C1553BE00748A36 /* BGSerialRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004C51C1553BE00748A36 /* BGSerialRequest.m */; };
 		CE1004C91C158DAC00748A36 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004C81C158DAC00748A36 /* TableViewController.m */; };
 		CE1004CD1C1591F000748A36 /* BGBatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004CB1C1591F000748A36 /* BGBatchViewController.m */; };
 		CE1004CE1C1591F000748A36 /* BGBatchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1004CC1C1591F000748A36 /* BGBatchViewController.xib */; };
-		CE1004D21C1592CD00748A36 /* BGSerialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004D01C1592CD00748A36 /* BGSerialViewController.m */; };
-		CE1004D31C1592CD00748A36 /* BGSerialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1004D11C1592CD00748A36 /* BGSerialViewController.xib */; };
 		CE1005151C15939E00748A36 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004F51C15939D00748A36 /* MKAnnotationView+WebCache.m */; };
 		CE1005161C15939E00748A36 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004F71C15939D00748A36 /* NSData+ImageContentType.m */; };
 		CE1005171C15939E00748A36 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004F91C15939D00748A36 /* SDImageCache.m */; };
@@ -116,16 +113,11 @@
 		CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		CE070BBF1BB517A0002FF644 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		CE1004C41C1553BE00748A36 /* BGSerialRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGSerialRequest.h; sourceTree = "<group>"; };
-		CE1004C51C1553BE00748A36 /* BGSerialRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGSerialRequest.m; sourceTree = "<group>"; };
 		CE1004C71C158DAC00748A36 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		CE1004C81C158DAC00748A36 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		CE1004CA1C1591F000748A36 /* BGBatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGBatchViewController.h; sourceTree = "<group>"; };
 		CE1004CB1C1591F000748A36 /* BGBatchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGBatchViewController.m; sourceTree = "<group>"; };
 		CE1004CC1C1591F000748A36 /* BGBatchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BGBatchViewController.xib; sourceTree = "<group>"; };
-		CE1004CF1C1592CD00748A36 /* BGSerialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGSerialViewController.h; sourceTree = "<group>"; };
-		CE1004D01C1592CD00748A36 /* BGSerialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGSerialViewController.m; sourceTree = "<group>"; };
-		CE1004D11C1592CD00748A36 /* BGSerialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BGSerialViewController.xib; sourceTree = "<group>"; };
 		CE1004F41C15939D00748A36 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		CE1004F51C15939D00748A36 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		CE1004F61C15939D00748A36 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -543,9 +535,6 @@
 				CEF8E55B1B99483E0087CDB3 /* ViewController.m */,
 				CE1004C71C158DAC00748A36 /* TableViewController.h */,
 				CE1004C81C158DAC00748A36 /* TableViewController.m */,
-				CE1004CF1C1592CD00748A36 /* BGSerialViewController.h */,
-				CE1004D01C1592CD00748A36 /* BGSerialViewController.m */,
-				CE1004D11C1592CD00748A36 /* BGSerialViewController.xib */,
 				CE1004CA1C1591F000748A36 /* BGBatchViewController.h */,
 				CE1004CB1C1591F000748A36 /* BGBatchViewController.m */,
 				CE1004CC1C1591F000748A36 /* BGBatchViewController.xib */,
@@ -641,8 +630,6 @@
 				CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */,
 				CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */,
 				CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */,
-				CE1004C41C1553BE00748A36 /* BGSerialRequest.h */,
-				CE1004C51C1553BE00748A36 /* BGSerialRequest.m */,
 			);
 			path = BGNetwork;
 			sourceTree = "<group>";
@@ -691,8 +678,9 @@
 		CEF8E40B1B99464C0087CDB3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = BG;
 				LastUpgradeCheck = 0640;
-				ORGANIZATIONNAME = lcg;
+				ORGANIZATIONNAME = "BGNetwork https://github.com/liuchungui/BGNetwork/tree/dev";
 				TargetAttributes = {
 					CEF8E4121B99464C0087CDB3 = {
 						CreatedOnToolsVersion = 6.4;
@@ -729,7 +717,6 @@
 			files = (
 				CEF8E54F1B9947E10087CDB3 /* _refresh_rotate@2x.png in Resources */,
 				CEF8E54E1B9947E10087CDB3 /* _refresh_arrow@2x.png in Resources */,
-				CE1004D31C1592CD00748A36 /* BGSerialViewController.xib in Resources */,
 				CE1004CE1C1591F000748A36 /* BGBatchViewController.xib in Resources */,
 				CEF8E54B1B9947E10087CDB3 /* DemoCell.xib in Resources */,
 				CEF8E5541B9948290087CDB3 /* Main.storyboard in Resources */,
@@ -764,7 +751,6 @@
 				CEF8E6DC1B9959E40087CDB3 /* BGNetworkManager.m in Sources */,
 				CE070BC61BB517A0002FF644 /* AFURLConnectionOperation.m in Sources */,
 				CEF8E5461B9947E10087CDB3 /* BaseLineCell.m in Sources */,
-				CE1004C61C1553BE00748A36 /* BGSerialRequest.m in Sources */,
 				CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */,
 				CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */,
 				CEF8E6DD1B9959E40087CDB3 /* BGNetworkRequest.m in Sources */,
@@ -815,7 +801,6 @@
 				CE10051F1C15939E00748A36 /* UIImage+GIF.m in Sources */,
 				CEF8E5691B9948500087CDB3 /* PageModel.m in Sources */,
 				CEF8E5491B9947E10087CDB3 /* BaseView.m in Sources */,
-				CE1004D21C1592CD00748A36 /* BGSerialViewController.m in Sources */,
 				CEF8E6D81B9959E40087CDB3 /* BGAFResponseSerializer.m in Sources */,
 				CEF8E4191B99464C0087CDB3 /* main.m in Sources */,
 				CE070BC21BB517A0002FF644 /* AFHTTPRequestOperationManager.m in Sources */,
