@@ -1,6 +1,6 @@
 {
     "name": "BGNetwork",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "license": "MIT",
     "summary": "BGNetwork is a request util based on AFNetworking",
     "homepage": "https://github.com/chunguiLiu/BGNetwork",
@@ -10,7 +10,7 @@
     },
     "source": {
         "git": "https://github.com/chunguiLiu/BGNetwork.git",
-        "tag": "0.1.4"
+        "tag": "0.1.5"
     },
     "source_files": "BGNetwork/*",
     "platforms": {
