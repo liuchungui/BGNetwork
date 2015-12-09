@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DemoNetworkConfiguration.h"
-#import "BGNetworkManager.h"
-#import "BGNetworkUtil.h"
+#import "BGNetwork.h"
 
 @interface AppDelegate ()
 

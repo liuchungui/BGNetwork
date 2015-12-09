@@ -157,6 +157,7 @@
 		CE10052C1C15999E00748A36 /* InfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoRequest.m; sourceTree = "<group>"; };
 		CE10052E1C1599AB00748A36 /* AdvertInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertInfoRequest.h; sourceTree = "<group>"; };
 		CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertInfoRequest.m; sourceTree = "<group>"; };
+		CE13BC711C1893CE00D0FD78 /* BGNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BGNetwork.h; sourceTree = "<group>"; };
 		CED2BD921BBA3775005928B9 /* casetree.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = casetree.cer; sourceTree = "<group>"; };
 		CEF8E4131B99464C0087CDB3 /* BGNetworkDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BGNetworkDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF8E4171B99464C0087CDB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -630,6 +631,7 @@
 				CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */,
 				CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */,
 				CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */,
+				CE13BC711C1893CE00D0FD78 /* BGNetwork.h */,
 			);
 			path = BGNetwork;
 			sourceTree = "<group>";
