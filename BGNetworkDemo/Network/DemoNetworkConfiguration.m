@@ -14,6 +14,10 @@
 //    return @"https://casetree.cn/web/test/";
 }
 
+- (void)preProcessingRequest:(BGNetworkRequest *)request {
+//    request.methodName = [NSString stringWithFormat:@"%@%@", @"http://baidu.com/", request.methodName];方法
+}
+
 - (NSData *)httpBodyDataWithRequest:(BGNetworkRequest *)request {
     if(!request.parametersDic.count){
         return nil;

@@ -13,7 +13,7 @@
 #import "BGNetworkCache.h"
 
 /**
- *  网络管理内，是一个单例，需要创建一个网络配置给此类使用
+ *  网络管理类，是一个单例，需要创建一个网络配置给此类使用
  */
 @interface BGNetworkManager : NSObject
 + (instancetype)sharedManager;
@@ -28,7 +28,7 @@
 @property (nonatomic, strong, readonly) BGNetworkCache *cache;
 
 /**
- *  设置网络配置
+ *  网络配置类
  */
 @property (nonatomic, strong, readonly) BGNetworkConfiguration *configuration;
 
