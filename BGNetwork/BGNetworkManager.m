@@ -56,6 +56,9 @@ static BGNetworkManager *_manager = nil;
 - (void)managerSendRequest:(BGNetworkRequest *)request{
     NSParameterAssert(self.connector);
     dispatch_async(self.workQueue, ^{
+        //发送网络之前，先进行一下预处理
+        [self.configuration preProcessingRequest:request];
+        
         switch (request.cachePolicy) {
             case BGNetworkRquestCacheNone:
                 //请求网络

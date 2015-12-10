@@ -25,6 +25,9 @@
     return nil;
 }
 
+- (void)preProcessingRequest:(BGNetworkRequest *)request {
+}
+
 - (NSDictionary *)requestHTTPHeaderFields:(BGNetworkRequest *)request {
     NSMutableDictionary *allHTTPHeaderFileds = [@{
                                                   @"Content-Type":@"application/x-www-form-urlencoded;charset=utf-8",
