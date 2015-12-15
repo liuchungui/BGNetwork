@@ -16,7 +16,7 @@ static NSUInteger _requestIdentifier = 0;
     NSString *_methodName;
 }
 @property (nonatomic, strong) NSMutableDictionary *mutableParametersDic;
-@property (nonatomic, copy) NSMutableDictionary *requestHTTPHeaderFields;
+@property (nonatomic, strong) NSMutableDictionary *mutableRequestHTTPHeaderFields;
 /**
  *  代理
  */
@@ -31,7 +31,7 @@ static NSUInteger _requestIdentifier = 0;
 - (instancetype)init{
     if(self = [super init]){
         _requestIdentifier += 1;
-        _requestHTTPHeaderFields = [[NSMutableDictionary alloc] init];
+        _mutableRequestHTTPHeaderFields = [[NSMutableDictionary alloc] init];
         _mutableParametersDic = [[NSMutableDictionary alloc] init];
         self.httpMethod = BGNetworkRequestHTTPGet;
         self.cachePolicy = BGNetworkRquestCacheNone;
@@ -55,7 +55,7 @@ static NSUInteger _requestIdentifier = 0;
 }
 
 - (NSDictionary *)requestHTTPHeaderFields {
-    return [_requestHTTPHeaderFields copy];
+    return [_mutableRequestHTTPHeaderFields copy];
 }
 
 #pragma mark - BGNetworkRequest method
@@ -68,14 +68,14 @@ static NSUInteger _requestIdentifier = 0;
     if(!field){
         return @"";
     }
-    return self.requestHTTPHeaderFields[field];
+    return _mutableRequestHTTPHeaderFields[field];
 }
 
 - (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field{
     if(!field || !value){
         return;
     }
-    [self.requestHTTPHeaderFields setValue:value forKey:field];
+    _mutableRequestHTTPHeaderFields[field] = value;
 }
 
 #pragma mark - 设置参数
@@ -108,8 +108,8 @@ static NSUInteger _requestIdentifier = 0;
 #pragma mark - NSCopying method
 - (id)copyWithZone:(NSZone *)zone{
     BGNetworkRequest *request = [[[self class] allocWithZone:zone] init];
-    request.requestHTTPHeaderFields = self.requestHTTPHeaderFields;
-    request.mutableParametersDic = self.mutableParametersDic;
+    request.mutableRequestHTTPHeaderFields = [self.mutableRequestHTTPHeaderFields mutableCopy];
+    request.mutableParametersDic = [self.mutableParametersDic mutableCopy];
     return request;
 }
 

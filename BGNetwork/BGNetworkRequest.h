@@ -94,7 +94,7 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
 /**
  *  请求头
  */
-@property (nonatomic, readonly, copy) NSDictionary *requestHTTPHeaderFields;
+@property (nonatomic, copy, readonly) NSDictionary *requestHTTPHeaderFields;
 
 
 #pragma mark - 设置或获取请求头的内容

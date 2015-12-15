@@ -22,6 +22,14 @@
 
 @optional
 /**
+ *  在请求以前，对request预处理一下，默认不处理
+ *
+ *  @param request 请求
+ *  @note 此方法添加，为了适应多域名，可以对request.methodName设置一个绝对路径
+ */
+- (void)preProcessingRequest:(BGNetworkRequest *)request;
+
+/**
  *  对request当中的HTTP Header进行处理，可以在此方法内部加入公共的请求头内容
  *
  *  @param request 请求
