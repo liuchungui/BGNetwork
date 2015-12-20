@@ -60,6 +60,22 @@
     return [self.httpClient POST:methodName parameters:paramters success:successBlock failure:failedBlock];
 }
 
+- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
+                                         progress:(void (^)(NSProgress *downloadProgress)) downloadProgressBlock
+                                      destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
+                                completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler {
+    NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithRequest:request progress:downloadProgressBlock destination:destination completionHandler:completionHandler];
+    [task resume];
+    return task;
+}
+
+- (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData
+                                                progress:(void (^)(NSProgress *downloadProgress)) downloadProgressBlock
+                                             destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
+                                       completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler {
+    return [self.httpClient downloadTaskWithResumeData:resumeData progress:downloadProgressBlock destination:destination completionHandler:completionHandler];
+}
+
 #pragma mark - BGAFRequestSerializerDelegate
 - (NSURLRequest *)requestSerializer:(BGAFRequestSerializer *)requestSerializer request:(NSURLRequest *)request withParameters:(id)parameters error:(NSError *__autoreleasing *)error{
     NSParameterAssert(request);

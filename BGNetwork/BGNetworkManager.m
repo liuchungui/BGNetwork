@@ -53,6 +53,58 @@ static BGNetworkManager *_manager = nil;
     return self;
 }
 
+
+- (void)sendRequest:(BGDownloadRequest *)request
+           progress:(void (^)(NSProgress * _Nonnull))downloadProgressBlock
+            success:(void (^)(NSURLResponse * _Nonnull, NSURL * _Nullable))successCompletionBlock
+            failure:(void (^)(NSError * _Nullable))failureCompletionBlock {
+    dispatch_async(self.workQueue, ^{
+        NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
+        NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
+        [self.cache queryCacheForKey:cacheKey completed:^(id  _Nullable object) {
+            dispatch_async(self.workQueue, ^{
+                //有缓存，则断点续传
+                if([object isKindOfClass:[NSData class]]) {
+                    [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                        return [NSURL URLWithString:[self.cache defaultCachePathForKey:cacheKey]];
+                    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                        if(error) {
+                            if(failureCompletionBlock) {
+                                failureCompletionBlock(error);
+                            }
+                        }
+                        else {
+                            if(successCompletionBlock) {
+                                successCompletionBlock(response, filePath);
+                            }
+                        }
+                    }];
+                }
+                else {
+                    //无缓存，则重新下载
+                    NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
+                    [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                        return [NSURL URLWithString:[self.cache defaultCachePathForKey:cacheKey]];
+                    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                        if(error) {
+                            if(failureCompletionBlock) {
+                                failureCompletionBlock(error);
+                            }
+                        }
+                        else {
+                            if(successCompletionBlock) {
+                                successCompletionBlock(response, filePath);
+                            }
+                        }
+                    }];
+                    
+                }
+            });
+        }];
+        
+    });
+}
+
 - (void)sendRequest:(BGNetworkRequest *)request
             success:(BGSuccessCompletionBlock)successCompletionBlock
     businessFailure:(BGBusinessFailureBlock)businessFailureBlock

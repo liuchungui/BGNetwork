@@ -36,6 +36,7 @@
 		CE10052D1C15999E00748A36 /* InfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052C1C15999E00748A36 /* InfoRequest.m */; };
 		CE1005301C1599AB00748A36 /* AdvertInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */; };
 		CE1897291C26EEAA009A16D6 /* DownloadFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */; };
+		CE18972C1C270F5C009A16D6 /* BGDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */; };
 		CEA38C061C1BABCD0070DF3D /* BGDownloadRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA38C041C1BABCD0070DF3D /* BGDownloadRequestController.m */; };
 		CEA38C071C1BABCD0070DF3D /* BGDownloadRequestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA38C051C1BABCD0070DF3D /* BGDownloadRequestController.xib */; };
 		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; };
@@ -154,6 +155,8 @@
 		CE13BC711C1893CE00D0FD78 /* BGNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BGNetwork.h; sourceTree = "<group>"; };
 		CE1897271C26EEAA009A16D6 /* DownloadFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadFileRequest.h; sourceTree = "<group>"; };
 		CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadFileRequest.m; sourceTree = "<group>"; };
+		CE18972A1C270F5C009A16D6 /* BGDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDownloadRequest.h; sourceTree = "<group>"; };
+		CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDownloadRequest.m; sourceTree = "<group>"; };
 		CEA38C031C1BABCD0070DF3D /* BGDownloadRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDownloadRequestController.h; sourceTree = "<group>"; };
 		CEA38C041C1BABCD0070DF3D /* BGDownloadRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDownloadRequestController.m; sourceTree = "<group>"; };
 		CEA38C051C1BABCD0070DF3D /* BGDownloadRequestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BGDownloadRequestController.xib; sourceTree = "<group>"; };
@@ -617,6 +620,8 @@
 				CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */,
 				CEF8E6C11B9959E40087CDB3 /* BGNetworkRequest.h */,
 				CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */,
+				CE18972A1C270F5C009A16D6 /* BGDownloadRequest.h */,
+				CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */,
 				CEF8E6C31B9959E40087CDB3 /* BGNetworkUtil.h */,
 				CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */,
 				CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */,
@@ -774,6 +779,7 @@
 				CEF8E41C1B99464C0087CDB3 /* AppDelegate.m in Sources */,
 				CEF8E62C1B994B380087CDB3 /* DemoRequest.m in Sources */,
 				CE1004CD1C1591F000748A36 /* BGBatchViewController.m in Sources */,
+				CE18972C1C270F5C009A16D6 /* BGDownloadRequest.m in Sources */,
 				CE1005181C15939E00748A36 /* SDWebImageCompat.m in Sources */,
 				CEF8E5671B9948500087CDB3 /* BaseModel.m in Sources */,
 				CE10051E1C15939E00748A36 /* UIButton+WebCache.m in Sources */,

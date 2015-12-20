@@ -44,6 +44,22 @@
  */
 - (NSURLSessionDataTask * _Nonnull)sendPOSTRequest:(NSString * _Nonnull)methodName parameters:(NSDictionary * _Nullable)paramters success:(void (^ _Nullable)(NSURLSessionDataTask * _Nonnull task, NSData * _Nullable responseData))successBlock failed:(void (^ _Nullable)(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error))failedBlock;
 
+/**
+ *  下载
+ */
+- (NSURLSessionDownloadTask * _Nonnull)downloadTaskWithRequest:(NSURLRequest * _Nonnull)request
+                                             progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
+                                          destination:(NSURL * _Nullable (^ _Nullable)(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response))destination
+                                    completionHandler:(nullable void (^)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
+
+/**
+ *  断点续传
+ */
+- (NSURLSessionDownloadTask * _Nonnull)downloadTaskWithResumeData:(NSData * _Nonnull)resumeData
+                                                progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
+                                             destination:(NSURL * _Nullable (^ _Nullable)(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response))destination
+                                       completionHandler:(nullable void (^)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
+
 
 /**
  *  取消请求

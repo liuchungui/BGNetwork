@@ -6,8 +6,8 @@
 //  Copyright © 2015年 BGNetwork https://github.com/liuchungui/BGNetwork/tree/dev. All rights reserved.
 //
 
-#import "BGNetworkRequest.h"
+#import "BGDownloadRequest.h"
 
-@interface DownloadFileRequest : BGNetworkRequest
+@interface DownloadFileRequest : BGDownloadRequest
 
 @end

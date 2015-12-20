@@ -40,6 +40,9 @@
                         <constraint firstAttribute="width" constant="100" id="Okd-h0-lA8"/>
                     </constraints>
                     <state key="normal" title="BGDownload"/>
+                    <connections>
+                        <action selector="downloadFileAction:" destination="-1" eventType="touchUpInside" id="a8f-Zj-KEi"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Oz-cx-7mD">
                     <rect key="frame" x="20" y="520" width="69" height="30"/>
@@ -55,8 +58,7 @@
                         </mask>
                     </variation>
                     <connections>
-                        <action selector="downLoadButtonAction:" destination="-1" eventType="touchUpInside" id="Peg-Gd-6Ua"/>
-                        <action selector="downloadFileAction:" destination="-1" eventType="touchUpInside" id="C8m-U8-duA"/>
+                        <action selector="downLoadButtonAction:" destination="-1" eventType="touchUpInside" id="pc8-1e-B1m"/>
                     </connections>
                 </button>
             </subviews>

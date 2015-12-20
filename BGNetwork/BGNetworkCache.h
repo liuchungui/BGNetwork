@@ -22,6 +22,17 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id _Nullable object);
  *
  */
 - (instancetype _Nonnull)initWithNamespace:(NSString * _Nonnull)nameSpace;
+
+/**
+ *  默认缓存路径
+ *
+ *  @param key 缓存的文件名
+ *
+ *  @return 返回文件路径
+ */
+- (NSString *)defaultCachePathForKey:(NSString *)key;
+
+#pragma mark - 缓存
 /**
  *  换存数据
  *
