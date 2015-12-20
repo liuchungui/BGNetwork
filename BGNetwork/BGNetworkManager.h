@@ -16,28 +16,28 @@
  *  网络管理内，是一个单例，需要创建一个网络配置给此类使用
  */
 @interface BGNetworkManager : NSObject
-+ (instancetype)sharedManager;
++ (instancetype _Nonnull)sharedManager;
 /**
  *  网络连接者
  */
-@property (nonatomic, strong, readonly) BGNetworkConnector *connector;
+@property (nonatomic, strong, readonly) BGNetworkConnector * _Nonnull connector;
 
 /**
  *  网络缓存
  */
-@property (nonatomic, strong, readonly) BGNetworkCache *cache;
+@property (nonatomic, strong, readonly) BGNetworkCache * _Nonnull cache;
 
 /**
  *  设置网络配置
  */
-@property (nonatomic, strong, readonly) BGNetworkConfiguration *configuration;
+@property (nonatomic, strong, readonly) BGNetworkConfiguration * _Nonnull configuration;
 
 /**
  *  设置网络配置
  *
  *  @param configuration 网络配置
  */
-- (void)setNetworkConfiguration:(BGNetworkConfiguration *)configuration;
+- (void)setNetworkConfiguration:(BGNetworkConfiguration * _Nonnull)configuration;
 
 
 /**
@@ -48,15 +48,15 @@
  *  @param businessFailureBlock   业务失败调回
  *  @param networkFailureBlock    网络失败调回
  */
-- (void)sendRequest:(BGNetworkRequest *)request
-            success:(BGSuccessCompletionBlock)successCompletionBlock
-    businessFailure:(BGBusinessFailureBlock)businessFailureBlock
-     networkFailure:(BGNetworkFailureBlock)networkFailureBlock;
+- (void)sendRequest:(BGNetworkRequest * _Nonnull)request
+            success:(BGSuccessCompletionBlock _Nullable)successCompletionBlock
+    businessFailure:(BGBusinessFailureBlock _Nullable)businessFailureBlock
+     networkFailure:(BGNetworkFailureBlock _Nullable)networkFailureBlock;
 
 /**
  *  取消请求
  *
  *  @param url 取消请求的url
  */
-- (void)cancelRequestWithUrl:(NSString *)url;
+- (void)cancelRequestWithUrl:(NSString * _Nonnull)url;
 @end

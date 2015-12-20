@@ -17,6 +17,6 @@
 @protocol BGAFResponseSerializerDelegate <NSObject>
 @required
 
-- (id)responseSerializer:(BGAFResponseSerializer *)responseSerializer response:(NSURLResponse *)response data:(NSData *)data error:(NSError *__autoreleasing *)error;
+- (id _Nonnull)responseSerializer:(BGAFResponseSerializer * _Nonnull)responseSerializer response:(NSURLResponse * _Nonnull)response data:(NSData * _Nullable)data error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 @end

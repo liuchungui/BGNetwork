@@ -41,9 +41,9 @@ typedef NS_ENUM(NSInteger, BGNetworkRequestCachePolicy){
 
 
 #pragma mark - completion block
-typedef void(^BGSuccessCompletionBlock)(BGNetworkRequest *request, id response);
-typedef void(^BGBusinessFailureBlock)(BGNetworkRequest *request, id response);
-typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
+typedef void(^BGSuccessCompletionBlock)(BGNetworkRequest  * _Nonnull request, id  _Nullable response);
+typedef void(^BGBusinessFailureBlock)(BGNetworkRequest * _Nonnull request, id _Nullable response);
+typedef void(^BGNetworkFailureBlock)(BGNetworkRequest * _Nonnull request, NSError *_Nullable error);
 
 @protocol BGNetworkRequestDelegate;
 @protocol BGNetworkRequest <NSObject>
@@ -54,7 +54,7 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
  *
  *  @return 处理之后的数据
  */
-- (id)processResponseObject:(id)responseObject;
+- (id _Nullable)processResponseObject:(id _Nonnull)responseObject;
 
 @end
 
@@ -74,7 +74,7 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
 /**
  *  方法名
  */
-@property (nonatomic, strong) NSString *methodName;
+@property (nonatomic, strong) NSString * _Nonnull methodName;
 
 /**
  *  HTTP请求的方法，默认GET，现支持GET和POST
@@ -89,24 +89,24 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
 /**
  *  参数字典
  */
-@property (nonatomic, copy, readonly) NSDictionary *parametersDic;
+@property (nonatomic, copy, readonly) NSDictionary * _Nonnull parametersDic;
 
 /**
  *  请求头
  */
-@property (nonatomic, copy, readonly) NSDictionary *requestHTTPHeaderFields;
+@property (nonatomic, copy, readonly) NSDictionary * _Nonnull requestHTTPHeaderFields;
 
 
 #pragma mark - 设置或获取请求头的内容
-- (void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field;
-- (NSString *)valueForHTTPHeaderField:(NSString *)field;
+- (void)setValue:(NSString * _Nonnull)value forHTTPHeaderField:(NSString * _Nonnull)field;
+- (NSString * _Nonnull)valueForHTTPHeaderField:(NSString * _Nonnull)field;
 
 #pragma mark - 设置参数
-- (void)setIntegerValue:(NSInteger)value forParamKey:(NSString *)key;
-- (void)setDoubleValue:(double)value forParamKey:(NSString *)key;
-- (void)setLongLongValue:(long long)value forParamKey:(NSString *)key;
-- (void)setBOOLValue:(BOOL)value forParamKey:(NSString *)key;
-- (void)setValue:(id)value forParamKey:(NSString *)key;
+- (void)setIntegerValue:(NSInteger)value forParamKey:(NSString * _Nonnull)key;
+- (void)setDoubleValue:(double)value forParamKey:(NSString * _Nonnull)key;
+- (void)setLongLongValue:(long long)value forParamKey:(NSString * _Nonnull)key;
+- (void)setBOOLValue:(BOOL)value forParamKey:(NSString * _Nonnull)key;
+- (void)setValue:(id _Nonnull)value forParamKey:(NSString * _Nonnull)key;
 @end
 
 #pragma mark - BGNetworkRequest(BGNetworkManager)
@@ -123,7 +123,7 @@ typedef void(^BGNetworkFailureBlock)(BGNetworkRequest *request, NSError *error);
  *  @param businessFailureBlock   业务失败回调
  *  @param networkFailureBlock    网络失败回调
  */
-- (void)sendRequestWithSuccess:(BGSuccessCompletionBlock)successCompletionBlock
-               businessFailure:(BGBusinessFailureBlock)businessFailureBlock
-                networkFailure:(BGNetworkFailureBlock)networkFailureBlock;
+- (void)sendRequestWithSuccess:(BGSuccessCompletionBlock _Nullable)successCompletionBlock
+               businessFailure:(BGBusinessFailureBlock _Nullable)businessFailureBlock
+                networkFailure:(BGNetworkFailureBlock _Nullable)networkFailureBlock;
 @end

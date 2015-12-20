@@ -16,6 +16,6 @@
 @protocol BGAFRequestSerializerDelegate <NSObject>
 
 @required
-- (NSURLRequest *)requestSerializer:(BGAFRequestSerializer *)requestSerializer request:(NSURLRequest *)request withParameters:(id)parameters error:(NSError *__autoreleasing *)error;
+- ( NSURLRequest * _Nonnull )requestSerializer:( BGAFRequestSerializer * _Nonnull )requestSerializer request:( NSURLRequest * _Nonnull )request withParameters:(id _Nullable)parameters error:(NSError *  _Nullable __autoreleasing * _Nullable)error;
 
 @end

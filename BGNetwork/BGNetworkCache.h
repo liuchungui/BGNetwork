@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
+typedef void(^BGNetworkCacheQueryCompletedBlock)(id _Nullable object);
 @interface BGNetworkCache : NSObject
 /**
  *  返回一个单例对象
  */
-+ (instancetype)sharedCache;
++ (instancetype _Nonnull)sharedCache;
 
 /**
  *  初始化对象
@@ -21,14 +21,14 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
  *  @param nameSpace 设置缓存空间
  *
  */
-- (instancetype)initWithNamespace:(NSString *)nameSpace;
+- (instancetype _Nonnull)initWithNamespace:(NSString * _Nonnull)nameSpace;
 /**
  *  换存数据
  *
  *  @param data 缓存的数据
  *  @param key  缓存的Key值
  */
-- (void)storeData:(NSData *)data forKey:(NSString *)key;
+- (void)storeData:(NSData * _Nonnull)data forKey:(NSString * _Nonnull)key;
 
 /**
  *  查询缓存数据
@@ -37,7 +37,7 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
  *
  *  @return 返回查询到的缓存数据
  */
-- (NSData *)queryCacheForKey:(NSString *)key;
+- (NSData * _Nullable)queryCacheForKey:(NSString * _Nonnull)key;
 
 /**
  *  查询缓存数据
@@ -45,14 +45,14 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
  *  @param key   查询缓存数据的key
  *  @param block 查询完之后的回调block
  */
-- (void)queryCacheForKey:(NSString *)key completed:(BGNetworkCacheQueryCompletedBlock)block;
+- (void)queryCacheForKey:(NSString * _Nonnull)key completed:(BGNetworkCacheQueryCompletedBlock _Nonnull)block;
 
 /**
  *  删除数据
  *
  *  @param key 缓存数据对应的key
  */
-- (void)removeCacheForKey:(NSString *)key;
+- (void)removeCacheForKey:(NSString * _Nonnull)key;
 
 #pragma mark - 存储对象
 /**
@@ -61,7 +61,7 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
  *  @param object 对象
  *  @param key    key值
  */
-- (void)storeObject:(id<NSCoding>)object forKey:(NSString *)key;
+- (void)storeObject:(id<NSCoding> _Nonnull)object forKey:(NSString * _Nonnull)key;
 /**
  *  查询对象
  *
@@ -69,12 +69,12 @@ typedef void(^BGNetworkCacheQueryCompletedBlock)(id object);
  *
  *  @return 返回一个查询的对象
  */
-- (id)queryObjectForKey:(NSString *)key;
+- (id _Nullable)queryObjectForKey:(NSString * _Nonnull)key;
 /**
  *  查询对象
  *
  *  @param key   key值
  *  @param block 回调一个查询好的对象
  */
-- (void)queryObjectForKey:(NSString *)key completed:(BGNetworkCacheQueryCompletedBlock)block;
+- (void)queryObjectForKey:(NSString * _Nonnull)key completed:(BGNetworkCacheQueryCompletedBlock _Nonnull)block;
 @end

@@ -18,8 +18,8 @@
  */
 @interface BGNetworkConnector : NSObject
 
-- (instancetype)initWithBaseURL:(NSString *)baseURL;
-- (instancetype)initWithBaseURL:(NSString *)baseURL delegate:(id<BGNetworkConnectorDelegate>)delegate;
+- (instancetype _Nonnull)initWithBaseURL:(NSString * _Nonnull)baseURL;
+- (instancetype _Nonnull)initWithBaseURL:(NSString * _Nonnull)baseURL delegate:(id<BGNetworkConnectorDelegate> _Nullable)delegate;
 
 
 @property (nonatomic, weak, readonly) id<BGNetworkConnectorDelegate> delegate;
@@ -32,7 +32,7 @@
  *  @param successBlock 请求成功调回
  *  @param failedBlock  请求失败调回
  */
-- (NSURLSessionDataTask *)sendGETRequest:(NSString *)methodName parameters:(NSDictionary *)paramters success:(void (^)(NSURLSessionDataTask *task, NSData *responseData))successBlock failed:(void (^)(NSURLSessionDataTask *task, NSError *error))failedBlock;
+- (NSURLSessionDataTask * _Nonnull)sendGETRequest:(NSString * _Nonnull)methodName parameters:(NSDictionary * _Nullable)paramters success:( void (^ _Nullable )(NSURLSessionDataTask  * _Nonnull task, NSData  * _Nonnull responseData))successBlock failed:( void (^ _Nullable )(NSURLSessionDataTask  * _Nonnull task, NSError  * _Nonnull error))failedBlock;
 
 /**
  *  发送POST请求
@@ -42,7 +42,7 @@
  *  @param successBlock 请求成功调回
  *  @param failedBlock  请求失败调回
  */
-- (NSURLSessionDataTask *)sendPOSTRequest:(NSString *)methodName parameters:(NSDictionary *)paramters success:(void (^)(NSURLSessionDataTask *task, NSData *responseData))successBlock failed:(void (^)(NSURLSessionDataTask *task, NSError *error))failedBlock;
+- (NSURLSessionDataTask * _Nonnull)sendPOSTRequest:(NSString * _Nonnull)methodName parameters:(NSDictionary * _Nullable)paramters success:(void (^ _Nullable)(NSURLSessionDataTask * _Nonnull task, NSData * _Nullable responseData))successBlock failed:(void (^ _Nullable)(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error))failedBlock;
 
 
 /**
@@ -50,7 +50,7 @@
  *
  *  @param url url
  */
-- (void)cancelRequest:(NSString *)url;
+- (void)cancelRequest:(NSString  * _Nonnull )url;
 @end
 
 @protocol BGNetworkConnectorDelegate <NSObject>
@@ -63,7 +63,7 @@
  *
  *  @return 返回一个http请求头
  */
-- (NSDictionary *)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector *)connector request:(NSURLRequest *)request;
+- (NSDictionary * _Nonnull)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector * _Nonnull)connector request:(NSURLRequest * _Nonnull)request;
 
 /**
  *  代理方法获取请求url的queryString部分
@@ -74,7 +74,7 @@
  *
  *  @return 返回url的queryString部分
  */
-- (NSString *)queryStringForURLWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request;
+- (NSString * _Nullable)queryStringForURLWithNetworkConnector:(BGNetworkConnector * _Nonnull)connector parameters:(NSDictionary * _Nullable)paramters request:(NSURLRequest * _Nonnull)request;
 
 /**
  *  代理方法获取请求体
@@ -85,5 +85,5 @@
  *
  *  @return 返回请求体
  */
-- (NSData *)dataOfHTTPBodyWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request error:(NSError *__autoreleasing *)error;
+- (NSData * _Nullable)dataOfHTTPBodyWithNetworkConnector:(BGNetworkConnector * _Nonnull)connector parameters:(NSDictionary * _Nullable)paramters request:(NSURLRequest * _Nonnull)request error:(NSError *  _Nullable __autoreleasing * _Nullable)error;
 @end

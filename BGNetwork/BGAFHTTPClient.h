@@ -10,8 +10,8 @@
 
 @interface BGAFHTTPClient : AFHTTPSessionManager
 /** 判断一组请求是否已经请求完成 */
-- (BOOL)isHttpQueueFinished:(NSArray*)httpUrlArray;
+- (BOOL)isHttpQueueFinished:( NSArray * _Nonnull )httpUrlArray;
 
 /** 取消请求 */
-- (void)cancelTasksWithUrl:(NSString *)url;
+- (void)cancelTasksWithUrl:( NSString * _Nonnull )url;
 @end
