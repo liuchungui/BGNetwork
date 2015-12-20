@@ -35,6 +35,7 @@
 		CE1005271C1593F000748A36 /* UIView+Extra.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1005261C1593F000748A36 /* UIView+Extra.m */; };
 		CE10052D1C15999E00748A36 /* InfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052C1C15999E00748A36 /* InfoRequest.m */; };
 		CE1005301C1599AB00748A36 /* AdvertInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */; };
+		CE1897291C26EEAA009A16D6 /* DownloadFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */; };
 		CEA38C061C1BABCD0070DF3D /* BGDownloadRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA38C041C1BABCD0070DF3D /* BGDownloadRequestController.m */; };
 		CEA38C071C1BABCD0070DF3D /* BGDownloadRequestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA38C051C1BABCD0070DF3D /* BGDownloadRequestController.xib */; };
 		CED2BD931BBA3775005928B9 /* casetree.cer in Resources */ = {isa = PBXBuildFile; fileRef = CED2BD921BBA3775005928B9 /* casetree.cer */; };
@@ -151,6 +152,8 @@
 		CE10052E1C1599AB00748A36 /* AdvertInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertInfoRequest.h; sourceTree = "<group>"; };
 		CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertInfoRequest.m; sourceTree = "<group>"; };
 		CE13BC711C1893CE00D0FD78 /* BGNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BGNetwork.h; sourceTree = "<group>"; };
+		CE1897271C26EEAA009A16D6 /* DownloadFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadFileRequest.h; sourceTree = "<group>"; };
+		CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadFileRequest.m; sourceTree = "<group>"; };
 		CEA38C031C1BABCD0070DF3D /* BGDownloadRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDownloadRequestController.h; sourceTree = "<group>"; };
 		CEA38C041C1BABCD0070DF3D /* BGDownloadRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDownloadRequestController.m; sourceTree = "<group>"; };
 		CEA38C051C1BABCD0070DF3D /* BGDownloadRequestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BGDownloadRequestController.xib; sourceTree = "<group>"; };
@@ -589,6 +592,8 @@
 				CE10052C1C15999E00748A36 /* InfoRequest.m */,
 				CE10052E1C1599AB00748A36 /* AdvertInfoRequest.h */,
 				CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */,
+				CE1897271C26EEAA009A16D6 /* DownloadFileRequest.h */,
+				CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -748,6 +753,7 @@
 				CEF8E5431B9947E10087CDB3 /* BaseCollectionViewCell.m in Sources */,
 				CEF8E5481B9947E10087CDB3 /* BaseLineView.m in Sources */,
 				CE070BC51BB517A0002FF644 /* AFSecurityPolicy.m in Sources */,
+				CE1897291C26EEAA009A16D6 /* DownloadFileRequest.m in Sources */,
 				CEF8E5451B9947E10087CDB3 /* BaseDoubleLineView.m in Sources */,
 				CEF8E5521B9947E10087CDB3 /* RefreshTableHeaderView.m in Sources */,
 				CE10051C1C15939E00748A36 /* SDWebImageManager.m in Sources */,

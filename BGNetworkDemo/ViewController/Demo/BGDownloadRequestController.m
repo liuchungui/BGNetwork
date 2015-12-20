@@ -8,6 +8,7 @@
 
 #import "BGDownloadRequestController.h"
 #import "AFNetworking.h"
+#import "DownloadFileRequest.h"
 
 #define PATH_AT_CACHEDIR(name)		[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] 
 
@@ -88,6 +89,19 @@
 //        }
 //    }
 //}
+
+- (IBAction)downloadFileAction:(id)sender {
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg"]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:@"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"%f", downloadProgress.fractionCompleted);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"success!");
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failure!");
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

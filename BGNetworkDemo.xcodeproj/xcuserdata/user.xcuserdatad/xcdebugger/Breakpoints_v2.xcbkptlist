@@ -169,22 +169,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AFNetworking/AFHTTPSessionManager.m"
-            timestampString = "469102430.466714"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "-POST:parameters:constructingBodyWithBlock:success:failure:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "AFNetworking/AFURLSessionManager.m"
             timestampString = "471577187.672209"
             startingColumnNumber = "9223372036854775807"
@@ -202,7 +186,7 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/iOS/BGNetwork/AFNetworking/AFURLSessionManager.m"
-                  timestampString = "471937064.901493"
+                  timestampString = "472320318.29673"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "490"
@@ -217,7 +201,7 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/iOS/BGNetwork/AFNetworking/AFURLSessionManager.m"
-                  timestampString = "471937064.901913"
+                  timestampString = "472320318.297301"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "490"
@@ -250,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-            timestampString = "471935327.01779"
+            timestampString = "472313805.973512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "-downLoadButtonAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-            timestampString = "471935327.01779"
+            timestampString = "472313805.973512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "-downLoadButtonAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -282,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-            timestampString = "471935327.01779"
+            timestampString = "472313805.973512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "-downLoadButtonAction:"
             landmarkType = "5">
             <Locations>
@@ -298,11 +282,11 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/iOS/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-                  timestampString = "471937064.919104"
+                  timestampString = "472320318.339187"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
                   offsetFromSymbolStart = "141">
                </Location>
                <Location
@@ -313,11 +297,11 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/iOS/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-                  timestampString = "471937064.919337"
+                  timestampString = "472320318.34025"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
@@ -330,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-            timestampString = "471935327.01779"
+            timestampString = "472313805.973512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "-downLoadButtonAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
-            timestampString = "471935327.01779"
+            timestampString = "472313805.973512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "-resumeDownloadButtonAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -363,6 +347,38 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
+            timestampString = "472313805.973512"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-resumeDownloadButtonAction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BGNetworkDemo/Network/DownloadFileRequest.m"
+            timestampString = "472313574.182274"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "-processResponseObject:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

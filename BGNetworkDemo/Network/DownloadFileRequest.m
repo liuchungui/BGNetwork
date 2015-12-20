@@ -9,5 +9,15 @@
 #import "DownloadFileRequest.h"
 
 @implementation DownloadFileRequest
+- (instancetype)init {
+    if(self = [super init]) {
+        self.methodName = @"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg";
+        self.httpMethod = BGNetworkRequestHTTPGet;
+    }
+    return self;
+}
 
+- (id)processResponseObject:(id)responseObject {
+    return responseObject;
+}
 @end
