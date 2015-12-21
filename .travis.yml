@@ -1,4 +1,3 @@
 language: objective-c
 osx_image: xcode7.1
-xcode_project: BGNetworkDemo.xcodeproj
-xcode_scheme: BGNetworkDemo
+script: xctool -project BGNetworkDemo.xcodeproj -scheme BGNetworkDemo build test -sdk iphonesimulator
