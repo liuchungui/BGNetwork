@@ -10,9 +10,9 @@
 
 @implementation DemoNetworkConfiguration
 - (NSString *)baseURLString{
-    return @"http://localhost/app/BGNetwork/";
+//    return @"http://localhost/app/BGNetwork/";
 //    return @"http://casetree.cn/web/test/";
-//    return @"https://casetree.cn/web/test/";
+    return @"https://casetree.cn/web/test/";
 }
 
 - (NSData *)httpBodyDataWithRequest:(BGNetworkRequest *)request{
