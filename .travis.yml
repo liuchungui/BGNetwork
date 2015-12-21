@@ -1,4 +1,4 @@
 language: objective-c
 osx_image: xcode7.1
-xcode_project: BGNetwork.xcodeproj
-xcode_scheme: BGNetwork
+xcode_project: BGNetworkDemo.xcodeproj
+xcode_scheme: BGNetworkDemo
