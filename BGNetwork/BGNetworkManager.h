@@ -65,7 +65,7 @@
  */
 - (void)sendDownloadRequest:(BGDownloadRequest * _Nonnull)request
                    progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
-                    success:(nullable void (^)(BGDownloadRequest * _Nonnull request, NSData * _Nullable data))successCompletionBlock
+                    success:(nullable void (^)(BGDownloadRequest * _Nonnull request, NSURL * _Nullable filePath))successCompletionBlock
                     failure:(nullable void (^)(BGDownloadRequest * _Nonnull request, NSError * _Nullable error))failureCompletionBlock;
 
 

@@ -36,7 +36,7 @@ static NSUInteger _requestIdentifier = 0;
 
 @implementation BGDownloadRequest (BGNetworkManager)
 - (void)sendRequestWithProgress:(void (^)(NSProgress * _Nonnull))downloadProgressBlock
-                        success:(void (^)(BGDownloadRequest * _Nonnull, NSData * _Nullable))successCompletionBlock
+                        success:(void (^)(BGDownloadRequest * _Nonnull, NSURL * _Nullable))successCompletionBlock
                         failure:(void (^)(BGDownloadRequest * _Nonnull, NSError * _Nullable))failureCompletionBlock {
     [[BGNetworkManager sharedManager] sendDownloadRequest:self progress:downloadProgressBlock success:successCompletionBlock failure:failureCompletionBlock];
 }

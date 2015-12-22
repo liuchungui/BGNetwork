@@ -16,12 +16,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvN-Vb-uB3">
-                    <rect key="frame" x="480" y="520" width="100" height="30"/>
+                    <rect key="frame" x="400" y="520" width="150" height="30"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="09U-zU-GkC"/>
                         <constraint firstAttribute="height" constant="30" id="Q7b-ui-eNx"/>
-                        <constraint firstAttribute="width" constant="100" id="dXc-SX-K3a"/>
+                        <constraint firstAttribute="width" constant="150" id="dXc-SX-K3a"/>
                     </constraints>
                     <state key="normal" title="resumeDownload"/>
                     <variation key="default">
@@ -33,19 +33,8 @@
                         <action selector="resumeDownloadButtonAction:" destination="-1" eventType="touchUpInside" id="BF3-vZ-4DU"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLv-aZ-lAR">
-                    <rect key="frame" x="250" y="520" width="100" height="30"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="Okd-h0-lA8"/>
-                    </constraints>
-                    <state key="normal" title="BGDownload"/>
-                    <connections>
-                        <action selector="downloadFileAction:" destination="-1" eventType="touchUpInside" id="a8f-Zj-KEi"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Oz-cx-7mD">
-                    <rect key="frame" x="20" y="520" width="69" height="30"/>
+                    <rect key="frame" x="50" y="520" width="69" height="30"/>
                     <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="M2H-62-Ysa"/>
@@ -61,20 +50,48 @@
                         <action selector="downLoadButtonAction:" destination="-1" eventType="touchUpInside" id="pc8-1e-B1m"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeK-xp-miu">
+                    <rect key="frame" x="400" y="390" width="150" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="4iM-Ar-gov"/>
+                    </constraints>
+                    <state key="normal" title="pause"/>
+                    <connections>
+                        <action selector="pauseAction:" destination="-1" eventType="touchUpInside" id="6AJ-TJ-yUm"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLv-aZ-lAR">
+                    <rect key="frame" x="50" y="390" width="100" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="Okd-h0-lA8"/>
+                    </constraints>
+                    <state key="normal" title="BGDownload"/>
+                    <connections>
+                        <action selector="downloadFileAction:" destination="-1" eventType="touchUpInside" id="a8f-Zj-KEi"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MLv-aZ-lAR" firstAttribute="bottom" secondItem="9Oz-cx-7mD" secondAttribute="bottom" id="7dK-sz-qHE"/>
                 <constraint firstAttribute="bottom" secondItem="9Oz-cx-7mD" secondAttribute="bottom" constant="50" id="9sJ-da-5qZ"/>
+                <constraint firstAttribute="trailing" secondItem="MeK-xp-miu" secondAttribute="trailing" constant="50" id="D1X-1Q-wlN"/>
+                <constraint firstItem="MLv-aZ-lAR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="DVl-2b-DQd"/>
                 <constraint firstAttribute="bottom" secondItem="PvN-Vb-uB3" secondAttribute="bottom" constant="50" id="Re5-Br-Q9K"/>
-                <constraint firstAttribute="trailing" secondItem="PvN-Vb-uB3" secondAttribute="trailing" constant="20" id="VaR-0a-cGG"/>
+                <constraint firstAttribute="bottom" secondItem="MLv-aZ-lAR" secondAttribute="bottom" constant="180" id="TJG-qs-EFu"/>
+                <constraint firstAttribute="trailing" secondItem="PvN-Vb-uB3" secondAttribute="trailing" constant="50" id="VaR-0a-cGG"/>
                 <constraint firstItem="9Oz-cx-7mD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Vaq-Mz-lNl"/>
                 <constraint firstItem="MLv-aZ-lAR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Wga-gd-hGX"/>
-                <constraint firstItem="9Oz-cx-7mD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="sbj-0X-ZeI"/>
+                <constraint firstItem="MeK-xp-miu" firstAttribute="bottom" secondItem="MLv-aZ-lAR" secondAttribute="bottom" id="Wsu-e7-krH"/>
+                <constraint firstItem="9Oz-cx-7mD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="sbj-0X-ZeI"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="7dK-sz-qHE"/>
+                    <exclude reference="Wga-gd-hGX"/>
                     <exclude reference="Vaq-Mz-lNl"/>
                 </mask>
             </variation>
