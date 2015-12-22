@@ -85,7 +85,7 @@ static BGNetworkManager *_manager = nil;
                         }
                     }];
                     //save
-                    self.tmpDownloadTaskDic[requestURLString] = task;
+                    self.tempDownloadTaskDic[requestURLString] = task;
                 }
                 else {
                     //无缓存，则重新下载
@@ -105,7 +105,7 @@ static BGNetworkManager *_manager = nil;
                         }
                     }];
                     //save
-                    self.tmpDownloadTaskDic[requestURLString] = task;
+                    self.tempDownloadTaskDic[requestURLString] = task;
                 }
             });
         }];
