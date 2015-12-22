@@ -11,6 +11,7 @@
 #import "DemoNetworkConfiguration.h"
 #import "BGNetworkManager.h"
 #import "DemoRequest.h"
+#import "BGUploadRequest.h"
 
 @interface BGNetworkDemoTests : XCTestCase
 @end
@@ -52,6 +53,31 @@
         [expectation fulfill];
     } businessFailure:NULL networkFailure:NULL];
     [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(requestSuccess);
+    XCTAssertNotNil(blockResponseObject);
+}
+
+- (void)testThatUploadRequestSuccess {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"UploadRequest should succeed"];
+    __block BOOL requestSuccess = NO;
+    __block id blockResponseObject = nil;
+    UIImage *image = [UIImage imageNamed:@"icon_shanchu.png"];
+    BGUploadRequest *request = [[BGUploadRequest alloc] initWithData:UIImageJPEGRepresentation(image, 1.0)];
+    request.methodName = @"upload.php";
+    [request sendRequestWithProgress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%f", uploadProgress.fractionCompleted);
+    } success:^(BGNetworkRequest * _Nonnull request, id  _Nullable response) {
+        requestSuccess = YES;
+        blockResponseObject = response;
+        [expectation fulfill];
+    } businessFailure:^(BGNetworkRequest * _Nonnull request, id  _Nullable response) {
+        NSLog(@"%@", response);
+    } networkFailure:^(BGNetworkRequest * _Nonnull request, NSError * _Nullable error) {
+        NSLog(@"%@", error);
+    }];
+    
+    [self waitForExpectationsWithTimeout:20.0 handler:NULL];
     
     XCTAssertTrue(requestSuccess);
     XCTAssertNotNil(blockResponseObject);
