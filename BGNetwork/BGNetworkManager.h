@@ -63,10 +63,10 @@
  *  @param successCompletionBlock 下载成功
  *  @param failureCompletionBlock 下载失败
  */
-- (void)sendRequest:(BGDownloadRequest * _Nonnull)request
-           progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
-            success:(nullable void (^)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath))successCompletionBlock
-            failure:(nullable void (^)(NSError * _Nullable error))failureCompletionBlock;
+- (void)sendDownloadRequest:(BGDownloadRequest * _Nonnull)request
+                   progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
+                    success:(nullable void (^)(BGDownloadRequest * _Nonnull request, NSData * _Nullable data))successCompletionBlock
+                    failure:(nullable void (^)(BGDownloadRequest * _Nonnull request, NSError * _Nullable error))failureCompletionBlock;
 
 
 - (void)sendUploadRequest:(BGUploadRequest * _Nonnull)request

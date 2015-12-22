@@ -44,6 +44,9 @@
         //文件管理
         dispatch_async(self.workQueue, ^{
             _fileManager = [NSFileManager defaultManager];
+            if (![_fileManager fileExistsAtPath:_diskCachePath]) {
+                [_fileManager createDirectoryAtPath:_diskCachePath withIntermediateDirectories:YES attributes:nil error:NULL];
+            }
         });
     }
     return self;
@@ -57,10 +60,6 @@
     [self.memoryCache setObject:data forKey:key cost:data.length];
     //缓存到本地
     dispatch_async(self.workQueue, ^{
-        if (![_fileManager fileExistsAtPath:_diskCachePath]) {
-            [_fileManager createDirectoryAtPath:_diskCachePath withIntermediateDirectories:YES attributes:nil error:NULL];
-        }
-        
         // get cache Path for data key
         NSString *cachePathForKey = [self defaultCachePathForKey:key];
         [_fileManager createFileAtPath:cachePathForKey contents:data attributes:nil];

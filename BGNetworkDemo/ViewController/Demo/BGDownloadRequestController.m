@@ -34,13 +34,13 @@
     
     NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
-        if(downloadProgress.fractionCompleted > 0.5) {
-            //don't imp [self.task cancel];
-            //取消任务，并且获取临时的数据，以便以后恢复下载
-            [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-                self.tmpData = resumeData;
-            }];
-        }
+//        if(downloadProgress.fractionCompleted > 0.5) {
+//            //don't imp [self.task cancel];
+//            //取消任务，并且获取临时的数据，以便以后恢复下载
+//            [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+//                self.tmpData = resumeData;
+//            }];
+//        }
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         return targetPath;
         
@@ -94,9 +94,9 @@
     DownloadFileRequest *request = [[DownloadFileRequest alloc] init];
     [request sendRequestWithProgress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
-    } success:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath) {
-        NSLog(@"%@", filePath);
-    } failure:^(NSError * _Nullable error) {
+    } success:^(BGDownloadRequest * _Nonnull request, NSData * _Nullable data) {
+        NSLog(@"%@", data);
+    } failure:^(BGDownloadRequest * _Nonnull request, NSError * _Nullable error) {
         NSLog(@"%@", error);
     }];
 }
