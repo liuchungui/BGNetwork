@@ -20,6 +20,10 @@ static BGNetworkManager *_manager = nil;
  */
 @property (nonatomic, strong) NSMutableDictionary *tempRequestDic;
 /**
+ *  下载任务的字典
+ */
+@property (nonatomic, strong) NSMutableDictionary *tempDownloadTaskDic;
+/**
  *  网络配置
  */
 @property (nonatomic, strong) BGNetworkConfiguration *configuration;
@@ -47,7 +51,8 @@ static BGNetworkManager *_manager = nil;
         _dataHandleQueue = dispatch_queue_create("com.BGNEtworkManager.dataHandle", DISPATCH_QUEUE_CONCURRENT);
         
         dispatch_async(_workQueue, ^{
-            self.tempRequestDic = [[NSMutableDictionary alloc] init];
+            self.tempRequestDic = [NSMutableDictionary dictionary];
+            self.tempDownloadTaskDic = [NSMutableDictionary dictionary];
         });
     }
     return self;
@@ -65,7 +70,7 @@ static BGNetworkManager *_manager = nil;
             dispatch_async(self.workQueue, ^{
                 //有缓存，则断点续传
                 if([object isKindOfClass:[NSData class]]) {
-                    [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                    NSURLSessionDownloadTask *task = [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                         return [NSURL URLWithString:[self.cache defaultCachePathForKey:cacheKey]];
                     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                         if(error) {
@@ -79,11 +84,13 @@ static BGNetworkManager *_manager = nil;
                             }
                         }
                     }];
+                    //save
+                    self.tmpDownloadTaskDic[requestURLString] = task;
                 }
                 else {
                     //无缓存，则重新下载
                     NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
-                    [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                    NSURLSessionDownloadTask *task = [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                         return [NSURL URLWithString:[self.cache defaultCachePathForKey:cacheKey]];
                     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                         if(error) {
@@ -97,7 +104,8 @@ static BGNetworkManager *_manager = nil;
                             }
                         }
                     }];
-                    
+                    //save
+                    self.tmpDownloadTaskDic[requestURLString] = task;
                 }
             });
         }];
@@ -303,6 +311,21 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - cancel request
 - (void)cancelRequestWithUrl:(NSString *)url{
     [self.connector cancelRequest:url];
+}
+
+- (void)cancelDownloadRequest:(BGDownloadRequest *)request {
+    dispatch_async(self.workQueue, ^{
+        NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
+        NSURLSessionDownloadTask *task = self.tempDownloadTaskDic[requestURLString];
+        [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
+            //缓存，以用来断点续传
+            [self.cache storeData:resumeData forKey:cacheKey];
+            //不保存
+            self.tempDownloadTaskDic[requestURLString] = nil;
+        }];
+    });
+    
 }
 
 #pragma mark - Util method

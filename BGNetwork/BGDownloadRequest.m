@@ -43,7 +43,7 @@ static NSUInteger _requestIdentifier = 0;
  *  取消请求
  */
 - (void)cancelRequest {
-#warning 未写
+    [[BGNetworkManager sharedManager] cancelDownloadRequest:self];
 }
 
 @end

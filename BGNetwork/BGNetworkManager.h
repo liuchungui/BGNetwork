@@ -73,4 +73,9 @@
  *  @param url 取消请求的url
  */
 - (void)cancelRequestWithUrl:(NSString * _Nonnull)url;
+
+/**
+ *  cancel download request
+ */
+- (void)cancelDownloadRequest:(BGDownloadRequest * _Nonnull)request;
 @end
