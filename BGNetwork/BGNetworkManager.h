@@ -12,6 +12,7 @@
 #import "BGNetworkRequest.h"
 #import "BGNetworkCache.h"
 #import "BGDownloadRequest.h"
+#import "BGUploadRequest.h"
 
 /**
  *  网络管理内，是一个单例，需要创建一个网络配置给此类使用
@@ -66,6 +67,13 @@
            progress:(nullable void (^)(NSProgress * _Nonnull downloadProgress)) downloadProgressBlock
             success:(nullable void (^)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath))successCompletionBlock
             failure:(nullable void (^)(NSError * _Nullable error))failureCompletionBlock;
+
+
+- (void)sendUploadRequest:(BGUploadRequest * _Nonnull)request
+                 progress:(nullable void (^)(NSProgress * _Nonnull uploadProgress)) uploadProgress
+                  success:(BGSuccessCompletionBlock _Nullable)successCompletionBlock
+          businessFailure:(BGBusinessFailureBlock _Nullable)businessFailureBlock
+           networkFailure:(BGNetworkFailureBlock _Nullable)networkFailureBlock;
 
 /**
  *  取消请求

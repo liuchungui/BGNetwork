@@ -113,6 +113,26 @@ static BGNetworkManager *_manager = nil;
     });
 }
 
+- (void)sendUploadRequest:(BGUploadRequest *)request
+                 progress:(void (^)(NSProgress * _Nonnull))uploadProgress
+                  success:(BGSuccessCompletionBlock)successCompletionBlock
+          businessFailure:(BGBusinessFailureBlock)businessFailureBlock
+           networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
+    dispatch_async(self.workQueue, ^{
+        [self.connector POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [formData appendPartWithFileData:request.fileData name:request.uploadKey fileName:request.fileName mimeType:request.mimeType];
+        } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            dispatch_async(self.workQueue, ^{
+                [self networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
+            });
+        } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error) {
+            dispatch_async(self.workQueue, ^{
+                [self networkFailure:request error:error completion:networkFailureBlock];
+            });
+        }];
+    });
+}
+
 - (void)sendRequest:(BGNetworkRequest *)request
             success:(BGSuccessCompletionBlock)successCompletionBlock
     businessFailure:(BGBusinessFailureBlock)businessFailureBlock

@@ -10,6 +10,7 @@
 #import "ViewController.h"
 #import "BGBatchViewController.h"
 #import "BGDownloadRequestController.h"
+#import "BGUploadViewController.h"
 
 @interface TableViewController ()
 
@@ -40,7 +41,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -54,6 +55,9 @@
             break;
         case 2:
             cell.textLabel.text = @"BGDownLoadRequest";
+            break;
+        case 3:
+            cell.textLabel.text = @"BGUploadRequest";
             break;
             
         default:
@@ -73,6 +77,10 @@
             break;
         case 2:
             ctrl = [[BGDownloadRequestController alloc] init];
+            break;
+        case 3:
+            ctrl = [[BGUploadViewController alloc] init];
+            break;
         default:
             break;
     }

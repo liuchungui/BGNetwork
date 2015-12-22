@@ -60,6 +60,13 @@
                                              destination:(NSURL * _Nullable (^ _Nullable)(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response))destination
                                        completionHandler:(nullable void (^)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
 
+- (NSURLSessionDataTask * _Nonnull)POST:(NSString * _Nonnull)URLString
+                    parameters:(id _Nonnull)parameters
+     constructingBodyWithBlock:(void (^ _Nonnull)(id <AFMultipartFormData> _Nonnull formData))block
+                      progress:(nullable void (^)(NSProgress * _Nonnull))uploadProgress
+                       success:(nullable void (^)(NSURLSessionDataTask * _Nonnull task, id _Nonnull responseObject))success
+                       failure:(nullable void (^)(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error))failure;
+
 
 /**
  *  取消请求

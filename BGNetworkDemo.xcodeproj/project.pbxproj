@@ -35,6 +35,10 @@
 		CE1005271C1593F000748A36 /* UIView+Extra.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1005261C1593F000748A36 /* UIView+Extra.m */; };
 		CE10052D1C15999E00748A36 /* InfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052C1C15999E00748A36 /* InfoRequest.m */; };
 		CE1005301C1599AB00748A36 /* AdvertInfoRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */; };
+		CE1687691C29353E002F37FE /* BGUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1687671C29353E002F37FE /* BGUploadViewController.m */; };
+		CE16876A1C29353E002F37FE /* BGUploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1687681C29353E002F37FE /* BGUploadViewController.xib */; };
+		CE16876E1C2936A7002F37FE /* icon_shanchu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE16876D1C2936A7002F37FE /* icon_shanchu@2x.png */; };
+		CE1687711C294DBB002F37FE /* BGUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1687701C294DBB002F37FE /* BGUploadRequest.m */; };
 		CE1897291C26EEAA009A16D6 /* DownloadFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */; };
 		CE18972C1C270F5C009A16D6 /* BGDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */; };
 		CEA38C061C1BABCD0070DF3D /* BGDownloadRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA38C041C1BABCD0070DF3D /* BGDownloadRequestController.m */; };
@@ -153,6 +157,12 @@
 		CE10052E1C1599AB00748A36 /* AdvertInfoRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertInfoRequest.h; sourceTree = "<group>"; };
 		CE10052F1C1599AB00748A36 /* AdvertInfoRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertInfoRequest.m; sourceTree = "<group>"; };
 		CE13BC711C1893CE00D0FD78 /* BGNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BGNetwork.h; sourceTree = "<group>"; };
+		CE1687661C29353E002F37FE /* BGUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGUploadViewController.h; sourceTree = "<group>"; };
+		CE1687671C29353E002F37FE /* BGUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGUploadViewController.m; sourceTree = "<group>"; };
+		CE1687681C29353E002F37FE /* BGUploadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BGUploadViewController.xib; sourceTree = "<group>"; };
+		CE16876D1C2936A7002F37FE /* icon_shanchu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_shanchu@2x.png"; sourceTree = "<group>"; };
+		CE16876F1C294DBB002F37FE /* BGUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGUploadRequest.h; sourceTree = "<group>"; };
+		CE1687701C294DBB002F37FE /* BGUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGUploadRequest.m; sourceTree = "<group>"; };
 		CE1897271C26EEAA009A16D6 /* DownloadFileRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadFileRequest.h; sourceTree = "<group>"; };
 		CE1897281C26EEAA009A16D6 /* DownloadFileRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadFileRequest.m; sourceTree = "<group>"; };
 		CE18972A1C270F5C009A16D6 /* BGDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDownloadRequest.h; sourceTree = "<group>"; };
@@ -354,6 +364,14 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		CE16876C1C2936A1002F37FE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CE16876D1C2936A7002F37FE /* icon_shanchu@2x.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		CEF8E40A1B99464C0087CDB3 = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +395,7 @@
 		CEF8E4151B99464C0087CDB3 /* BGNetworkDemo */ = {
 			isa = PBXGroup;
 			children = (
+				CE16876C1C2936A1002F37FE /* Resource */,
 				CEF8E6261B994A830087CDB3 /* Network */,
 				CEF8E56A1B9948E70087CDB3 /* Macro */,
 				CEF8E55E1B9948500087CDB3 /* Models */,
@@ -530,6 +549,9 @@
 				CE1004CA1C1591F000748A36 /* BGBatchViewController.h */,
 				CE1004CB1C1591F000748A36 /* BGBatchViewController.m */,
 				CE1004CC1C1591F000748A36 /* BGBatchViewController.xib */,
+				CE1687661C29353E002F37FE /* BGUploadViewController.h */,
+				CE1687671C29353E002F37FE /* BGUploadViewController.m */,
+				CE1687681C29353E002F37FE /* BGUploadViewController.xib */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -622,6 +644,8 @@
 				CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */,
 				CE18972A1C270F5C009A16D6 /* BGDownloadRequest.h */,
 				CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */,
+				CE16876F1C294DBB002F37FE /* BGUploadRequest.h */,
+				CE1687701C294DBB002F37FE /* BGUploadRequest.m */,
 				CEF8E6C31B9959E40087CDB3 /* BGNetworkUtil.h */,
 				CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */,
 				CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */,
@@ -712,6 +736,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE16876A1C29353E002F37FE /* BGUploadViewController.xib in Resources */,
+				CE16876E1C2936A7002F37FE /* icon_shanchu@2x.png in Resources */,
 				CEF8E54F1B9947E10087CDB3 /* _refresh_rotate@2x.png in Resources */,
 				CEF8E54E1B9947E10087CDB3 /* _refresh_arrow@2x.png in Resources */,
 				CE1004CE1C1591F000748A36 /* BGBatchViewController.xib in Resources */,
@@ -772,6 +798,7 @@
 				CEF8E6DE1B9959E40087CDB3 /* BGNetworkUtil.m in Sources */,
 				CE10052D1C15999E00748A36 /* InfoRequest.m in Sources */,
 				CEF8E54D1B9947E10087CDB3 /* RefreshTimeHelper.m in Sources */,
+				CE1687691C29353E002F37FE /* BGUploadViewController.m in Sources */,
 				CE070BC31BB517A0002FF644 /* AFHTTPSessionManager.m in Sources */,
 				CEF8E6DA1B9959E40087CDB3 /* BGNetworkConfiguration.m in Sources */,
 				CE1005191C15939E00748A36 /* SDWebImageDecoder.m in Sources */,
@@ -785,6 +812,7 @@
 				CE10051E1C15939E00748A36 /* UIButton+WebCache.m in Sources */,
 				CEF8E5441B9947E10087CDB3 /* BaseDoubleLineCell.m in Sources */,
 				CEF8E6291B994A9F0087CDB3 /* DemoNetworkConfiguration.m in Sources */,
+				CE1687711C294DBB002F37FE /* BGUploadRequest.m in Sources */,
 				CEF8E6D61B9959E40087CDB3 /* BGAFHTTPClient.m in Sources */,
 				CEF8E5681B9948500087CDB3 /* DemoModel.m in Sources */,
 				CEF8E54C1B9947E10087CDB3 /* RefreshTableView.m in Sources */,
