@@ -7,7 +7,20 @@
 //
 
 #import "BGNetworkCache.h"
-#import "BGNetworkUtil.h"
+#import <CommonCrypto/CommonDigest.h>
+
+static inline NSString *cache_md5(NSString *value) {
+    const char *str = [value UTF8String];
+    if (str == NULL) {
+        str = "";
+    }
+    unsigned char r[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (CC_LONG)strlen(str), r);
+    NSString *md5Str = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                        r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+    
+    return md5Str;
+}
 
 @interface BGNetworkCache ()
 @property (nonatomic, strong) dispatch_queue_t workQueue;
@@ -52,58 +65,108 @@
     return self;
 }
 
+#pragma mark - cache data for key
 - (void)storeData:(NSData *)data forKey:(NSString *)key{
-    if(!data | !key){
+    [self storeData:data forFileName:cache_md5(key)];
+}
+
+- (NSData *)queryCacheForKey:(NSString *)key{
+    return [self queryCacheForFileName:cache_md5(key)];
+}
+
+- (void)queryCacheForKey:(NSString *)key completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)block{
+    [self queryCacheForFileName:cache_md5(key) completion:block];
+}
+
+- (void)removeCacheForKey:(NSString *)key{
+    [self removeCacheForFileName:cache_md5(key)];
+}
+
+#pragma mark - cache data for fileName
+- (void)storeData:(NSData *)data forFileName:(NSString *)fileName completion:(BGNetworkCacheCompletionBlock _Nullable)comletionBlock{
+    if(!data | !fileName){
         return;
     }
+    
     //缓存到内存
+    NSString *key = cache_md5(fileName);
     [self.memoryCache setObject:data forKey:key cost:data.length];
+    
     //缓存到本地
     dispatch_async(self.workQueue, ^{
         // get cache Path for data key
-        NSString *cachePathForKey = [self defaultCachePathForKey:key];
+        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
         [_fileManager createFileAtPath:cachePathForKey contents:data attributes:nil];
         //缓存成功之后，从内存中删除
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.memoryCache removeObjectForKey:key];
         });
+        if(comletionBlock) {
+            comletionBlock();
+        }
     });
 }
 
-- (NSData *)queryCacheForKey:(NSString *)key{
-    if(!key){
+- (void)storeData:(NSData *)data forFileName:(NSString *)fileName {
+    [self storeData:data forFileName:fileName completion:NULL];
+}
+
+- (NSData *)queryCacheForFileName:(NSString *)fileName {
+    if(!fileName){
         return nil;
     }
+    
+    //query memory data
+    NSString *key = cache_md5(fileName);
     NSData *data = [self.memoryCache objectForKey:key];
+    
     if(data == nil){
-        NSString *cachePathForKey = [self defaultCachePathForKey:key];
+        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
         data = [[NSData alloc] initWithContentsOfFile:cachePathForKey];
     }
+    
     return data;
 }
 
-- (void)queryCacheForKey:(NSString *)key completed:(BGNetworkCacheQueryCompletedBlock)block{
-    if(!key || !block){
+- (void)queryCacheForFileName:(NSString *)fileName completion:(BGNetworkQueryCacheCompletionBlock)comletionBlock {
+    if(!fileName){
         return;
     }
+    
+    //query memory data
+    NSString *key = cache_md5(fileName);
     NSData *data = [self.memoryCache objectForKey:key];
+    
     if(data == nil){
-        dispatch_async(self.workQueue, ^{
-            NSString *cachePathForKey = [self defaultCachePathForKey:key];
-            NSData *diskData = [[NSData alloc] initWithContentsOfFile:cachePathForKey];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                block(diskData);
-            });
-        });
+        [self queryDiskCacheForFileName:fileName completion:comletionBlock];
     }
     else{
-        block(data);
+        comletionBlock(data);
     }
 }
 
-- (void)removeCacheForKey:(NSString *)key{
+- (void)queryDiskCacheForFileName:(NSString *)fileName completion:(BGNetworkQueryCacheCompletionBlock)comletionBlock {
+    if(!fileName){
+        return;
+    }
+    
     dispatch_async(self.workQueue, ^{
-        NSString *cachePathForKey = [self defaultCachePathForKey:key];
+        NSString *cachePath = [self defaultCachePathForKey:fileName];
+        NSData *diskData = [[NSData alloc] initWithContentsOfFile:cachePath];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            comletionBlock(diskData);
+        });
+    });
+}
+
+- (void)removeCacheForFileName:(NSString *)fileName {
+    //remove memory data
+    NSString *key = cache_md5(fileName);
+    [self.memoryCache removeObjectForKey:key];
+    
+    //remove disk data
+    dispatch_async(self.workQueue, ^{
+        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
         [_fileManager removeItemAtPath:cachePathForKey error:nil];
     });
 }
@@ -119,11 +182,11 @@
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
-- (void)queryObjectForKey:(NSString *)key completed:(BGNetworkCacheQueryCompletedBlock)block{
+- (void)queryObjectForKey:(NSString *)key completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)block{
     if(!key || !block){
         return;
     }
-    [self queryCacheForKey:key completed:^(NSData *data) {
+    [self queryCacheForKey:key completion:^(NSData *data) {
         id object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         block(object);
     }];
@@ -135,12 +198,16 @@
     return [paths[0] stringByAppendingPathComponent:fullNamespace];
 }
 
-- (NSString *)cachePathForKey:(NSString *)key inPath:(NSString *)path {
-    NSString *filename = [BGNetworkUtil md5:key];
-    return [path stringByAppendingPathComponent:filename];
+- (NSString *)cachePathForFileName:(NSString *)fileName inPath:(NSString *)path {
+    return [path stringByAppendingPathComponent:fileName];
 }
 
 - (NSString *)defaultCachePathForKey:(NSString *)key {
-    return [self cachePathForKey:key inPath:self.diskCachePath];
+    NSString *fileName = cache_md5(key);
+    return [self defaultCachePathForFileName:fileName];
+}
+
+- (NSString *)defaultCachePathForFileName:(NSString *)fileName {
+    return [self cachePathForFileName:fileName inPath:self.diskCachePath];
 }
 @end
