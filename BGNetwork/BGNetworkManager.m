@@ -369,7 +369,6 @@ static BGNetworkManager *_manager = nil;
         NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
         NSURLSessionDownloadTask *task = self.tempDownloadTaskDic[requestURLString];
         [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-            NSString *string = [[NSString alloc] initWithData:resumeData encoding:NSUTF8StringEncoding];
             NSString *pathExtension = [request.methodName pathExtension];
             NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
             NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
