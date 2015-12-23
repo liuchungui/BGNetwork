@@ -9,6 +9,7 @@
 #import "BGDownloadRequestController.h"
 #import "AFNetworking.h"
 #import "DownloadFileRequest.h"
+#import "BGNetwork.h"
 
 #define PATH_AT_CACHEDIR(name)		[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] 
 
@@ -35,11 +36,12 @@
     
     NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
-        if(downloadProgress.fractionCompleted > 0.5) {
+        if(downloadProgress.fractionCompleted > 0.2) {
             //don't imp [self.task cancel];
             //取消任务，并且获取临时的数据，以便以后恢复下载
             [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-                self.tmpData = resumeData;
+//                self.tmpData = resumeData;
+                [[BGNetworkCache sharedCache] storeData:resumeData forFileName:@"test.tmp"];
             }];
         }
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
@@ -56,13 +58,17 @@
 
 - (IBAction)resumeDownloadButtonAction:(id)sender {
     self.isResumeDownload = YES;
+    self.tmpData = [[BGNetworkCache sharedCache] queryCacheForFileName:@"test.tmp"];
     
     //拿取以前请求的数据进行重新请求，实现断点续传的效果
     AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
     NSURLSessionDownloadTask *task = [manger downloadTaskWithResumeData:self.tmpData progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        return targetPath;
+//        return targetPath;
+        NSString *filePath = [[BGNetworkCache sharedCache] defaultCachePathForFileName:@"test.dmg"];
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        return fileURL;
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         if(error == nil) {
             NSLog(@"resume download success!");

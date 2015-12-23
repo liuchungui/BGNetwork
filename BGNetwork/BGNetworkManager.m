@@ -99,27 +99,26 @@ static BGNetworkManager *_manager = nil;
     NSString *resumeDataFileName = [NSString stringWithFormat:@"%@_resume", fileName];
     [self.cache queryDiskCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
         //有数据，断点续传
-#warning 需要测一下断点续传
-        //        if([object isKindOfClass:[NSData class]]) {
-        //            NSURLSessionDownloadTask *task = [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        //                return [NSURL fileURLWithPath:[self.cache defaultCachePathForKey:cacheKey]];
-        //            } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        //                [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
-        //            }];
-        //            //save
-        //            self.tempDownloadTaskDic[requestURLString] = task;
-        //        }
-        //        else {
-        //无缓存，则重新下载
-        NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
-        NSURLSessionDownloadTask *task = [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-            return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
-        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-            [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
-        }];
-        //save
-        self.tempDownloadTaskDic[requestURLString] = task;
-        //        }
+        if([object isKindOfClass:[NSData class]]) {
+            NSURLSessionDownloadTask *task = [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+            } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+            }];
+            //save
+            self.tempDownloadTaskDic[requestURLString] = task;
+        }
+        else {
+            //无缓存，则重新下载
+            NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
+            NSURLSessionDownloadTask *task = [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+            } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+            }];
+            //save
+            self.tempDownloadTaskDic[requestURLString] = task;
+        }
     }];
 }
 
@@ -370,12 +369,15 @@ static BGNetworkManager *_manager = nil;
         NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
         NSURLSessionDownloadTask *task = self.tempDownloadTaskDic[requestURLString];
         [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            NSString *string = [[NSString alloc] initWithData:resumeData encoding:NSUTF8StringEncoding];
+            NSString *pathExtension = [request.methodName pathExtension];
             NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
-            NSString *resumeDataKey = [NSString stringWithFormat:@"%@_resume", cacheKey];
+            NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
+            NSString *resumeDataFile = [NSString stringWithFormat:@"%@_resume", fileName];
             //缓存，以用来断点续传
-            [self.cache storeData:resumeData forKey:resumeDataKey];
+            [self.cache storeData:resumeData forFileName:resumeDataFile];
             //不保存
-//            self.tempDownloadTaskDic[requestURLString] = nil;
+            self.tempDownloadTaskDic[requestURLString] = nil;
         }];
     });
     

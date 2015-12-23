@@ -151,7 +151,7 @@ static inline NSString *cache_md5(NSString *value) {
     }
     
     dispatch_async(self.workQueue, ^{
-        NSString *cachePath = [self defaultCachePathForKey:fileName];
+        NSString *cachePath = [self defaultCachePathForFileName:fileName];
         NSData *diskData = [[NSData alloc] initWithContentsOfFile:cachePath];
         dispatch_async(dispatch_get_main_queue(), ^{
             comletionBlock(diskData);

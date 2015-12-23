@@ -73,7 +73,9 @@
                                                 progress:(void (^)(NSProgress *downloadProgress)) downloadProgressBlock
                                              destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
                                        completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler {
-    return [self.httpClient downloadTaskWithResumeData:resumeData progress:downloadProgressBlock destination:destination completionHandler:completionHandler];
+    NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:resumeData progress:downloadProgressBlock destination:destination completionHandler:completionHandler];
+    [task resume];
+    return task;
 }
 
 - (NSURLSessionDataTask *)POST:(NSString *)URLString
