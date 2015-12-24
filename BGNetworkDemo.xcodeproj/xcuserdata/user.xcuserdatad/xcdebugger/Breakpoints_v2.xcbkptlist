@@ -308,12 +308,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetwork/BGNetworkManager.m"
-            timestampString = "472539407.10076"
+            timestampString = "472662767.78386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
-            landmarkName = "-cancelDownloadRequest:"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
+            landmarkName = "-networkSuccess:task:responseData:success:businessFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -324,12 +324,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetwork/BGNetworkManager.m"
-            timestampString = "472535893.572597"
+            timestampString = "472662767.78386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
-            landmarkName = "-cancelDownloadRequest:"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "-networkSuccess:task:responseData:success:businessFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -356,12 +356,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BGNetwork/BGNetworkManager.m"
-            timestampString = "472539407.10076"
+            timestampString = "472662767.78386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "-cancelDownloadRequest:"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "-networkSuccess:task:responseData:success:businessFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -12,7 +12,6 @@
 #import "BGNetworkManager.h"
 #import "BGAFRequestSerializer.h"
 #import "BGAFResponseSerializer.h"
-#import "BGNetworkUtil.h"
 #import "BGBatchRequest.h"
 
 #endif /* BGNetwork_h */

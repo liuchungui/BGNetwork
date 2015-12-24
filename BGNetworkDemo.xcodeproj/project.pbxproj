@@ -13,6 +13,7 @@
 		CE070BC71BB517A0002FF644 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBC1BB517A0002FF644 /* AFURLRequestSerialization.m */; };
 		CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */; };
 		CE070BC91BB517A0002FF644 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */; };
+		CE0EA7F11C2C33F6004FA851 /* BGUtilFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0EA7F01C2C33F6004FA851 /* BGUtilFunction.m */; };
 		CE1004C91C158DAC00748A36 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004C81C158DAC00748A36 /* TableViewController.m */; };
 		CE1004CD1C1591F000748A36 /* BGBatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1004CB1C1591F000748A36 /* BGBatchViewController.m */; };
 		CE1004CE1C1591F000748A36 /* BGBatchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1004CC1C1591F000748A36 /* BGBatchViewController.xib */; };
@@ -84,7 +85,6 @@
 		CEF8E6DB1B9959E40087CDB3 /* BGNetworkConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6BE1B9959E40087CDB3 /* BGNetworkConnector.m */; };
 		CEF8E6DC1B9959E40087CDB3 /* BGNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */; };
 		CEF8E6DD1B9959E40087CDB3 /* BGNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */; };
-		CEF8E6DE1B9959E40087CDB3 /* BGNetworkUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */; };
 		CEFAF52E1C14A3EC00DE2AEC /* BGBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +112,8 @@
 		CE070BBE1BB517A0002FF644 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		CE070BBF1BB517A0002FF644 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		CE070BC01BB517A0002FF644 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		CE0EA7EF1C2C33F6004FA851 /* BGUtilFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGUtilFunction.h; sourceTree = "<group>"; };
+		CE0EA7F01C2C33F6004FA851 /* BGUtilFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGUtilFunction.m; sourceTree = "<group>"; };
 		CE1004C71C158DAC00748A36 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		CE1004C81C158DAC00748A36 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		CE1004CA1C1591F000748A36 /* BGBatchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGBatchViewController.h; sourceTree = "<group>"; };
@@ -248,8 +250,6 @@
 		CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkManager.m; sourceTree = "<group>"; };
 		CEF8E6C11B9959E40087CDB3 /* BGNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkRequest.h; sourceTree = "<group>"; };
 		CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkRequest.m; sourceTree = "<group>"; };
-		CEF8E6C31B9959E40087CDB3 /* BGNetworkUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkUtil.h; sourceTree = "<group>"; };
-		CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkUtil.m; sourceTree = "<group>"; };
 		CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGBatchRequest.m; sourceTree = "<group>"; };
 		CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGBatchRequest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -646,10 +646,10 @@
 				CE18972B1C270F5C009A16D6 /* BGDownloadRequest.m */,
 				CE16876F1C294DBB002F37FE /* BGUploadRequest.h */,
 				CE1687701C294DBB002F37FE /* BGUploadRequest.m */,
-				CEF8E6C31B9959E40087CDB3 /* BGNetworkUtil.h */,
-				CEF8E6C41B9959E40087CDB3 /* BGNetworkUtil.m */,
 				CEFAF52D1C14A3EC00DE2AEC /* BGBatchRequest.h */,
 				CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */,
+				CE0EA7EF1C2C33F6004FA851 /* BGUtilFunction.h */,
+				CE0EA7F01C2C33F6004FA851 /* BGUtilFunction.m */,
 				CE13BC711C1893CE00D0FD78 /* BGNetwork.h */,
 			);
 			path = BGNetwork;
@@ -795,7 +795,6 @@
 				CE10051D1C15939E00748A36 /* SDWebImagePrefetcher.m in Sources */,
 				CE1005231C15939E00748A36 /* UIImageView+WebCache.m in Sources */,
 				CE070BC81BB517A0002FF644 /* AFURLResponseSerialization.m in Sources */,
-				CEF8E6DE1B9959E40087CDB3 /* BGNetworkUtil.m in Sources */,
 				CE10052D1C15999E00748A36 /* InfoRequest.m in Sources */,
 				CEF8E54D1B9947E10087CDB3 /* RefreshTimeHelper.m in Sources */,
 				CE1687691C29353E002F37FE /* BGUploadViewController.m in Sources */,
@@ -826,6 +825,7 @@
 				CE1005161C15939E00748A36 /* NSData+ImageContentType.m in Sources */,
 				CEF8E6D71B9959E40087CDB3 /* BGAFRequestSerializer.m in Sources */,
 				CE10051F1C15939E00748A36 /* UIImage+GIF.m in Sources */,
+				CE0EA7F11C2C33F6004FA851 /* BGUtilFunction.m in Sources */,
 				CEF8E5691B9948500087CDB3 /* PageModel.m in Sources */,
 				CEF8E5491B9947E10087CDB3 /* BaseView.m in Sources */,
 				CEF8E6D81B9959E40087CDB3 /* BGAFResponseSerializer.m in Sources */,

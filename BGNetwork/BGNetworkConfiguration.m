@@ -7,7 +7,7 @@
 //
 
 #import "BGNetworkConfiguration.h"
-#import "BGNetworkUtil.h"
+#import "BGUtilFunction.h"
 
 @interface BGNetworkConfiguration ()
 @end
@@ -41,7 +41,7 @@
 
 - (NSString *)queryStringForURLWithRequest:(BGNetworkRequest *)request{
     if(request.httpMethod == BGNetworkRequestHTTPGet){
-        return [BGNetworkUtil queryStringFromParamDic:request.parametersDic];
+        return BGQueryStringFromParamDictionary(request.parametersDic);
     }
     else{
         return nil;

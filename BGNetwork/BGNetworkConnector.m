@@ -10,7 +10,6 @@
 #import "BGAFHTTPClient.h"
 #import "BGAFRequestSerializer.h"
 #import "BGAFResponseSerializer.h"
-#import "BGNetworkUtil.h"
 
 @interface BGNetworkConnector ()<BGAFRequestSerializerDelegate, BGAFResponseSerializerDelegate>
 @property (nonatomic, strong) BGAFHTTPClient *httpClient;

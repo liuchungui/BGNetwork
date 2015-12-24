@@ -7,20 +7,7 @@
 //
 
 #import "BGNetworkCache.h"
-#import <CommonCrypto/CommonDigest.h>
-
-static inline NSString *cache_md5(NSString *value) {
-    const char *str = [value UTF8String];
-    if (str == NULL) {
-        str = "";
-    }
-    unsigned char r[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(str, (CC_LONG)strlen(str), r);
-    NSString *md5Str = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-                        r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
-    
-    return md5Str;
-}
+#import "BGUtilFunction.h"
 
 @interface BGNetworkCache ()
 @property (nonatomic, strong) dispatch_queue_t workQueue;
@@ -67,19 +54,19 @@ static inline NSString *cache_md5(NSString *value) {
 
 #pragma mark - cache data for key
 - (void)storeData:(NSData *)data forKey:(NSString *)key{
-    [self storeData:data forFileName:cache_md5(key)];
+    [self storeData:data forFileName:BG_MD5(key)];
 }
 
 - (NSData *)queryCacheForKey:(NSString *)key{
-    return [self queryCacheForFileName:cache_md5(key)];
+    return [self queryCacheForFileName:BG_MD5(key)];
 }
 
 - (void)queryCacheForKey:(NSString *)key completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)block{
-    [self queryCacheForFileName:cache_md5(key) completion:block];
+    [self queryCacheForFileName:BG_MD5(key) completion:block];
 }
 
 - (void)removeCacheForKey:(NSString *)key{
-    [self removeCacheForFileName:cache_md5(key)];
+    [self removeCacheForFileName:BG_MD5(key)];
 }
 
 #pragma mark - cache data for fileName
@@ -89,7 +76,7 @@ static inline NSString *cache_md5(NSString *value) {
     }
     
     //缓存到内存
-    NSString *key = cache_md5(fileName);
+    NSString *key = BG_MD5(fileName);
     [self.memoryCache setObject:data forKey:key cost:data.length];
     
     //缓存到本地
@@ -117,7 +104,7 @@ static inline NSString *cache_md5(NSString *value) {
     }
     
     //query memory data
-    NSString *key = cache_md5(fileName);
+    NSString *key = BG_MD5(fileName);
     NSData *data = [self.memoryCache objectForKey:key];
     
     if(data == nil){
@@ -134,7 +121,7 @@ static inline NSString *cache_md5(NSString *value) {
     }
     
     //query memory data
-    NSString *key = cache_md5(fileName);
+    NSString *key = BG_MD5(fileName);
     NSData *data = [self.memoryCache objectForKey:key];
     
     if(data == nil){
@@ -161,7 +148,7 @@ static inline NSString *cache_md5(NSString *value) {
 
 - (void)removeCacheForFileName:(NSString *)fileName {
     //remove memory data
-    NSString *key = cache_md5(fileName);
+    NSString *key = BG_MD5(fileName);
     [self.memoryCache removeObjectForKey:key];
     
     //remove disk data
@@ -203,7 +190,7 @@ static inline NSString *cache_md5(NSString *value) {
 }
 
 - (NSString *)defaultCachePathForKey:(NSString *)key {
-    NSString *fileName = cache_md5(key);
+    NSString *fileName = BG_MD5(key);
     return [self defaultCachePathForFileName:fileName];
 }
 

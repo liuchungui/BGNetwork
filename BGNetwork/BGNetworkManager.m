@@ -7,7 +7,37 @@
 //
 
 #import "BGNetworkManager.h"
-#import "BGNetworkUtil.h"
+#import "BGUtilFunction.h"
+
+static inline NSString *BGURLStringFromBaseURLAndMethod(NSURL *baseURL, NSString *methodName) {
+    return [[NSURL URLWithString:methodName relativeToURL:baseURL] absoluteString];
+}
+
+static inline NSString *BGKeyFromRequestAndBaseURL(BGNetworkRequest *request, NSURL *baseURL) {
+    return BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(baseURL, request.methodName));
+}
+
+static inline id BGParseJsonData(id jsonData){
+    /**
+     *  解析json对象
+     */
+    NSError *error;
+    id jsonResult = nil;
+    if([NSJSONSerialization isValidJSONObject:jsonData]){
+        return jsonData;
+    }
+    //NSData
+    if (jsonData && [jsonData isKindOfClass:[NSData class]]){
+        jsonResult = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+    }
+    if (jsonResult != nil && error == nil){
+        return jsonResult;
+    }
+    else{
+        // 解析错误
+        return nil;
+    }
+}
 
 static BGNetworkManager *_manager = nil;
 @interface BGNetworkManager ()<BGNetworkConnectorDelegate>
@@ -67,7 +97,7 @@ static BGNetworkManager *_manager = nil;
     dispatch_async(self.workQueue, ^{
         NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
         NSString *pathExtension = [request.methodName pathExtension];
-        NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
+        NSString *cacheKey = BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName));
         NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
         [self.cache queryDiskCacheForFileName:fileName completion:^(id  _Nullable object) {
             dispatch_async(self.workQueue, ^{
@@ -238,11 +268,11 @@ static BGNetworkManager *_manager = nil;
 #pragma mark - cache method
 - (void)readCacheWithRequest:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
     __weak BGNetworkManager *weakManager = self;
-    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
+    NSString *cacheKey = BGKeyFromRequestAndBaseURL(request, self.baseURL);
     [self.cache queryCacheForKey:cacheKey completion:^(NSData *data) {
         dispatch_async(weakManager.dataHandleQueue, ^{
             //解析数据
-            id responseObject = [weakManager parseResponseData:data];
+            id responseObject = BGParseJsonData(data);
             dispatch_async(weakManager.workQueue, ^{
                 if(completionBlock) {
                     completionBlock(request, responseObject);
@@ -253,9 +283,8 @@ static BGNetworkManager *_manager = nil;
 }
 
 - (void)cacheResponseData:(NSData *)responseData request:(BGNetworkRequest *)request{
-    NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
     //缓存数据
-    [self.cache storeData:responseData forKey:cacheKey];
+    [self.cache storeData:responseData forKey:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
 }
 
 #pragma mark - set method
@@ -280,7 +309,7 @@ static BGNetworkManager *_manager = nil;
         //对数据进行解密
         NSData *decryptData = [self.configuration decryptResponseData:responseData response:task.response request:request];
         //解析数据
-        id responseObject = [self parseResponseData:decryptData];
+        id responseObject = BGParseJsonData(decryptData);
         dispatch_async(self.workQueue, ^{
             if(responseObject && [self.configuration shouldBusinessSuccessWithResponseData:responseObject task:task request:request]) {
                 if([self.configuration shouldCacheResponseData:responseObject task:task request:request]) {
@@ -309,8 +338,7 @@ static BGNetworkManager *_manager = nil;
         }
         @catch (NSException *exception) {
             //崩溃则删除对应的缓存数据
-            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
-            [self.cache removeCacheForKey:cacheKey];
+            [self.cache removeCacheForKey:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
         }
         @finally {
         }
@@ -370,7 +398,7 @@ static BGNetworkManager *_manager = nil;
         NSURLSessionDownloadTask *task = self.tempDownloadTaskDic[requestURLString];
         [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
             NSString *pathExtension = [request.methodName pathExtension];
-            NSString *cacheKey = [BGNetworkUtil keyFromParamDic:request.parametersDic methodName:request.methodName baseURL:self.configuration.baseURLString];
+            NSString *cacheKey = BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName));
             NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
             NSString *resumeDataFile = [NSString stringWithFormat:@"%@_resume", fileName];
             //缓存，以用来断点续传
@@ -380,17 +408,6 @@ static BGNetworkManager *_manager = nil;
         }];
     });
     
-}
-
-#pragma mark - Util method
-/**
- *  解析json数据
- */
-- (id)parseResponseData:(NSData *)responseData{
-    if(responseData == nil){
-        return nil;
-    }
-    return [BGNetworkUtil parseJsonData:responseData];
 }
 
 #pragma mark - BGNetworkConnectorDelegate
