@@ -11,6 +11,14 @@
 #import "DownloadFileRequest.h"
 #import "BGNetwork.h"
 
+NSString *EncodingURL(NSString * string) {
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                 (CFStringRef)string,
+                                                                                 NULL,
+                                                                                 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                 kCFStringEncodingUTF8));
+}
+
 #define PATH_AT_CACHEDIR(name)		[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] 
 
 @interface BGDownloadRequestController ()
@@ -27,23 +35,31 @@
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)downLoadButtonAction:(id)sender {
+    /*
+     *  对文件名做一下处理，获取encodingURL之后的
+     */
+//    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg";
+    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊.dmg";
+    NSString *lastPathComponent = EncodingURL([downloadUrl lastPathComponent]);
+    downloadUrl = [NSString stringWithFormat:@"%@/%@", [downloadUrl stringByDeletingLastPathComponent], lastPathComponent];
     self.isResumeDownload = NO;
     /**
      *  AF下载
      */
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg"]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:downloadUrl]];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
-        if(downloadProgress.fractionCompleted > 0.2) {
-            //don't imp [self.task cancel];
-            //取消任务，并且获取临时的数据，以便以后恢复下载
-            [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-//                self.tmpData = resumeData;
-                [[BGNetworkCache sharedCache] storeData:resumeData forFileName:@"test.tmp"];
-            }];
-        }
+//        if(downloadProgress.fractionCompleted > 0.2) {
+//            //don't imp [self.task cancel];
+//            //取消任务，并且获取临时的数据，以便以后恢复下载
+//            [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+////                self.tmpData = resumeData;
+//                [[BGNetworkCache sharedCache] storeData:resumeData forFileName:@"test.tmp"];
+//            }];
+//        }
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         return targetPath;
         
@@ -98,7 +114,14 @@
 //}
 
 - (IBAction)downloadFileAction:(id)sender {
+    /*
+     *  对文件名做一下处理，获取encodingURL之后的
+     */
+    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊.dmg";
+    NSString *lastPathComponent = EncodingURL([downloadUrl lastPathComponent]);
+    downloadUrl = [NSString stringWithFormat:@"%@/%@", [downloadUrl stringByDeletingLastPathComponent], lastPathComponent];
     DownloadFileRequest *request = [[DownloadFileRequest alloc] init];
+    request.methodName = downloadUrl;
     [request sendRequestWithProgress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%f", downloadProgress.fractionCompleted);
     } success:^(BGDownloadRequest * _Nonnull request, NSURL * _Nullable filePath) {

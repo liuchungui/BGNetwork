@@ -42,5 +42,5 @@
  *  @param completionBlock 所有BGNetworkRequest请求完成后回调
  */
 - (void)sendRequestSuccess:(void (^ _Nullable)(BGNetworkRequest * _Nonnull request, id _Nullable response))successBlock
-                completion:(void (^ _Nullable)(BGBatchRequest * _Nonnull batchRequest, BOOL isSuccess))completionBlock;
+                completion:(void (^ _Nullable)(BGBatchRequest * _Nonnull batchRequest, BOOL isAllSuccess))completionBlock;
 @end

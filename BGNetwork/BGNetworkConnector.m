@@ -126,9 +126,9 @@
 }
 
 #pragma mark - BGAFResponseSerializerDelegate
-- (id)responseSerializer:(BGAFResponseSerializer *)responseSerializer response:(NSHTTPURLResponse *)response data:(NSData *)data error:(NSError *__autoreleasing *)error{
-    return data;
-}
+//- (id)responseSerializer:(BGAFResponseSerializer *)responseSerializer response:(NSHTTPURLResponse *)response data:(NSData *)data error:(NSError *__autoreleasing *)error{
+//    return data;
+//}
 
 #pragma mark - cancel request
 - (void)cancelRequest:(NSString *)url{
