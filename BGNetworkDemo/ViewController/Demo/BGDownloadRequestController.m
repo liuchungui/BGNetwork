@@ -117,7 +117,7 @@ NSString *EncodingURL(NSString * string) {
     /*
      *  对文件名做一下处理，获取encodingURL之后的
      */
-    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊.dmg";
+    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊2.dmg";
     NSString *lastPathComponent = EncodingURL([downloadUrl lastPathComponent]);
     downloadUrl = [NSString stringWithFormat:@"%@/%@", [downloadUrl stringByDeletingLastPathComponent], lastPathComponent];
     DownloadFileRequest *request = [[DownloadFileRequest alloc] init];
