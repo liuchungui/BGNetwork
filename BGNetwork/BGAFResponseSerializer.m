@@ -19,12 +19,4 @@
     
     return self;
 }
-
-- (id)responseObjectForResponse:(NSURLResponse *)response data:(NSData *)data error:(NSError *__autoreleasing *)error{
-    return [super responseObjectForResponse:response data:data error:error];
-//    if(_delegate == nil){
-//        return [super responseObjectForResponse:response data:data error:error];
-//    }
-//    return [_delegate responseSerializer:self response:response data:data error:error];
-}
 @end

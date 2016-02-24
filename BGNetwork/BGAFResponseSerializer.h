@@ -8,15 +8,5 @@
 
 #import "AFURLResponseSerialization.h"
 
-//@protocol BGAFResponseSerializerDelegate;
-
 @interface BGAFResponseSerializer : AFHTTPResponseSerializer
-//@property (nonatomic, weak) id<BGAFResponseSerializerDelegate> delegate;
 @end
-
-//@protocol BGAFResponseSerializerDelegate <NSObject>
-//@required
-//
-//- (id _Nonnull)responseSerializer:(BGAFResponseSerializer * _Nonnull)responseSerializer response:(NSURLResponse * _Nonnull)response data:(NSData * _Nullable)data error:(NSError * _Nullable __autoreleasing * _Nullable)error;
-//
-//@end
