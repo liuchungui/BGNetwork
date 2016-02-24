@@ -8,6 +8,9 @@
 
 #import "BGNetworkManager.h"
 #import "BGUtilFunction.h"
+#import "BGAFHTTPClient.h"
+#import "BGAFRequestSerializer.h"
+#import "BGAFResponseSerializer.h"
 
 static inline NSString *BGURLStringFromBaseURLAndMethod(NSURL *baseURL, NSString *methodName) {
     return [[NSURL URLWithString:methodName relativeToURL:baseURL] absoluteString];
@@ -17,7 +20,7 @@ static inline NSString *BGKeyFromRequestAndBaseURL(BGNetworkRequest *request, NS
     return BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(baseURL, request.methodName));
 }
 
-static inline id BGParseJsonData(id jsonData){
+static id BGParseJsonData(id jsonData){
     /**
      *  解析json对象
      */
@@ -40,8 +43,9 @@ static inline id BGParseJsonData(id jsonData){
 }
 
 static BGNetworkManager *_manager = nil;
-@interface BGNetworkManager ()<BGNetworkConnectorDelegate>
-@property (nonatomic, strong) BGNetworkConnector *connector;
+
+@interface BGNetworkManager ()<BGAFRequestSerializerDelegate>
+@property (nonatomic, strong) BGAFHTTPClient *httpClient;
 @property (nonatomic, strong) BGNetworkCache *cache;
 @property (nonatomic, strong) dispatch_queue_t workQueue;
 @property (nonatomic, strong) dispatch_queue_t dataHandleQueue;
@@ -130,7 +134,7 @@ static BGNetworkManager *_manager = nil;
     [self.cache queryDiskCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
         //有数据，断点续传
         if([object isKindOfClass:[NSData class]]) {
-            NSURLSessionDownloadTask *task = [self.connector downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                 [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
@@ -141,7 +145,7 @@ static BGNetworkManager *_manager = nil;
         else {
             //无缓存，则重新下载
             NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
-            NSURLSessionDownloadTask *task = [self.connector downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                 [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
@@ -180,7 +184,7 @@ static BGNetworkManager *_manager = nil;
           businessFailure:(BGBusinessFailureBlock)businessFailureBlock
            networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
     dispatch_async(self.workQueue, ^{
-        [self.connector POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [self.httpClient POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             [formData appendPartWithFileData:request.fileData name:request.uploadKey fileName:request.fileName mimeType:request.mimeType];
         } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
             dispatch_async(self.workQueue, ^{
@@ -198,7 +202,6 @@ static BGNetworkManager *_manager = nil;
             success:(BGSuccessCompletionBlock)successCompletionBlock
     businessFailure:(BGBusinessFailureBlock)businessFailureBlock
      networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
-    NSParameterAssert(self.connector);
     dispatch_async(self.workQueue, ^{
         //发送网络之前，先进行一下预处理
         [self.configuration preProcessingRequest:request];
@@ -245,17 +248,17 @@ static BGNetworkManager *_manager = nil;
     __weak BGNetworkManager *weakManager = self;
     switch (request.httpMethod) {
         case BGNetworkRequestHTTPGet:{
-            [self.connector sendGETRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
-                [weakManager networkSuccess:request task:task responseData:responseData success:successCompletionBlock businessFailure:businessFailureBlock];
-            } failed:^(NSURLSessionDataTask *task, NSError *error) {
+            [self.httpClient GET:request.methodName parameters:request.parametersDic progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [weakManager networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [weakManager networkFailure:request error:error completion:networkFailureBlock];
             }];
         }
             break;
         case BGNetworkRequestHTTPPost:{
-            [self.connector sendPOSTRequest:request.methodName parameters:request.parametersDic success:^(NSURLSessionDataTask *task, NSData *responseData) {
-                [weakManager networkSuccess:request task:task responseData:responseData success:successCompletionBlock businessFailure:businessFailureBlock];
-            } failed:^(NSURLSessionDataTask *task, NSError *error) {
+            [self.httpClient POST:request.methodName parameters:request.parametersDic progress:NULL success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                  [weakManager networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [weakManager networkFailure:request error:error completion:networkFailureBlock];
             }];
         }
@@ -291,7 +294,27 @@ static BGNetworkManager *_manager = nil;
 - (void)setNetworkConfiguration:(BGNetworkConfiguration *)configuration{
     NSParameterAssert(configuration);
     NSParameterAssert(configuration.baseURLString);
-    self.connector = [[BGNetworkConnector alloc] initWithBaseURL:configuration.baseURLString delegate:self];
+    //AFHTTPClient
+    _httpClient = [[BGAFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:configuration.baseURLString]];
+    AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+    //是否允许CA不信任的证书通过
+    policy.allowInvalidCertificates = YES;
+    //是否验证主机名
+    policy.validatesDomainName = YES;
+    _httpClient.securityPolicy = policy;
+    
+    //请求的序列化器
+    BGAFRequestSerializer *requestSerializer = [BGAFRequestSerializer serializer];
+    requestSerializer.delegate = self;
+    
+    //响应的序列化器
+    BGAFResponseSerializer *responseSerializer = [BGAFResponseSerializer serializer];
+//    responseSerializer.delegate = self;
+    
+    //设置
+    _httpClient.requestSerializer = requestSerializer;
+    _httpClient.responseSerializer = responseSerializer;
+    
     self.baseURL = [NSURL URLWithString:configuration.baseURLString];
     _configuration = configuration;
 }
@@ -389,7 +412,7 @@ static BGNetworkManager *_manager = nil;
 
 #pragma mark - cancel request
 - (void)cancelRequestWithUrl:(NSString *)url{
-    [self.connector cancelRequest:url];
+    [self.httpClient cancelTasksWithUrl:url];
 }
 
 - (void)cancelDownloadRequest:(BGDownloadRequest *)request {
@@ -410,21 +433,44 @@ static BGNetworkManager *_manager = nil;
     
 }
 
-#pragma mark - BGNetworkConnectorDelegate
-- (NSDictionary *)allHTTPHeaderFieldsWithNetworkConnector:(BGNetworkConnector *)connector request:(NSURLRequest *)request{
+#pragma mark - BGAFRequestSerializerDelegate
+- (NSURLRequest *)requestSerializer:(BGAFRequestSerializer *)requestSerializer request:(NSURLRequest *)request withParameters:(id)parameters error:(NSError *__autoreleasing *)error{
+    NSParameterAssert(request);
+    // NOTE:MutableRequest
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    
+    // NOTE:RequestHeader
     //取出请求
     BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
-    return [self.configuration requestHTTPHeaderFields:networkRequest];
-}
-
-- (NSString *)queryStringForURLWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request{
-    //取出请求
-    BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
-    return [self.configuration queryStringForURLWithRequest:networkRequest];
-}
-
-- (NSData *)dataOfHTTPBodyWithNetworkConnector:(BGNetworkConnector *)connector parameters:(NSDictionary *)paramters request:(NSURLRequest *)request error:(NSError *__autoreleasing *)error{
-    BGNetworkRequest *networkRequest = self.tempRequestDic[request.URL.absoluteString];
-    return [self.configuration httpBodyDataWithRequest:networkRequest];
+    NSDictionary *httpRequestHeaderDic = [self.configuration requestHTTPHeaderFields:networkRequest];
+    [httpRequestHeaderDic enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL * __unused stop) {
+        if (![request valueForHTTPHeaderField:field]) {
+            [mutableRequest setValue:value forHTTPHeaderField:field];
+        }
+    }];
+    
+    if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
+        [mutableRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    }
+    
+    //NOTE:URL QueryString
+    NSString *queryString = [self.configuration queryStringForURLWithRequest:networkRequest];
+    if(queryString){
+        mutableRequest.URL = [NSURL URLWithString:[[mutableRequest.URL absoluteString] stringByAppendingFormat:mutableRequest.URL.query ? @"&%@" : @"?%@", queryString]];
+    }
+    
+    //NOTE:HTTP GET or POST method
+    if ([requestSerializer.HTTPMethodsEncodingParametersInURI containsObject:[[request HTTPMethod] uppercaseString]]) {
+        //GET请求
+    }
+    else{
+        //NOTE:HTTP Body Data
+        NSData *bodyData = [self.configuration httpBodyDataWithRequest:networkRequest];
+        if(bodyData){
+            [mutableRequest setHTTPBody:bodyData];
+        }
+    }
+    
+    return [mutableRequest copy];
 }
 @end
