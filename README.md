@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/liuchungui/BGNetwork.svg?branch=dev)](https://travis-ci.org/liuchungui/BGNetwork)
+[![codecov.io](https://codecov.io/github/liuchungui/BGNetwork/coverage.svg?branch=dev)](https://codecov.io/github/liuchungui/BGNetwork?branch=dev)
+
 ##BGNetwork是什么？
 BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要由**BGNetworkManager**、**BGNetworkRequest**、**BGNetworkConfiguration**、**BGNetworkConnector**、**BGNetworkCache**五个部分组成。它的工作流程是先将每个网络请求封装成一个Request对象，然后交给BGNetworkManager发送请求，最后使用block调用回来。其中，在发送请求的过程中，有一个非常重要的类——BGNetworkConfiguration，这个类担任统一的配置，如baseURL、请求头的组建、请求体组建与加密、Response的解密。而我们的核心目标是只需要子类化一个BGNetworkConfiguration对整个网络框架进行配置，不需要改动任何源代码，就能快速满足业务需求。
 
