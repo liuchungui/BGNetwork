@@ -12,6 +12,9 @@
 #import "BGNetworkManager.h"
 #import "DemoRequest.h"
 #import "BGUploadRequest.h"
+#import "InfoRequest.h"
+#import "AdvertInfoRequest.h"
+#import "BGBatchRequest.h"
 
 @interface BGNetworkDemoTests : XCTestCase
 @end
@@ -81,6 +84,46 @@
     
     XCTAssertTrue(requestSuccess);
     XCTAssertNotNil(blockResponseObject);
+}
+
+- (void)testThatBatchRequestSuccess {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"BatchRequest should succeed"];
+    __block NSInteger successNum = 0;
+    __block id blockFirstResponseObject = nil;
+    __block id blockSecondResponseObject = nil;
+    
+    //create request
+    InfoRequest *infoRequest = [[InfoRequest alloc] initWithId:13];
+    AdvertInfoRequest *advertRequest = [[AdvertInfoRequest alloc] init];
+    
+    BGBatchRequest *batchRequest = [[BGBatchRequest alloc] initWithRequests:@[infoRequest, advertRequest]];
+    batchRequest.continueLoadWhenRequestFailure = YES;
+    
+    //set failure block
+    [batchRequest setBusinessFailure:^(BGNetworkRequest *request, id response) {
+    } networkFailure:^(BGNetworkRequest *request, NSError *error) {
+    }];
+    
+    //send request
+    [batchRequest sendRequestSuccess:^(BGNetworkRequest *request, id response) {
+        if(request == infoRequest) {
+            blockFirstResponseObject = response;
+        }
+        else if(request == advertRequest) {
+            blockSecondResponseObject = response;
+        }
+        successNum ++;
+        if(successNum == 2) {
+            [expectation fulfill];
+        }
+    } completion:^(BGBatchRequest *batchRequest, BOOL isSuccess) {
+    }];
+    
+    [self waitForExpectationsWithTimeout:20 handler:NULL];
+    
+    XCTAssertEqual(successNum, 2);
+    XCTAssertNotNil(blockFirstResponseObject);
+    XCTAssertNotNil(blockSecondResponseObject);
 }
 
 @end
