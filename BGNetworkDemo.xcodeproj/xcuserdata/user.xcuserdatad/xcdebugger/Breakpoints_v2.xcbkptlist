@@ -267,6 +267,38 @@
             endingLineNumber = "128"
             landmarkName = "-downloadFileAction:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BGDownloadRequestController downloadFileAction:]"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
+                  timestampString = "477975828.809121"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "365">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__50-[BGDownloadRequestController downloadFileAction:]_block_invoke"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
+                  timestampString = "477975828.809319"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "50">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -283,6 +315,38 @@
             endingLineNumber = "130"
             landmarkName = "-downloadFileAction:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__50-[BGDownloadRequestController downloadFileAction:]_block_invoke"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
+                  timestampString = "477975828.810442"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "130"
+                  endingLineNumber = "130"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__50-[BGDownloadRequestController downloadFileAction:]_block_invoke_2"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetworkDemo/ViewController/Demo/BGDownloadRequestController.m"
+                  timestampString = "477975828.811385"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "130"
+                  endingLineNumber = "130"
+                  offsetFromSymbolStart = "91">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -313,8 +377,40 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "330"
             endingLineNumber = "330"
-            landmarkName = "-networkSuccess:task:responseData:success:businessFailure:"
+            landmarkName = "-success:responseObject:completion:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BGNetworkManager networkSuccess:task:responseData:success:businessFailure:]"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
+                  timestampString = "477975828.81501"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "234">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__77-[BGNetworkManager networkSuccess:task:responseData:success:businessFailure:]_block_invoke"
+                  moduleName = "BGNetworkDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
+                  timestampString = "477975828.815294"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "330"
+                  endingLineNumber = "330"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -452,12 +548,12 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "474654340.6962"
+                  timestampString = "477975828.838977"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "1424">
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "1127">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -467,57 +563,12 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "474654340.696422"
+                  timestampString = "477975828.839453"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "253">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_90"
-                  moduleName = "BGNetworkDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "474654340.696565"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_91"
-                  moduleName = "BGNetworkDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "474654340.69672"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "14">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__89-[BGNetworkManager downloadDataWithRequest:requestURL:fileName:progress:success:failure:]_block_invoke93"
-                  moduleName = "BGNetworkDemo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "474654340.696856"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "114">
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "83">
                </Location>
             </Locations>
          </BreakpointContent>
