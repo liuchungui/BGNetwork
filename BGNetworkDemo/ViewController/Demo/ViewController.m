@@ -25,7 +25,7 @@
 
 @implementation ViewController
 - (void)dealloc {
-    NSLog(@"%@ delloc", NSStringFromClass(self.class));
+//    NSLog(@"%@ delloc", NSStringFromClass(self.class));
 }
 
 - (void)viewDidLoad {
