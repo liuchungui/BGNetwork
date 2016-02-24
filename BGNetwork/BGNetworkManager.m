@@ -82,7 +82,7 @@ static BGNetworkManager *_manager = nil;
         _workQueue = dispatch_queue_create("com.BGNetworkManager.workQueue", DISPATCH_QUEUE_SERIAL);
         
         //数据处理队列
-        _dataHandleQueue = dispatch_queue_create("com.BGNEtworkManager.dataHandle", DISPATCH_QUEUE_CONCURRENT);
+        _dataHandleQueue = dispatch_queue_create("com.BGNEtworkManager.dataHandleQueue", DISPATCH_QUEUE_CONCURRENT);
         
         dispatch_async(_workQueue, ^{
             self.tempRequestDic = [NSMutableDictionary dictionary];
@@ -99,10 +99,11 @@ static BGNetworkManager *_manager = nil;
                     success:(void (^)(BGDownloadRequest * _Nonnull, NSURL * _Nullable))successCompletionBlock
                     failure:(void (^)(BGDownloadRequest * _Nonnull, NSError * _Nullable))failureCompletionBlock {
     dispatch_async(self.workQueue, ^{
+        
         NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
-        NSString *pathExtension = [request.methodName pathExtension];
         NSString *cacheKey = BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName));
-        NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
+        NSString *fileName = [cacheKey stringByAppendingPathExtension:[request.methodName pathExtension]];
+        
         [self.cache queryDiskCacheForFileName:fileName completion:^(id  _Nullable object) {
             dispatch_async(self.workQueue, ^{
                 //有缓存，则直接返回
@@ -134,29 +135,40 @@ static BGNetworkManager *_manager = nil;
     [self.cache queryDiskCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
         //有数据，断点续传
         if([object isKindOfClass:[NSData class]]) {
+            
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                
                 return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+                
+                [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+                
             }];
             //save
             self.tempDownloadTaskDic[requestURLString] = task;
+            
         }
         else {
             //无缓存，则重新下载
             NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                
                 return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                [self downloadResultWithRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+                
+                [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
+                
             }];
+            
             //save
             self.tempDownloadTaskDic[requestURLString] = task;
         }
     }];
 }
 
-- (void)downloadResultWithRequest:(BGDownloadRequest *)request
+- (void)resultWithDownloadRequest:(BGDownloadRequest *)request
                          filePath:(NSURL *)filePath
                             error:(NSError *)error
                           success:(void (^)(BGDownloadRequest * _Nonnull, NSURL * _Nullable))successCompletionBlock
@@ -183,19 +195,27 @@ static BGNetworkManager *_manager = nil;
                   success:(BGSuccessCompletionBlock)successCompletionBlock
           businessFailure:(BGBusinessFailureBlock)businessFailureBlock
            networkFailure:(BGNetworkFailureBlock)networkFailureBlock {
+    
     dispatch_async(self.workQueue, ^{
         [self.httpClient POST:request.methodName parameters:request.parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            
             [formData appendPartWithFileData:request.fileData name:request.uploadKey fileName:request.fileName mimeType:request.mimeType];
+            
         } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            
             dispatch_async(self.workQueue, ^{
                 [self networkSuccess:request task:task responseData:responseObject success:successCompletionBlock businessFailure:businessFailureBlock];
             });
+            
         } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nullable error) {
+            
             dispatch_async(self.workQueue, ^{
                 [self networkFailure:request error:error completion:networkFailureBlock];
             });
+            
         }];
     });
+    
 }
 
 - (void)sendRequest:(BGNetworkRequest *)request
@@ -309,7 +329,6 @@ static BGNetworkManager *_manager = nil;
     
     //响应的序列化器
     BGAFResponseSerializer *responseSerializer = [BGAFResponseSerializer serializer];
-//    responseSerializer.delegate = self;
     
     //设置
     _httpClient.requestSerializer = requestSerializer;

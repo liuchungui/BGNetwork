@@ -27,13 +27,12 @@
 }
 
 - (IBAction)uploadAction:(id)sender {
-    NSString *serverStr = @"http://localhost/test/upload.php";
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost"]];
+    NSString *serverStr = @"upload.php";
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://casetree.cn/web/test/"]];
     
     //请求的serializer
     AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
     [serializer setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-    [serializer setValue:@"true" forHTTPHeaderField:@"file"];
     manager.requestSerializer = serializer;
     
     //response的serializer
