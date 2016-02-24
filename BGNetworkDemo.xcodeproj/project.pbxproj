@@ -82,7 +82,6 @@
 		CEF8E6D81B9959E40087CDB3 /* BGAFResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6B81B9959E40087CDB3 /* BGAFResponseSerializer.m */; };
 		CEF8E6D91B9959E40087CDB3 /* BGNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6BA1B9959E40087CDB3 /* BGNetworkCache.m */; };
 		CEF8E6DA1B9959E40087CDB3 /* BGNetworkConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6BC1B9959E40087CDB3 /* BGNetworkConfiguration.m */; };
-		CEF8E6DB1B9959E40087CDB3 /* BGNetworkConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6BE1B9959E40087CDB3 /* BGNetworkConnector.m */; };
 		CEF8E6DC1B9959E40087CDB3 /* BGNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */; };
 		CEF8E6DD1B9959E40087CDB3 /* BGNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF8E6C21B9959E40087CDB3 /* BGNetworkRequest.m */; };
 		CEFAF52E1C14A3EC00DE2AEC /* BGBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFAF52C1C14A3EC00DE2AEC /* BGBatchRequest.m */; };
@@ -244,8 +243,6 @@
 		CEF8E6BA1B9959E40087CDB3 /* BGNetworkCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkCache.m; sourceTree = "<group>"; };
 		CEF8E6BB1B9959E40087CDB3 /* BGNetworkConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkConfiguration.h; sourceTree = "<group>"; };
 		CEF8E6BC1B9959E40087CDB3 /* BGNetworkConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkConfiguration.m; sourceTree = "<group>"; };
-		CEF8E6BD1B9959E40087CDB3 /* BGNetworkConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkConnector.h; sourceTree = "<group>"; };
-		CEF8E6BE1B9959E40087CDB3 /* BGNetworkConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkConnector.m; sourceTree = "<group>"; };
 		CEF8E6BF1B9959E40087CDB3 /* BGNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkManager.h; sourceTree = "<group>"; };
 		CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGNetworkManager.m; sourceTree = "<group>"; };
 		CEF8E6C11B9959E40087CDB3 /* BGNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGNetworkRequest.h; sourceTree = "<group>"; };
@@ -636,8 +633,6 @@
 				CEF8E6BA1B9959E40087CDB3 /* BGNetworkCache.m */,
 				CEF8E6BB1B9959E40087CDB3 /* BGNetworkConfiguration.h */,
 				CEF8E6BC1B9959E40087CDB3 /* BGNetworkConfiguration.m */,
-				CEF8E6BD1B9959E40087CDB3 /* BGNetworkConnector.h */,
-				CEF8E6BE1B9959E40087CDB3 /* BGNetworkConnector.m */,
 				CEF8E6BF1B9959E40087CDB3 /* BGNetworkManager.h */,
 				CEF8E6C01B9959E40087CDB3 /* BGNetworkManager.m */,
 				CEF8E6C11B9959E40087CDB3 /* BGNetworkRequest.h */,
@@ -830,7 +825,6 @@
 				CEF8E5491B9947E10087CDB3 /* BaseView.m in Sources */,
 				CEF8E6D81B9959E40087CDB3 /* BGAFResponseSerializer.m in Sources */,
 				CEF8E4191B99464C0087CDB3 /* main.m in Sources */,
-				CEF8E6DB1B9959E40087CDB3 /* BGNetworkConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

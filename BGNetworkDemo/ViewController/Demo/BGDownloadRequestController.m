@@ -75,6 +75,9 @@ NSString *EncodingURL(NSString * string) {
 - (IBAction)resumeDownloadButtonAction:(id)sender {
     self.isResumeDownload = YES;
     self.tmpData = [[BGNetworkCache sharedCache] queryCacheForFileName:@"test.tmp"];
+    if(self.tmpData == nil) {
+        return;
+    }
     
     //拿取以前请求的数据进行重新请求，实现断点续传的效果
     AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];

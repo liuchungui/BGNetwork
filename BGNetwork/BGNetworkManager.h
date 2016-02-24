@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BGNetworkConnector.h"
 #import "BGNetworkConfiguration.h"
 #import "BGNetworkRequest.h"
 #import "BGNetworkCache.h"
@@ -19,11 +18,6 @@
  */
 @interface BGNetworkManager : NSObject
 + (instancetype _Nonnull)sharedManager;
-/**
- *  网络连接者
- */
-@property (nonatomic, strong, readonly) BGNetworkConnector * _Nonnull connector;
-
 /**
  *  网络缓存
  */
