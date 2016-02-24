@@ -2,7 +2,5 @@ language: objective-c
 osx_image: xcode7.1
 script: xctool -project BGNetworkDemo.xcodeproj -scheme BGNetworkDemo build test -sdk iphonesimulator
 
-install:
-	pip install codecov
 after_success:
-	codecov
+	bash <(curl -s https://codecov.io/bash)
