@@ -137,14 +137,12 @@ static BGNetworkManager *_manager = nil;
         if([object isKindOfClass:[NSData class]]) {
             
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-                
                 return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
-                
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                
                 [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
-                
             }];
+            
+            [task resume];
             //save
             self.tempDownloadTaskDic[requestURLString] = task;
             
@@ -162,6 +160,7 @@ static BGNetworkManager *_manager = nil;
                 
             }];
             
+            [task resume];
             //save
             self.tempDownloadTaskDic[requestURLString] = task;
         }

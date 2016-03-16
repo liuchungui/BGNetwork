@@ -39,7 +39,7 @@ NSString *EncodingURL(NSString * string) {
      *  对文件名做一下处理，获取encodingURL之后的
      */
 //    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg";
-    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊.dmg";
+    NSString *downloadUrl = @"http://localhost/app/BGNetwork/download/测试d一下啊3.dmg";
     NSString *lastPathComponent = EncodingURL([downloadUrl lastPathComponent]);
     downloadUrl = [NSString stringWithFormat:@"%@/%@", [downloadUrl stringByDeletingLastPathComponent], lastPathComponent];
     self.isResumeDownload = NO;
