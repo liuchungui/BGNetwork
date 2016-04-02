@@ -25,7 +25,7 @@ static NSUInteger _requestIdentifier = 0;
 @end
 @implementation BGNetworkRequest
 - (void)dealloc {
-    NSLog(@"%@ delloc", NSStringFromClass(self.class));
+//    NSLog(@"%@ delloc", NSStringFromClass(self.class));
 }
 
 - (instancetype)init{
