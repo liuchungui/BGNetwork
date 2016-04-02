@@ -142,7 +142,12 @@ static BGNetworkManager *_manager = nil;
             NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 
-                return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                if(((NSHTTPURLResponse *) task.response).statusCode != 200) {
+                    return targetPath;
+                }
+                else {
+                    return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                }
                 
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                 
