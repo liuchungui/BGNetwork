@@ -10,7 +10,7 @@
 @protocol BGAFRequestSerializerDelegate;
 
 @interface BGAFRequestSerializer : AFHTTPRequestSerializer
-@property (nonatomic, weak) id<BGAFRequestSerializerDelegate> delegate;
+@property (nonatomic, weak) _Nullable id<BGAFRequestSerializerDelegate> delegate;
 @end
 
 @protocol BGAFRequestSerializerDelegate <NSObject>
