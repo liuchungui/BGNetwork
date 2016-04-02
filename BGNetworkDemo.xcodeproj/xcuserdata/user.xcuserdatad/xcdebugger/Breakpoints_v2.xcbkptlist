@@ -170,12 +170,12 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "477992487.127438"
+                  timestampString = "481295656.062065"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "139"
                   endingLineNumber = "139"
-                  offsetFromSymbolStart = "163">
+                  offsetFromSymbolStart = "136">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -185,11 +185,11 @@
                   moduleName = "BGNetworkDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user/git/BGNetwork/BGNetwork/BGNetworkManager.m"
-                  timestampString = "477992487.127612"
+                  timestampString = "481295656.062183"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "139"
-                  endingLineNumber = "139"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
                   offsetFromSymbolStart = "83">
                </Location>
             </Locations>
@@ -272,38 +272,6 @@
             startingLineNumber = "1212"
             endingLineNumber = "1212"
             landmarkName = "-URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AFNetworking/AFURLSessionManager.m"
-            timestampString = "477992523.570465"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AFNetworking/AFURLSessionManager.m"
-            timestampString = "477992573.08398"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
