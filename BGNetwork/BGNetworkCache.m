@@ -3,7 +3,7 @@
 //  BGNetwork
 //
 //  Created by user on 15/8/21.
-//  Copyright (c) 2015年 lcg. All rights reserved.
+//  Copyright © 2015年 BGNetwork https://github.com/liuchungui/BGNetwork/tree/dev. All rights reserved.
 //
 
 #import "BGNetworkCache.h"
