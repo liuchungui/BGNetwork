@@ -83,6 +83,9 @@
     dispatch_async(self.workQueue, ^{
         // get cache Path for data key
         NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
+        if([_fileManager fileExistsAtPath:cachePathForKey isDirectory:nil]) {
+            [_fileManager removeItemAtPath:cachePathForKey error:nil];
+        }
         [_fileManager createFileAtPath:cachePathForKey contents:data attributes:nil];
         //缓存成功之后，从内存中删除
         dispatch_async(dispatch_get_main_queue(), ^{

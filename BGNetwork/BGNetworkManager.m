@@ -125,10 +125,22 @@ static BGNetworkManager *_manager = nil;
     [self.cache queryDiskCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
         //有数据，断点续传
         if([object isKindOfClass:[NSData class]]) {
-            
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-                return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                //4xx客户端错误
+                //5xx服务器错误
+                //2xx请求成功
+                //3xx重定向
+                if(((NSHTTPURLResponse *) response).statusCode >= 400) {
+                    return targetPath;
+                }
+                else {
+                    return [NSURL fileURLWithPath:[self.cache defaultCachePathForFileName:fileName]];
+                }
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                if(error == nil) {                    
+                    //删除断点续传文件
+                    [self.cache removeCacheForFileName:resumeDataFileName];
+                }
                 [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
             }];
             
@@ -142,7 +154,7 @@ static BGNetworkManager *_manager = nil;
             NSMutableURLRequest *httpRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithRequest:httpRequest progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 
-                if(((NSHTTPURLResponse *) task.response).statusCode != 200) {
+                if(((NSHTTPURLResponse *) response).statusCode >= 400) {
                     return targetPath;
                 }
                 else {

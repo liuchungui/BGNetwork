@@ -11,7 +11,7 @@
 @implementation DownloadFileRequest
 - (instancetype)init {
     if(self = [super init]) {
-        self.methodName = @"http://localhost/app/BGNetwork/download/Command_Line_Tools_OS_X_10.10_for_Xcode_7.1.dmg";
+        self.methodName = @"download/CollectionViewPGforIOS.pdf";
     }
     return self;
 }
