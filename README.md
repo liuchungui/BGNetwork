@@ -67,5 +67,5 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 
 ##相关类的任务角色
 <p align="center" >
-  <img src="https://raw.githubusercontent.com/chunguiLiu/BGNetwork/master/assets/architecture.png" alt="BGNetwork" title="BGNetwork" height=251 width = 556>
+  <img src="https://raw.githubusercontent.com/chunguiLiu/BGNetwork/dev/assets/architecture.png" alt="BGNetwork" title="BGNetwork" height=251 width = 556>
 </p>
