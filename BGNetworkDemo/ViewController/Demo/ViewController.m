@@ -13,7 +13,9 @@
 #import "PageModel.h"
 #import "DemoRequest.h"
 #import "BGBatchRequest.h"
+#import <objc/runtime.h>
 
+static const char *BGNetworkRequestMethodNameKey = "BGNetworkRequestMethodNameKey";
 @interface ViewController ()<RefreshTableViewDelegate>{
     RefreshTableView *_tableView;
     NSMutableArray *_dataArr;
@@ -28,8 +30,19 @@
 //    NSLog(@"%@ delloc", NSStringFromClass(self.class));
 }
 
+- (void)setAssociateValue:(NSString *)value {
+    objc_setAssociatedObject([self class], BGNetworkRequestMethodNameKey, value, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSString *)getAssociateValue {
+    return objc_getAssociatedObject([self class], BGNetworkRequestMethodNameKey);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setAssociateValue:@"my name is"];
+    NSLog(@"%@", [self getAssociateValue]);
+    
     [self setupViews];
     [self setupData];
     // Do any additional setup after loading the view, typically from a nib.

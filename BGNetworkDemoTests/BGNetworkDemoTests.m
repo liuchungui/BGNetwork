@@ -126,4 +126,25 @@
     XCTAssertNotNil(blockSecondResponseObject);
 }
 
+- (void)testThatRequestCancel {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request should cancel"];
+    __block BOOL cancelSuccess = NO;
+    DemoRequest *request = [[DemoRequest alloc] initPage:0 pageSize:10];
+    [request sendRequestWithSuccess:^(BGNetworkRequest * _Nonnull request, id  _Nullable response) {
+    } businessFailure:^(BGNetworkRequest * _Nonnull request, id  _Nullable response) {
+    } networkFailure:^(BGNetworkRequest * _Nonnull request, NSError * _Nullable error) {
+        if(error.code == kCFURLErrorCancelled) {
+            cancelSuccess = YES;
+            [expectation fulfill];
+        }
+    }];
+    
+    //取消请求
+    [DemoRequest cancelRequest];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(cancelSuccess);
+}
+
 @end
