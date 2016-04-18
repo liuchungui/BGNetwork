@@ -6,7 +6,7 @@ BGNetwork是一个基于**AFNetworking**封装的一个网络框架，它主要�
 
 ##有哪些功能？
 * 支持统一设置baseURL
-* 提供对url的queryString部分进行配置
+* 提供对url的queryString部分进行配置
 * 提供对HTTP请求头的配置
 * 提供对HTTP请求体的配置，并可进行加密
 * 支持对网络请求的数据进行缓存以及配置不同的缓存策略
