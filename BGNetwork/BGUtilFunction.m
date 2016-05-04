@@ -27,7 +27,7 @@ NSArray *BGQueryStringFromKeyAndValue(NSString *key, id value){
     if([value isKindOfClass:[NSDictionary class]]){
         [(NSDictionary *)value enumerateKeysAndObjectsUsingBlock:^(NSString *dicKey, id obj, BOOL *stop) {
             NSString *resultKey = [NSString stringWithFormat:@"%@[%@]", key, dicKey];
-            [array addObjectsFromArray:BGQueryStringFromKeyAndValue(resultKey, value)];
+            [array addObjectsFromArray:BGQueryStringFromKeyAndValue(resultKey, obj)];
         }];
     }
     else if([value isKindOfClass:[NSArray class]]){
