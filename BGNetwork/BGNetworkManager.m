@@ -93,9 +93,8 @@ static BGNetworkManager *_manager = nil;
                     success:(void (^)(BGDownloadRequest * _Nonnull, NSURL * _Nullable))successCompletionBlock
                     failure:(void (^)(BGDownloadRequest * _Nonnull, NSError * _Nullable))failureCompletionBlock {
     
-    NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
-    NSString *cacheKey = BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName));
-    NSString *fileName = [cacheKey stringByAppendingPathExtension:[request.methodName pathExtension]];
+    NSString *requestURLString = BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName);
+    NSString *fileName = [self downloadRequestFileName:request];
     
     [self.cache queryDiskCacheForFileName:fileName completion:^(id  _Nullable object) {
         //有缓存，则直接返回
@@ -141,6 +140,7 @@ static BGNetworkManager *_manager = nil;
                     //删除断点续传文件
                     [self.cache removeCacheForFileName:resumeDataFileName];
                 }
+                self.tempDownloadTaskDic[requestURLString] = nil;
                 [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
             }];
             
@@ -162,7 +162,8 @@ static BGNetworkManager *_manager = nil;
                 }
                 
             } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                
+                //清空task
+                self.tempDownloadTaskDic[requestURLString] = nil;
                 [self resultWithDownloadRequest:request filePath:filePath error:error success:successCompletionBlock failure:failureCompletionBlock];
                 
             }];
@@ -193,7 +194,23 @@ static BGNetworkManager *_manager = nil;
     });
 }
 
+/**
+ *  下载请求的文件名
+ */
+- (NSString *)downloadRequestFileName:(BGDownloadRequest *)request {
+    NSString *requestURLString = BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName);
+    NSString *cacheKey = BG_MD5(requestURLString);
+    NSString *pathExtension = [request.fileName pathExtension];
+    NSString *fileName =  pathExtension ? [cacheKey stringByAppendingPathExtension:pathExtension] : [cacheKey stringByAppendingPathExtension:@"tmp"];
+    return fileName;
+}
 
+/**
+ *  断点续传的文件名，在下载文件名后面多了一个_resume
+ */
+- (NSString *)downloadRequestResumeDataFileName:(BGDownloadRequest *)request {
+    return [NSString stringWithFormat:@"%@_resume", [self downloadRequestFileName:request]];
+}
 
 #pragma mark - upload request
 - (void)sendUploadRequest:(BGUploadRequest *)request
@@ -433,12 +450,9 @@ static BGNetworkManager *_manager = nil;
     NSString *requestURLString = [[NSURL URLWithString:request.methodName relativeToURL:self.baseURL] absoluteString];
     NSURLSessionDownloadTask *task = self.tempDownloadTaskDic[requestURLString];
     [task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-        NSString *pathExtension = [request.methodName pathExtension];
-        NSString *cacheKey = BGKeyFromParamsAndURLString(request.parametersDic, BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName));
-        NSString *fileName = [cacheKey stringByAppendingPathExtension:pathExtension];
-        NSString *resumeDataFile = [NSString stringWithFormat:@"%@_resume", fileName];
+        NSString *resumeDataFileName = [self downloadRequestResumeDataFileName:request];
         //缓存，以用来断点续传
-        [self.cache storeData:resumeData forFileName:resumeDataFile];
+        [self.cache storeData:resumeData forFileName:resumeDataFileName];
         //不保存
         self.tempDownloadTaskDic[requestURLString] = nil;
     }];

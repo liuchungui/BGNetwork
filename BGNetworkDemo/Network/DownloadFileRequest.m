@@ -11,7 +11,8 @@
 @implementation DownloadFileRequest
 - (instancetype)init {
     if(self = [super init]) {
-        self.methodName = @"download/CollectionViewPGforIOS.pdf";
+        self.methodName = @"download/CollectionViewPGforIOS.pdf?test=100";
+        self.fileName = @"test.pdf";
     }
     return self;
 }

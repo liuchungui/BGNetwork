@@ -28,7 +28,7 @@ NSString *EncodingURL(NSString * string) {
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
-@property (nonatomic, strong) DownloadFileRequest *request;
+@property (nonatomic, strong) BGDownloadRequest *request;
 @end
 
 @implementation BGDownloadRequestController
@@ -45,7 +45,9 @@ NSString *EncodingURL(NSString * string) {
 }
 
 - (IBAction)downloadFileAction:(id)sender {
-    DownloadFileRequest *request = [[DownloadFileRequest alloc] init];
+    BGDownloadRequest *request = [[BGDownloadRequest alloc] init];
+    request.methodName = @"http://casetree.cn/web/test/download/CollectionViewPGforIOS.pdf?test=100";
+    request.fileName = @"test.pdf";
     [request sendRequestWithProgress:^(NSProgress * _Nonnull downloadProgress) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.progressViewRing setProgress:downloadProgress.fractionCompleted animated:YES];

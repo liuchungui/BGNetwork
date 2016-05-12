@@ -21,14 +21,9 @@
 @property (nonatomic, strong) NSString * _Nonnull methodName;
 
 /**
- *  参数字典
+ *  下载的文件名
  */
-@property (nonatomic, copy, readonly) NSDictionary * _Nonnull parametersDic;
-
-/**
- *  请求头
- */
-@property (nonatomic, copy, readonly) NSDictionary * _Nonnull requestHTTPHeaderFields;
+@property (nonatomic, strong) NSString * _Nonnull fileName;
 
 @end
 
