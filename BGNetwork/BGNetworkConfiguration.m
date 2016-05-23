@@ -10,19 +10,24 @@
 #import "BGUtilFunction.h"
 
 @interface BGNetworkConfiguration ()
+@property(nonatomic, strong) NSString *baseURLString;
 @end
 
 @implementation BGNetworkConfiguration
 
 + (instancetype)configuration{
+    return [self configurationWithBaseURL: nil];
+}
+
++ (instancetype _Nonnull)configurationWithBaseURL:(NSString *)baseURL {
     BGNetworkConfiguration *configuration = [[self alloc] init];
+    configuration.baseURLString = baseURL;
     return configuration;
 }
 
 #pragma mark - BGNetworkConfiguration
 - (NSString *)baseURLString{
-    [NSException exceptionWithName:@"子类必须覆写baseURL方法" reason:nil userInfo:nil];
-    return nil;
+    return self.baseURLString;
 }
 
 - (void)preProcessingRequest:(BGNetworkRequest *)request {

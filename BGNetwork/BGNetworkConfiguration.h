@@ -103,4 +103,5 @@
  */
 @interface BGNetworkConfiguration : NSObject<BGNetworkConfiguration>
 + (instancetype _Nonnull)configuration;
++ (instancetype _Nonnull)configurationWithBaseURL:(NSString *)baseURL;
 @end
