@@ -16,7 +16,7 @@
 @implementation BGNetworkConfiguration
 
 + (instancetype)configuration{
-    return [self configurationWithBaseURL: nil];
+    return [self configurationWithBaseURL: @""];
 }
 
 + (instancetype _Nonnull)configurationWithBaseURL:(NSString *)baseURL {
@@ -26,8 +26,8 @@
 }
 
 #pragma mark - BGNetworkConfiguration
-- (NSString *)baseURLString{
-    return self.baseURLString;
+- (NSString *)baseURLString {
+    return _baseURLString;
 }
 
 - (void)preProcessingRequest:(BGNetworkRequest *)request {
