@@ -52,24 +52,12 @@
     return self;
 }
 
-#pragma mark - cache data for key
-- (void)storeData:(NSData *)data forKey:(NSString *)key{
-    [self storeData:data forFileName:BG_MD5(key)];
-}
-
-- (NSData *)queryCacheForKey:(NSString *)key{
-    return [self queryCacheForFileName:BG_MD5(key)];
-}
-
-- (void)queryCacheForKey:(NSString *)key completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)block{
-    [self queryCacheForFileName:BG_MD5(key) completion:block];
-}
-
-- (void)removeCacheForKey:(NSString *)key{
-    [self removeCacheForFileName:BG_MD5(key)];
-}
-
 #pragma mark - cache data for fileName
+- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    [self storeData:data forFileName:fileName];
+}
+
 - (void)storeData:(NSData *)data forFileName:(NSString *)fileName completion:(BGNetworkCacheCompletionBlock _Nullable)comletionBlock{
     if(!data | !fileName){
         return;
@@ -82,7 +70,7 @@
     //缓存到本地
     dispatch_async(self.workQueue, ^{
         // get cache Path for data key
-        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
+        NSString *cachePathForKey = [self defaultCachePathForFileName:key];
         if([_fileManager fileExistsAtPath:cachePathForKey isDirectory:nil]) {
             [_fileManager removeItemAtPath:cachePathForKey error:nil];
         }
@@ -161,27 +149,6 @@
     });
 }
 
-#pragma mark - cache object method
-- (void)storeObject:(id<NSCoding>)object forKey:(NSString *)key{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    [self storeData:data forKey:key];
-}
-
-- (id)queryObjectForKey:(NSString *)key{
-    NSData *data = [self queryCacheForKey:key];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
-}
-
-- (void)queryObjectForKey:(NSString *)key completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)block{
-    if(!key || !block){
-        return;
-    }
-    [self queryCacheForKey:key completion:^(NSData *data) {
-        id object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        block(object);
-    }];
-}
-
 // Init the disk cache
 -(NSString *)makeDiskCachePath:(NSString*)fullNamespace{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -190,11 +157,6 @@
 
 - (NSString *)cachePathForFileName:(NSString *)fileName inPath:(NSString *)path {
     return [path stringByAppendingPathComponent:fileName];
-}
-
-- (NSString *)defaultCachePathForKey:(NSString *)key {
-    NSString *fileName = BG_MD5(key);
-    return [self defaultCachePathForFileName:fileName];
 }
 
 - (NSString *)defaultCachePathForFileName:(NSString *)fileName {

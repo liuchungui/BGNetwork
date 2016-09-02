@@ -15,6 +15,7 @@
 #import "InfoRequest.h"
 #import "AdvertInfoRequest.h"
 #import "BGBatchRequest.h"
+#import "BGNetworkCache.h"
 
 @interface BGNetworkDemoTests : XCTestCase
 @end
@@ -145,6 +146,29 @@
     [self waitForExpectationsWithTimeout:10.0 handler:NULL];
     
     XCTAssertTrue(cancelSuccess);
+}
+
+- (void)testThatRequestCache {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud cache"];
+    __block BOOL cacheSuccess = NO;
+    
+    BGNetworkCache *cache = [BGNetworkCache sharedCache];
+    
+    //test 1
+    NSString *fileName1 = @"fileName1";
+    NSString *str1 = @"test1";
+    [cache storeData:[str1 dataUsingEncoding:NSUTF8StringEncoding] forFileName:fileName1];
+    [cache queryCacheForFileName:fileName1 completion:^(NSData *data) {
+        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if([str1 isEqualToString:str]) {
+            cacheSuccess = YES;
+            [expectation fulfill];
+        }
+    }];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(cacheSuccess);
 }
 
 @end

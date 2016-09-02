@@ -306,7 +306,7 @@ static BGNetworkManager *_manager = nil;
 - (void)readCacheWithRequest:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
     __weak BGNetworkManager *weakManager = self;
     NSString *cacheKey = BGKeyFromRequestAndBaseURL(request, self.baseURL);
-    [self.cache queryCacheForKey:cacheKey completion:^(NSData *data) {
+    [self.cache queryCacheForFileName:cacheKey completion:^(NSData *data) {
         dispatch_async(weakManager.dataHandleQueue, ^{
             //解析数据
             id responseObject = BGParseJsonData(data);
@@ -321,7 +321,7 @@ static BGNetworkManager *_manager = nil;
 
 - (void)cacheResponseData:(NSData *)responseData request:(BGNetworkRequest *)request{
     //缓存数据
-    [self.cache storeData:responseData forKey:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
+    [self.cache storeData:responseData forFileName:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
 }
 
 #pragma mark - set method
@@ -394,7 +394,7 @@ static BGNetworkManager *_manager = nil;
         }
         @catch (NSException *exception) {
             //崩溃则删除对应的缓存数据
-            [self.cache removeCacheForKey:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
+            [self.cache removeCacheForFileName:BGKeyFromRequestAndBaseURL(request, self.baseURL)];
         }
         @finally {
         }
