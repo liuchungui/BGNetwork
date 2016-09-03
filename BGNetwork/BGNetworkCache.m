@@ -52,104 +52,7 @@
     return self;
 }
 
-#pragma mark - cache data for fileName
-- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    [self storeData:data forFileName:fileName];
-}
-
-- (void)storeData:(NSData *)data forFileName:(NSString *)fileName completion:(BGNetworkCacheCompletionBlock _Nullable)comletionBlock{
-    if(!data | !fileName){
-        return;
-    }
-    
-    //缓存到内存
-    NSString *key = BG_MD5(fileName);
-    [self.memoryCache setObject:data forKey:key cost:data.length];
-    
-    //缓存到本地
-    dispatch_async(self.workQueue, ^{
-        // get cache Path for data key
-        NSString *cachePathForKey = [self defaultCachePathForFileName:key];
-        if([_fileManager fileExistsAtPath:cachePathForKey isDirectory:nil]) {
-            [_fileManager removeItemAtPath:cachePathForKey error:nil];
-        }
-        [_fileManager createFileAtPath:cachePathForKey contents:data attributes:nil];
-        //缓存成功之后，从内存中删除
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.memoryCache removeObjectForKey:key];
-        });
-        if(comletionBlock) {
-            comletionBlock();
-        }
-    });
-}
-
-- (void)storeData:(NSData *)data forFileName:(NSString *)fileName {
-    [self storeData:data forFileName:fileName completion:NULL];
-}
-
-- (NSData *)queryCacheForFileName:(NSString *)fileName {
-    if(!fileName){
-        return nil;
-    }
-    
-    //query memory data
-    NSString *key = BG_MD5(fileName);
-    NSData *data = [self.memoryCache objectForKey:key];
-    
-    if(data == nil){
-        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
-        data = [[NSData alloc] initWithContentsOfFile:cachePathForKey];
-    }
-    
-    return data;
-}
-
-- (void)queryCacheForFileName:(NSString *)fileName completion:(BGNetworkQueryCacheCompletionBlock)comletionBlock {
-    if(!fileName){
-        return;
-    }
-    
-    //query memory data
-    NSString *key = BG_MD5(fileName);
-    NSData *data = [self.memoryCache objectForKey:key];
-    
-    if(data == nil){
-        [self queryDiskCacheForFileName:fileName completion:comletionBlock];
-    }
-    else{
-        comletionBlock(data);
-    }
-}
-
-- (void)queryDiskCacheForFileName:(NSString *)fileName completion:(BGNetworkQueryCacheCompletionBlock)comletionBlock {
-    if(!fileName){
-        return;
-    }
-    
-    dispatch_async(self.workQueue, ^{
-        NSString *cachePath = [self defaultCachePathForFileName:fileName];
-        NSData *diskData = [[NSData alloc] initWithContentsOfFile:cachePath];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            comletionBlock(diskData);
-        });
-    });
-}
-
-- (void)removeCacheForFileName:(NSString *)fileName {
-    //remove memory data
-    NSString *key = BG_MD5(fileName);
-    [self.memoryCache removeObjectForKey:key];
-    
-    //remove disk data
-    dispatch_async(self.workQueue, ^{
-        NSString *cachePathForKey = [self defaultCachePathForFileName:fileName];
-        [_fileManager removeItemAtPath:cachePathForKey error:nil];
-    });
-}
-
-// Init the disk cache
+#pragma mark - Init the disk cache
 -(NSString *)makeDiskCachePath:(NSString*)fullNamespace{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [paths[0] stringByAppendingPathComponent:fullNamespace];
@@ -161,5 +64,125 @@
 
 - (NSString *)defaultCachePathForFileName:(NSString *)fileName {
     return [self cachePathForFileName:fileName inPath:self.diskCachePath];
+}
+
+#pragma mark - store
+- (void)storeData:(NSData *)data forFileName:(NSString *)fileName completion:(void (^ _Nullable)(BOOL))comletionBlock{
+    if(!data | !fileName){
+        return;
+    }
+    
+    //缓存到内存
+    fileName = BG_MD5(fileName);
+    [self.memoryCache setObject:data forKey:fileName cost:data.length];
+    
+    //缓存到本地
+    dispatch_async(self.workQueue, ^{
+        // get cache Path
+        NSString *cachePath = [self defaultCachePathForFileName:fileName];
+        if([_fileManager fileExistsAtPath:cachePath isDirectory:nil]) {
+            [_fileManager removeItemAtPath:cachePath error:nil];
+        }
+        BOOL isSuccess = [_fileManager createFileAtPath:cachePath contents:data attributes:nil];
+        //缓存成功之后，从内存中删除
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.memoryCache removeObjectForKey:fileName];
+            if(comletionBlock) {
+                comletionBlock(isSuccess);
+            }
+        });
+    });
+}
+
+- (void)storeData:(NSData *)data forFileName:(NSString *)fileName {
+    [self storeData:data forFileName:fileName completion:NULL];
+}
+
+- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName {
+    [self storeObject:object forFileName:fileName completion:NULL];
+}
+
+- (void)storeObject:(id<NSCoding>)object forFileName:(NSString *)fileName completion:(void (^ _Nullable)(BOOL))comletionBlock {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    [self storeData:data forFileName:fileName completion:comletionBlock];
+}
+
+#pragma mark - query
+- (NSData *)queryDataCacheForFileName:(NSString *)fileName {
+    if(!fileName){
+        return nil;
+    }
+    
+    //query memory data
+    fileName = BG_MD5(fileName);
+    NSData *data = [self.memoryCache objectForKey:fileName];
+    
+    if(data == nil){
+        NSString *cachePath = [self defaultCachePathForFileName:fileName];
+        data = [[NSData alloc] initWithContentsOfFile:cachePath];
+    }
+    
+    return data;
+}
+
+- (void)queryDataCacheForFileName:(NSString *)fileName completion:(void (^)(NSData * _Nullable))completionBlock {
+    if(!fileName){
+        return;
+    }
+    
+    //query memory data
+    fileName = BG_MD5(fileName);
+    NSData *data = [self.memoryCache objectForKey:fileName];
+    
+    if(data == nil){
+        [self queryDiskCacheForFileName:fileName completion:completionBlock];
+    }
+    else{
+        completionBlock(data);
+    }
+}
+
+- (void)queryObjectCacheForFileName:(NSString *)fileName completion:(void (^)(id _Nullable))completionBlock {
+    [self queryDataCacheForFileName:fileName completion:^(NSData * _Nullable data) {
+        dispatch_async(self.workQueue, ^{
+            id object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock(object);
+            });
+        });
+    }];
+}
+
+- (id _Nullable)queryObjectCacheForFileName:(NSString * _Nonnull)fileName {
+    NSData *data = [self queryDataCacheForFileName:fileName];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
+//查询磁盘中的数据
+- (void)queryDiskCacheForFileName:(NSString *)fileName completion:(void (^)(NSData *data))completionBlock {
+    if(!fileName){
+        return;
+    }
+    
+    dispatch_async(self.workQueue, ^{
+        NSString *cachePath = [self defaultCachePathForFileName:fileName];
+        NSData *diskData = [[NSData alloc] initWithContentsOfFile:cachePath];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock(diskData);
+        });
+    });
+}
+
+#pragma mark - remove
+- (void)removeCacheForFileName:(NSString *)fileName {
+    //remove memory data
+    fileName = BG_MD5(fileName);
+    [self.memoryCache removeObjectForKey:fileName];
+    
+    //remove disk data
+    dispatch_async(self.workQueue, ^{
+        NSString *cachePath = [self defaultCachePathForFileName:fileName];
+        [_fileManager removeItemAtPath:cachePath error:nil];
+    });
 }
 @end

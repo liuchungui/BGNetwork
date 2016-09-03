@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^BGNetworkQueryCacheCompletionBlock)(id _Nullable object);
-typedef void(^BGNetworkCacheCompletionBlock)(void);
-
 @interface BGNetworkCache : NSObject
 /**
  *  返回一个单例对象
@@ -34,15 +31,7 @@ typedef void(^BGNetworkCacheCompletionBlock)(void);
  */
 - (NSString * _Nonnull)defaultCachePathForFileName:(NSString * _Nonnull)fileName;
 
-#pragma mark - cache file with fileName
-/**
- *  归档存储对象
- *
- *  @param object 对象
- *  @param key    key值
- */
-- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName;
-
+#pragma mark - store
 /**
  *  缓存数据
  */
@@ -51,24 +40,51 @@ typedef void(^BGNetworkCacheCompletionBlock)(void);
 /**
  *  缓存数据
  */
-- (void)storeData:(NSData * _Nonnull)data forFileName:(NSString * _Nonnull)fileName completion:(BGNetworkCacheCompletionBlock _Nullable)comletionBlock;
+- (void)storeData:(NSData * _Nonnull)data forFileName:(NSString * _Nonnull)fileName completion:(void (^ _Nullable)(BOOL isCacheSuccess))completionBlock;
 
+/**
+ *  归档存储对象
+ *
+ *  @param object 对象
+ *  @param key    key值
+ */
+- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName completion:(void (^ _Nullable)(BOOL isCacheSuccess))completionBlock;
+
+/**
+ *  归档存储对象
+ *
+ *  @param object 对象
+ *  @param key    key值
+ */
+- (void)storeObject:(id<NSCoding> _Nonnull)object forFileName:(NSString * _Nonnull)fileName;
+
+
+#pragma mark - query
 /**
  *  查询缓存数据
  *  @return 返回查询到的缓存数据
  */
-- (NSData * _Nullable)queryCacheForFileName:(NSString * _Nonnull)fileName;
+- (NSData * _Nullable)queryDataCacheForFileName:(NSString * _Nonnull)fileName;
 
 /**
  *  查询缓存数据
  */
-- (void)queryCacheForFileName:(NSString * _Nonnull)fileName completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)comletionBlock;
+- (void)queryDataCacheForFileName:(NSString * _Nonnull)fileName completion:(void (^ _Nullable)(NSData* _Nullable data))completionBlock;
 
 /**
- *  查询磁盘中缓存数据
+ *  查询缓存数据
+ *  @return 返回对象
  */
-- (void)queryDiskCacheForFileName:(NSString * _Nonnull)fileName completion:(BGNetworkQueryCacheCompletionBlock _Nonnull)comletionBlock;
+- (id _Nullable)queryObjectCacheForFileName:(NSString * _Nonnull)fileName;
 
+/**
+ *  查询缓存数据
+ *  @return 返回的对象
+ */
+- (void)queryObjectCacheForFileName:(NSString * _Nonnull)fileName completion:(void (^ _Nullable)(id _Nullable object))completionBlock;
+
+
+#pragma mark - remove
 /**
  *  删除数据
  */

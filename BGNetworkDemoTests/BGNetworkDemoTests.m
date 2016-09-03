@@ -136,8 +136,8 @@
     } networkFailure:^(BGNetworkRequest * _Nonnull request, NSError * _Nullable error) {
         if(error.code == kCFURLErrorCancelled) {
             cancelSuccess = YES;
-            [expectation fulfill];
         }
+        [expectation fulfill];
     }];
     
     //取消请求
@@ -148,27 +148,170 @@
     XCTAssertTrue(cancelSuccess);
 }
 
-- (void)testThatRequestCache {
+- (void)testThatRequestCacheData1 {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud cache"];
-    __block BOOL cacheSuccess = NO;
+    __block BOOL queryDataSuccess = NO;
     
     BGNetworkCache *cache = [BGNetworkCache sharedCache];
     
-    //test 1
-    NSString *fileName1 = @"fileName1";
-    NSString *str1 = @"test1";
-    [cache storeData:[str1 dataUsingEncoding:NSUTF8StringEncoding] forFileName:fileName1];
-    [cache queryCacheForFileName:fileName1 completion:^(NSData *data) {
-        NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if([str1 isEqualToString:str]) {
-            cacheSuccess = YES;
-            [expectation fulfill];
+    //test
+    NSString *fileName = @"BGNetworkRequestCacheData.test1";
+    NSString *str = @"com.BGNetworkRequestCacheData.test1";
+    NSData *storeData = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //store data
+    [cache storeData:storeData forFileName:fileName];
+    
+    //query data
+    NSData *queryData = [cache queryDataCacheForFileName:fileName];
+    if(![queryData isEqualToData:storeData]) {
+        [expectation fulfill];
+    }
+    
+    //query data
+    [cache queryDataCacheForFileName:fileName completion:^(NSData *data) {
+        if([queryData isEqualToData:data]) {
+            queryDataSuccess = YES;
         }
+        [expectation fulfill];
     }];
     
     [self waitForExpectationsWithTimeout:10.0 handler:NULL];
     
-    XCTAssertTrue(cacheSuccess);
+    XCTAssertTrue(queryDataSuccess);
+}
+
+- (void)testThatRequestCacheData2 {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud cache"];
+    __block BOOL storeObjectSuccess = NO;
+    __block BOOL queryDataSuccess = NO;
+    
+    BGNetworkCache *cache = [BGNetworkCache sharedCache];
+    
+    //test
+    NSString *fileName = @"BGNetworkRequestCacheData.test2";
+    NSString *str = @"com.BGNetworkRequestCacheData.test2";
+    NSData *storeData = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //store data
+    [cache storeData:storeData forFileName:fileName completion:^(BOOL isCacheSuccess) {
+        if(!isCacheSuccess) {
+            [expectation fulfill];
+        }
+        storeObjectSuccess = YES;
+        
+        //query data
+        NSData *queryData = [cache queryDataCacheForFileName:fileName];
+        if(![queryData isEqualToData:storeData]) {
+            [expectation fulfill];
+        }
+        
+        //query data
+        [cache queryDataCacheForFileName:fileName completion:^(NSData *data) {
+            if([queryData isEqualToData:data]) {
+                queryDataSuccess = YES;
+            }
+            [expectation fulfill];
+        }];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(storeObjectSuccess && queryDataSuccess);
+}
+
+- (void)testThatRequestCacheObject1 {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud cache"];
+    __block BOOL storeObjectSuccess = NO;
+    __block BOOL queryObjectSuccess = NO;
+    
+    BGNetworkCache *cache = [BGNetworkCache sharedCache];
+    
+    //test
+    NSString *fileName = @"BGNetworkRequestCacheObject.test1";
+    NSString *str = @"com.BGNetworkRequestCacheObject.test1";
+    [cache storeObject:str forFileName:fileName completion:^(BOOL isCacheSuccess) {
+        if(!isCacheSuccess) {
+            [expectation fulfill];
+        }
+        storeObjectSuccess = YES;
+        NSString *queryStr = [cache queryObjectCacheForFileName:fileName];
+        if(![str isEqualToString:queryStr]) {
+            [expectation fulfill];
+        }
+        [cache queryObjectCacheForFileName:fileName completion:^(NSString* _Nullable object) {
+            if([str isEqualToString:object]) {
+                queryObjectSuccess = YES;
+            }
+            [expectation fulfill];
+        }];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(storeObjectSuccess && queryObjectSuccess);
+}
+
+- (void)testThatRequestCacheObject2 {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud cache"];
+    __block BOOL queryObjectSuccess = NO;
+    
+    BGNetworkCache *cache = [BGNetworkCache sharedCache];
+    
+    //test
+    NSString *fileName = @"BGNetworkRequestCacheObject.test2";
+    NSString *str = @"com.BGNetworkRequestCacheObject.test2";
+    
+    //store object
+    [cache storeObject:str forFileName:fileName];
+    
+    //query object
+    NSString *queryStr = [cache queryObjectCacheForFileName:fileName];
+    if(![str isEqualToString:queryStr]) {
+        [expectation fulfill];
+    }
+    [cache queryObjectCacheForFileName:fileName completion:^(NSString* _Nullable object) {
+        if([str isEqualToString:object]) {
+            queryObjectSuccess = YES;
+        }
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(queryObjectSuccess);
+}
+
+- (void)testThatRequestRemoveCache {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Request shoud remove cache"];
+    __block BOOL removeCacheSuccess = NO;
+    
+    BGNetworkCache *cache = [BGNetworkCache sharedCache];
+    
+    //test
+    NSString *fileName = @"BGNetworkRequestRemoveCache.test";
+    NSString *str = @"com.BGNetworkRequestRemove.test";
+    
+    //store object
+    [cache storeObject:str forFileName:fileName];
+    
+    //query object
+    NSString *queryStr = [cache queryObjectCacheForFileName:fileName];
+    if(![str isEqualToString:queryStr]) {
+        [expectation fulfill];
+    }
+    
+    //remove cache
+    [cache removeCacheForFileName:fileName];
+    queryStr = [cache queryObjectCacheForFileName:fileName];
+    if(queryStr == NULL) {
+        removeCacheSuccess = YES;
+    }
+    
+    [expectation fulfill];
+    [self waitForExpectationsWithTimeout:10.0 handler:NULL];
+    
+    XCTAssertTrue(removeCacheSuccess);
 }
 
 @end

@@ -96,7 +96,7 @@ static BGNetworkManager *_manager = nil;
     NSString *requestURLString = BGURLStringFromBaseURLAndMethod(self.baseURL, request.methodName);
     NSString *fileName = [self downloadRequestFileName:request];
     
-    [self.cache queryDiskCacheForFileName:fileName completion:^(id  _Nullable object) {
+    [self.cache queryDataCacheForFileName:fileName completion:^(id  _Nullable object) {
         //有缓存，则直接返回
         if([object isKindOfClass:[NSData class]]) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,7 +121,7 @@ static BGNetworkManager *_manager = nil;
                         failure:(void (^)(BGDownloadRequest * _Nonnull, NSError * _Nullable))failureCompletionBlock {
     
     NSString *resumeDataFileName = [NSString stringWithFormat:@"%@_resume", fileName];
-    [self.cache queryDiskCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
+    [self.cache queryDataCacheForFileName:resumeDataFileName completion:^(id  _Nullable object) {
         //有数据，断点续传
         if([object isKindOfClass:[NSData class]]) {
             NSURLSessionDownloadTask *task = [self.httpClient downloadTaskWithResumeData:object progress:downloadProgressBlock destination:^NSURL * _Nullable(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
@@ -306,7 +306,7 @@ static BGNetworkManager *_manager = nil;
 - (void)readCacheWithRequest:(BGNetworkRequest *)request completion:(void (^)(BGNetworkRequest *request, id responseObject))completionBlock{
     __weak BGNetworkManager *weakManager = self;
     NSString *cacheKey = BGKeyFromRequestAndBaseURL(request, self.baseURL);
-    [self.cache queryCacheForFileName:cacheKey completion:^(NSData *data) {
+    [self.cache queryDataCacheForFileName:cacheKey completion:^(NSData *data) {
         dispatch_async(weakManager.dataHandleQueue, ^{
             //解析数据
             id responseObject = BGParseJsonData(data);
