@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'BGNetwork'
-  spec.version      = '0.2.5'
+  spec.version      = '0.2.6'
   spec.license      = 'MIT'
   spec.summary      = 'BGNetwork is a request util based on AFNetworking'
   spec.homepage     = 'https://github.com/liuchungui/BGNetwork'
